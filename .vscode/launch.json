@@ -17,7 +17,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome",
-            "file": "${workspaceFolder}/test.html"
+            "file": "${workspaceFolder}/index.html"
         }
     ]
 }
