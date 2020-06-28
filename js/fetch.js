@@ -2,7 +2,7 @@ const url = 'https://itunes.apple.com/search?term=twice&limit=10'
 
 function printData(data) {
   $('.loading').remove()
-  let dataObj = JSON.parse(data) // $.ajax -> JSON.parse(data) // axios or fetch -> data
+  let dataObj = data // $.ajax -> JSON.parse(data) // axios or fetch -> data
   dataObj.results.forEach(el => {
     const { artistName, collectionName, collectionViewUrl, artworkUrl100 } = el
     $('body').append(`
@@ -21,8 +21,8 @@ function printData(data) {
 
 function getAlbum() {
   // axios({
-  //   method: 'get',
-  //   url: url
+  //   url: url,
+  //   method: 'get'
   // }).then(response => {
   //   // `data` is the response that was provided by the server
   //   printData(response.data);
@@ -59,44 +59,41 @@ function getAlbum() {
   // });
 
 
-  // fetch(url).then(res => {
-  //   // fetch 和 jQuery.ajax() 的差異：
-  //   // fetch() 回傳的 promise 物件, 當遇到 HTTP Status 404, 500 時
-  //   // 仍會使用 resolve 但 res.ok 為 false，
-  //   // reject 只在網路發生錯誤或任何中斷請求時才使用。
-  //   if (!res.ok) throw new Error('Network response was not ok.');
-  //   // 可透過 blob(), json(), text() 取得資料
-  //   // 若出現錯誤："Failed to execute 'json' on 'Response': body stream is locked"
-  //   // 原因為 Response methode like 'json', 'text' can be called once, and then it locks.
-  //   // 可使用下列方法將 json 暫存
-  //   let json = res.json();
-  //   console.log(json);
-  //   return json;
-  // }).then(json =>
-  //   printData(json)
-  // ).catch(err =>
-  //   console.error(err)
-  // );
+  fetch(url, {
+    method: 'get'
+  }).then(res => {
+    // fetch 和 jQuery.ajax() 的差異：
+    // fetch() 回傳的 promise 物件, 當遇到 HTTP Status 404, 500 時
+    // 仍會使用 resolve 但 res.ok 為 false，
+    // reject 只在網路發生錯誤或任何中斷請求時才使用。
+    if (!res.ok) throw new Error('Network response was not ok.');
+    // 可透過 blob(), json(), text() 取得資料
+    // 若出現錯誤："Failed to execute 'json' on 'Response': body stream is locked"
+    // 原因為 Response methode like 'json', 'text' can be called once, and then it locks.
+    // 可使用下列方法將 json 暫存
+    let json = res.json();
+    console.log(json);
+    return json;
+  }).then(json =>
+    printData(json)
+  ).catch(err =>
+    console.error(err)
+  );
 
 
-  var request = $.ajax({
-    url,
-    method: 'GET' // 'POST' OK, but 'GET' ERROR CORS
-    // Access to XMLHttpRequest at 'https://itunes.apple.com/search?term=twice&limit=10' 
-    // from origin 'null' has been blocked by CORS policy: 
-    // The 'Access-Control-Allow-Origin' header has a value 'http://127.0.0.1:5500' 
-    // that is not equal to the supplied origin. 
-    // [file:///D:/Materials/%E5%AD%B8%E7%BF%92/GitHub/test/index.html]
-  });
-  request.done(function (data, textStatus, jqXHR) {
-    printData(data)
-  });
-  request.fail(function (jqXHR, textStatus, errorThrown) {
-    alert(textStatus)
-  });
-  request.always(function () {
-    // alert("complete")
-  });
+  // var request = $.ajax({
+  //   url,
+  //   method: 'get'
+  // });
+  // request.done(function (data, textStatus, jqXHR) {
+  //   printData(data)
+  // });
+  // request.fail(function (jqXHR, textStatus, errorThrown) {
+  //   alert(textStatus)
+  // });
+  // request.always(function () {
+  //   // alert("complete")
+  // });
 }
 
 $(() => {

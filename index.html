@@ -8,11 +8,13 @@
     <title>test</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <!-- <script src="node_modules/jquery/dist/jquery.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
-    <script src="./fetch.js"></script>
-    <!-- <script src="webpack_bundle.js"></script>
-    <script src="./main.js"></script> -->
+    <!-- <script src="./js/fetch.js"></script> -->
+
+    <!-- 引用ES6 module需標示type="module"，但IE不支援ES6 module -->
+    <!-- <script type="module" src="./js/main.js"></script> -->
+    <!-- 需透過webpack狀況：瀏覽器不支援引用CommonJS module或npm安裝的模組時 -->
+    <script src="./js/webpack_bundle.js"></script>
 </head>
 
 <body>
