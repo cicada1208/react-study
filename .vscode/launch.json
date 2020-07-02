@@ -16,7 +16,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "launch chrome with index",
+            "name": "launch chrome with index.html",
             "file": "${workspaceFolder}/index.html"
         },
         {
