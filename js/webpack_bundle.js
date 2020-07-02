@@ -90,47 +90,10 @@
 /*!*****************!*\
   !*** ./main.js ***!
   \*****************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ \"./utils.js\");\n/* harmony import */ var _node_modules_pad_left_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/pad-left/index.js */ \"./node_modules/pad-left/index.js\");\n/* harmony import */ var _node_modules_pad_left_index_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_pad_left_index_js__WEBPACK_IMPORTED_MODULE_1__);\n// // commomJS:\n// var utils = require('./utils')\n// console.log(utils.cal(30)) // 9\n// console.log(utils.name) // hello\n\n// ES6:\n\n\nconsole.log(_utils_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"].cal(30))\nconsole.log(_utils_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"].name)\nconsole.log(_node_modules_pad_left_index_js__WEBPACK_IMPORTED_MODULE_1___default()('4', 4, 0))\n\n//# sourceURL=webpack:///./main.js?");
-
-/***/ }),
-
-/***/ "./node_modules/pad-left/index.js":
-/*!****************************************!*\
-  !*** ./node_modules/pad-left/index.js ***!
-  \****************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("/*!\n * pad-left <https://github.com/jonschlinkert/pad-left>\n *\n * Copyright (c) 2014-2015, Jon Schlinkert.\n * Licensed under the MIT license.\n */\n\n\n\nvar repeat = __webpack_require__(/*! repeat-string */ \"./node_modules/repeat-string/index.js\");\n\nmodule.exports = function padLeft(str, num, ch) {\n  str = str.toString();\n\n  if (typeof num === 'undefined') {\n    return str;\n  }\n\n  if (ch === 0) {\n    ch = '0';\n  } else if (ch) {\n    ch = ch.toString();\n  } else {\n    ch = ' ';\n  }\n\n  return repeat(ch, num - str.length) + str;\n};\n\n\n//# sourceURL=webpack:///./node_modules/pad-left/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/repeat-string/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/repeat-string/index.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("/*!\n * repeat-string <https://github.com/jonschlinkert/repeat-string>\n *\n * Copyright (c) 2014-2015, Jon Schlinkert.\n * Licensed under the MIT License.\n */\n\n\n\n/**\n * Results cache\n */\n\nvar res = '';\nvar cache;\n\n/**\n * Expose `repeat`\n */\n\nmodule.exports = repeat;\n\n/**\n * Repeat the given `string` the specified `number`\n * of times.\n *\n * **Example:**\n *\n * ```js\n * var repeat = require('repeat-string');\n * repeat('A', 5);\n * //=> AAAAA\n * ```\n *\n * @param {String} `string` The string to repeat\n * @param {Number} `number` The number of times to repeat the string\n * @return {String} Repeated string\n * @api public\n */\n\nfunction repeat(str, num) {\n  if (typeof str !== 'string') {\n    throw new TypeError('expected a string');\n  }\n\n  // cover common, quick use cases\n  if (num === 1) return str;\n  if (num === 2) return str + str;\n\n  var max = str.length * num;\n  if (cache !== str || typeof cache === 'undefined') {\n    cache = str;\n    res = '';\n  } else if (res.length >= max) {\n    return res.substr(0, max);\n  }\n\n  while (max > res.length && num > 1) {\n    if (num & 1) {\n      res += str;\n    }\n\n    num >>= 1;\n    str += str;\n  }\n\n  res += str;\n  res = res.substr(0, max);\n  return res;\n}\n\n\n//# sourceURL=webpack:///./node_modules/repeat-string/index.js?");
-
-/***/ }),
-
-/***/ "./utils.js":
-/*!******************!*\
-  !*** ./utils.js ***!
-  \******************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// // commomJS:\n// function calculate(n) {\n//     return ((n * 100 + 20 - 4)) % 10 + 3  // 計算價格公式\n// }\n\n// module.exports = {\n//     cal: calculate,\n//     name: 'hello'\n// } // 把這個物件 export 出去\n\n// ES6:\nfunction calculate(n) {\n    return ((n * 100 + 20 - 4)) % 10 + 3  // 計算價格公式\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    cal: calculate,\n    name: 'hello2'\n});\n\n//# sourceURL=webpack:///./utils.js?");
+eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/lib/index.js):\\nError: Plugin/Preset files are not allowed to export objects, only functions. In /Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-preset-es2015/lib/index.js\\n    at createDescriptor (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-descriptors.js:178:11)\\n    at /Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-descriptors.js:109:50\\n    at Array.map (<anonymous>)\\n    at createDescriptors (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-descriptors.js:109:29)\\n    at createPresetDescriptors (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-descriptors.js:101:10)\\n    at presets (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-descriptors.js:47:19)\\n    at mergeChainOpts (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-chain.js:319:26)\\n    at /Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-chain.js:282:7\\n    at Generator.next (<anonymous>)\\n    at buildRootChain (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/config-chain.js:119:29)\\n    at buildRootChain.next (<anonymous>)\\n    at loadPrivatePartialConfig (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/partial.js:95:62)\\n    at loadPrivatePartialConfig.next (<anonymous>)\\n    at Function.<anonymous> (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/partial.js:120:25)\\n    at Generator.next (<anonymous>)\\n    at evaluateSync (/Users/cicadawang/Documents/GitHub/test/js/node_modules/gensync/index.js:244:28)\\n    at Function.sync (/Users/cicadawang/Documents/GitHub/test/js/node_modules/gensync/index.js:84:14)\\n    at Object.<anonymous> (/Users/cicadawang/Documents/GitHub/test/js/node_modules/@babel/core/lib/config/index.js:43:61)\\n    at Object.<anonymous> (/Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:151:26)\\n    at Generator.next (<anonymous>)\\n    at asyncGeneratorStep (/Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:3:103)\\n    at _next (/Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:5:194)\\n    at /Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:5:364\\n    at new Promise (<anonymous>)\\n    at Object.<anonymous> (/Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:5:97)\\n    at Object._loader (/Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:231:18)\\n    at Object.loader (/Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:64:18)\\n    at Object.<anonymous> (/Users/cicadawang/Documents/GitHub/test/js/node_modules/babel-loader/lib/index.js:59:12)\");\n\n//# sourceURL=webpack:///./main.js?");
 
 /***/ })
 
