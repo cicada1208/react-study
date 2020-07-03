@@ -1,14 +1,22 @@
 // install webpack: npm install --save-dev webpack webpack-cli html-webpack-plugin webpack-dev-server
-// install babel: npm install --save-dev babel-core babel-eslint babel-loader babel-preset-es2015 babel-preset-react
-// npm install -D babel-loader @babel/core @babel/preset-env babel-preset-es2015
-// bundle up moudle: npx webpack --config webpack.config.js
+// install babel: npm install -D babel-loader @babel/core @babel/preset-env @babel/preset-react 
 
-// 將 bundle 好的 <script> 插入到 body
+// 執行方法1:
+// 1. bundle up moudle: npx webpack --config webpack.config.js
+// 2. using html-webpack-plugin to add webpack_bundle.js to index.html
+// and create index.html automatically
+// 3. running by live server
+
+// 執行方法2:
+// 1. running by webpack-dev-server
+// using package.json scripts: {"webpack-dev": "webpack-dev-server --devtool eval --progress --colors --content-base build"}
+// 2. 不會重建 webpack_bundle.js 及建立 index.html，應是執行暫時建立的目錄 build 中的檔案
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: '../index.html',
-    filename: 'index.html',
-    inject: 'body',
+    template: '../index.html', // 以此為樣本
+    filename: 'index.html', // 產出該檔並包含 bundle 的 <script>
+    inject: 'body', // 將 bundle 的 <script> 插入到 body
 });
 
 module.exports = {
@@ -30,7 +38,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader', // ES6 和 JSX 轉為瀏覽器可解析的 JavaScript 
                     options: {
-                        presets: ['@babel/preset-env']
+                        presets: ['@babel/preset-env', '@babel/preset-react']
                     }
                 }
             }
