@@ -30,6 +30,7 @@ module.exports = {
     // production: 產品模式，自動壓縮及優化
     mode: 'development',
     // track down errors, map compiled code back to original source code
+    // 'source-map' most detailed at the expense of build speed.
     devtool: 'inline-source-map',
     // bundle 起點，可多個檔案
     entry: {
@@ -38,13 +39,15 @@ module.exports = {
     },
     // 匯出 bundle 檔案
     output: {
-        path: path.join(__dirname, '..', 'dist'), // `${__dirname}/dist`
+        // path: must be an absolute path
+        path: path.join(__dirname, '..', 'dist'),
         filename: '[name].bundle.js'
     },
     module: {
         rules: [
             {
                 test: /\.m?js$/, // 指定轉換的檔案，這裡指所有.js or .mjs
+                // exclude: takes preferrence over test and include
                 exclude: /(node_modules|bower_components)/,
                 use: { // 指定 loader
                     loader: 'babel-loader', // ES6 和 JSX 等轉為瀏覽器可解析的 ES5
