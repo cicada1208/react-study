@@ -20,7 +20,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: '../index.html', // 以此為樣本
+    template: './src/index.html', // 以此為樣本
     filename: 'index.html', // 產出該檔並包含 bundle 的 <script>
     inject: 'body', // 將 bundle 的 <script> 插入至 body
 });
@@ -34,13 +34,13 @@ module.exports = {
     devtool: 'inline-source-map',
     // bundle 起點，可多個檔案
     entry: {
-        main: './main.js',
-        api_query: './api_query.js'
+        main: './src/js/main.js',
+        api_query: './src/js/api_query.js'
     },
     // 匯出 bundle 檔案
     output: {
         // path: must be an absolute path
-        path: path.join(__dirname, '..', 'dist'),
+        path: path.join(__dirname, 'dist'),
         filename: '[name].bundle.js'
     },
     module: {
