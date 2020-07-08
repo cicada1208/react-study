@@ -4,8 +4,8 @@
 // console.log(utils.name) // hello
 
 // // ES6:
-// import utils from './utils.js'
-// import pad from 'pad-left' //'./node_modules/pad-left/index.js'
+// import utils from './utils.js' // ES6 需明確給予副檔名
+// import pad from 'pad-left'
 // console.log(utils.cal(30))
 // console.log(utils.name)
 // console.log(pad('4', 4, 0))

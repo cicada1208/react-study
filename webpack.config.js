@@ -29,7 +29,7 @@ module.exports = {
     // development: 開發模式
     // production: 產品模式，自動壓縮及優化
     mode: 'development',
-    // track down errors, map compiled code back to original source code
+    // devtool: track down errors, map compiled code back to original source code
     // 'source-map' most detailed at the expense of build speed.
     devtool: 'inline-source-map',
     // bundle 起點，可多個檔案
@@ -58,7 +58,7 @@ module.exports = {
             }
         ]
     },
-    devServer: { // webpack-dev-server 設定
+    devServer: { // webpack-dev-server setting
         inline: true,
         port: 8008,
     },
