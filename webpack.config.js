@@ -31,7 +31,7 @@ module.exports = {
     mode: 'development',
     // devtool: track down errors, map compiled code back to original source code
     // 'source-map' most detailed at the expense of build speed.
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     // entry: bundle 起點，可多個檔案
     entry: {
         main: './src/js/main.js',
