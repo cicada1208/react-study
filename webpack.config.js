@@ -26,18 +26,18 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-    // development: 開發模式
-    // production: 產品模式，自動壓縮及優化
+    // 'development': 開發模式
+    // 'production': 產品模式，自動壓縮及優化
     mode: 'development',
     // devtool: track down errors, map compiled code back to original source code
     // 'source-map' most detailed at the expense of build speed.
     devtool: 'inline-source-map',
-    // bundle 起點，可多個檔案
+    // entry: bundle 起點，可多個檔案
     entry: {
         main: './src/js/main.js',
         api_query: './src/js/api_query.js'
     },
-    // 匯出 bundle 檔案
+    // output: 匯出 bundle 檔案
     output: {
         // path: must be an absolute path
         path: path.join(__dirname, 'dist'),
@@ -59,9 +59,24 @@ module.exports = {
         ]
     },
     devServer: { // webpack-dev-server setting
-        inline: true,
+        // contentBase: Tell the server where to serve content from.
+        // This is only necessary if you want to serve static files.
+        // devServer.publicPath will be used to determine where the bundles should be served from, and takes precedence.
+        // It is recommended to use an absolute path.
+        contentBase: path.join(__dirname, 'dist'),
+        // port: Specify a port number to listen for requests on
         port: 8008,
+        // inline: A script will be inserted in your bundle to take care of live reloading,
+        // and build messages will appear in the browser console.
+        inline: true,
+        // open: Tells dev-server to open the browser after server had been started.
+        // set true to default browser, or specify 'Google Chrome'(The browser application name is platform dependent.)
+        open: true,
+        // // headers: Adds headers to all responses
+        // headers: {
+        //     'X-Custom-Foo': 'bar'
+        // }
     },
-    // 放置使用的外掛
+    // plugins: 放置使用的外掛
     plugins: [HtmlWebpackPluginConfig]
 }
