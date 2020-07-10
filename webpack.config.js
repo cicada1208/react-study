@@ -6,14 +6,15 @@
 // 1. running by webpack-dev-server
 // npm run webpack-dev by define package.json
 // scripts: {"webpack-dev": "webpack-dev-server --devtool eval --progress --colors --content-base build"}
-// 2. 不會建置 webpack_bundle.js 及 index.html，應是執行暫時建立目錄 build 中的檔案
+// 2. webpack-dev-server doesn't write any output files after compiling. 
+// Instead, it keeps bundle files in memory 
+// and serves them as if they were real files mounted at the server's root path.
 
 // 執行方法2:
-// 1. bundle up moudle: npx webpack --config webpack.config.js
+// 1. build: npx webpack --config webpack.config.js
 // or npm run webpack-build by define package.json
 // scripts: {"webpack-build": "webpack --config webpack.config.js"}
-// 2. 指令 webpack: 一次性建置
-// 因使用 html-webpack-plugin，故建置 webpack_bundle.js 後，會加入及建置 index.html
+// 2. 指令 webpack: 一次性建置，產生 webpack_bundle.js, index.html
 // 3. running by live server (CORS問題待解決？)
 
 const path = require('path');
@@ -40,7 +41,7 @@ module.exports = {
     // output: 匯出 bundle 檔案
     output: {
         // path: must be an absolute path
-        path: path.join(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
     },
     module: {
@@ -61,16 +62,18 @@ module.exports = {
     devServer: { // webpack-dev-server setting
         // contentBase: Tell the server where to serve content from.
         // This is only necessary if you want to serve static files.
-        // devServer.publicPath will be used to determine where the bundles should be served from, and takes precedence.
+        // devServer.publicPath will be used to determine where
+        // the bundles should be served from, and takes precedence.
         // It is recommended to use an absolute path.
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.resolve(__dirname, 'dist'),
         // port: Specify a port number to listen for requests on
         port: 8008,
         // inline: A script will be inserted in your bundle to take care of live reloading,
         // and build messages will appear in the browser console.
         inline: true,
         // open: Tells dev-server to open the browser after server had been started.
-        // set true to default browser, or specify 'Google Chrome'(The browser application name is platform dependent.)
+        // set true to default browser, or specify 'Google Chrome'
+        // (The browser application name is platform dependent.)
         open: true,
         // // headers: Adds headers to all responses
         // headers: {
