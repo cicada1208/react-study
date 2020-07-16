@@ -1,6 +1,8 @@
 // webpack：瀏覽器不支援引用 CommonJS module 或 npm 安裝的模組時，可以此工具打包
 // install webpack: npm install --save-dev webpack webpack-cli html-webpack-plugin webpack-dev-server
 // install babel: npm install -D babel-loader @babel/core @babel/preset-env @babel/preset-react 
+// import css: npm install --save-dev style-loader css-loader
+// import images: npm install --save-dev file-loader
 
 // 執行方法1:
 // 1. running by webpack-dev-server
@@ -56,6 +58,19 @@ module.exports = {
                         presets: ['@babel/preset-env', '@babel/preset-react']
                     }
                 }
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                ]
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader',
+                ]
             }
         ]
     },

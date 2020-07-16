@@ -1,8 +1,11 @@
+import $ from 'jquery'
+import axios from 'axios'
+import '../css/style.css'
+
 const url = 'https://itunes.apple.com/search?term=twice&limit=10'
 
 function printData(data) {
-    $('.div_api_query').remove()
-    let dataObj = data // $.ajax -> JSON.parse(data) // axios or fetch -> data
+    let dataObj = data
     dataObj.results.forEach(el => {
         const { artistName, collectionName, collectionViewUrl, artworkUrl100 } = el
         $('body').append(`
@@ -83,17 +86,17 @@ function getAlbum() {
 
     // // method 1:
     // var request = $.ajax({
-    //   url,
-    //   method: 'get'
+    //     url,
+    //     method: 'get'
     // });
     // request.done(function (data, textStatus, jqXHR) {
-    //   printData(data)
+    //     printData(JSON.parse(data))
     // });
     // request.fail(function (jqXHR, textStatus, errorThrown) {
-    //   alert(textStatus)
+    //     alert(textStatus)
     // });
     // request.always(function () {
-    //   // alert("complete")
+    //     // alert("complete")
     // });
 }
 
