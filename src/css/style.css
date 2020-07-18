@@ -1,9 +1,9 @@
-body{
+body {
   background-color: antiquewhite;
 }
 
-#div_jpg_pig{
-  background: url('../img/pig.jpg');
+#divPig {
+  background: url("../img/pig.jpg");
 }
 
 img {

@@ -1,8 +1,11 @@
-// webpack：瀏覽器不支援引用 CommonJS module 或 npm 安裝的模組時，可以此工具打包
-// install webpack: npm install --save-dev webpack webpack-cli html-webpack-plugin webpack-dev-server
+// webpack: 瀏覽器不支援引用 CommonJS module 或 npm 安裝的模組時，可以此工具打包
+// install webpack: npm install --save-dev webpack webpack-cli webpack-dev-server html-webpack-plugin clean-webpack-plugin
 // install babel: npm install -D babel-loader @babel/core @babel/preset-env @babel/preset-react 
 // import css: npm install --save-dev style-loader css-loader
-// import images: npm install --save-dev file-loader
+// import image, font: npm install --save-dev file-loader
+// import JSON: 預設支持
+// import csv: npm install --save-dev csv-loader
+// import xml: npm install --save-dev xml-loader
 
 // 執行方法1:
 // 1. running by webpack-dev-server
@@ -28,23 +31,51 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     inject: 'body', // 將 bundle 的 <script> 插入至 body
 });
 
+// clean the /dist folder before each build, so that only used files will be generated.
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 module.exports = {
     // 'development': 開發模式
     // 'production': 產品模式，自動壓縮及優化
     mode: 'development',
     // devtool: track down errors, map compiled code back to original source code
-    // 'source-map' most detailed at the expense of build speed.
+    // 'source-map': most detailed at the expense of build speed.
     devtool: 'source-map',
-    // entry: bundle 起點，可多個檔案
-    entry: {
+    entry: { // bundle 起點，可多個檔案
         main: './src/js/main.js',
         api_query: './src/js/api_query.js'
     },
-    // output: 匯出 bundle 檔案
-    output: {
+    output: { // 匯出 bundle 檔案
         // path: must be an absolute path
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
+    },
+    devServer: { // webpack-dev-server setting
+        // contentBase: Tell the server where to serve content from.
+        // This is only necessary if you want to serve static files.
+        // devServer.publicPath will be used to determine where
+        // the bundles should be served from, and takes precedence.
+        // It is recommended to use an absolute path.
+        contentBase: path.resolve(__dirname, 'dist'),
+        // port: Specify a port number to listen for requests on
+        port: 8008,
+        // inline: A script will be inserted in your bundle to take care of live reloading,
+        // and build messages will appear in the browser console.
+        inline: true,
+        // open: Tells dev-server to open the browser after server had been started.
+        // set true to default browser, or specify 'Google Chrome'
+        // (The browser application name is platform dependent.)
+        open: true,
+        // // headers: Adds headers to all responses
+        // headers: {
+        //     'X-Custom-Foo': 'bar'
+        // }
+    },
+    optimization: {
+        // SplitChunksPlugin: 將各個 entry 重複引用的模組，獨立出一個 chunk，避免重複 bundle
+        splitChunks: {
+            chunks: 'all',
+        },
     },
     module: {
         rules: [
@@ -71,30 +102,21 @@ module.exports = {
                 use: [
                     'file-loader',
                 ]
+            },
+            {
+                test: /\.(csv|tsv)$/,
+                use: [
+                    'csv-loader',
+                ]
+            },
+            {
+                test: /\.xml$/,
+                use: [
+                    'xml-loader',
+                ]
             }
         ]
     },
-    devServer: { // webpack-dev-server setting
-        // contentBase: Tell the server where to serve content from.
-        // This is only necessary if you want to serve static files.
-        // devServer.publicPath will be used to determine where
-        // the bundles should be served from, and takes precedence.
-        // It is recommended to use an absolute path.
-        contentBase: path.resolve(__dirname, 'dist'),
-        // port: Specify a port number to listen for requests on
-        port: 8008,
-        // inline: A script will be inserted in your bundle to take care of live reloading,
-        // and build messages will appear in the browser console.
-        inline: true,
-        // open: Tells dev-server to open the browser after server had been started.
-        // set true to default browser, or specify 'Google Chrome'
-        // (The browser application name is platform dependent.)
-        open: true,
-        // // headers: Adds headers to all responses
-        // headers: {
-        //     'X-Custom-Foo': 'bar'
-        // }
-    },
     // plugins: 放置使用的外掛
-    plugins: [HtmlWebpackPluginConfig]
+    plugins: [new CleanWebpackPlugin(), HtmlWebpackPluginConfig]
 }

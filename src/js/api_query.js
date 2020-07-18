@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import axios from 'axios'
-import '../css/style.css'
 
 const url = 'https://itunes.apple.com/search?term=twice&limit=10'
 

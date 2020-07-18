@@ -31,17 +31,24 @@ class App extends React.Component {
     }
 }
 
-const elt_div_react = document.createElement('div');
-elt_div_react.id = 'div_react';
-document.body.appendChild(elt_div_react);
-ReactDom.render(<App />, document.getElementById('div_react'));
+const divReact = document.createElement('div');
+divReact.id = 'div_react';
+ReactDom.render(<App />, divReact);
+document.body.appendChild(divReact);
 
 
-// import images:
+// import css:
+import '../css/style.css'
+
+// import image:
 import jpgPig from '../img/pig.jpg'
-const elt_div_jpg_pig = document.createElement('div');
-elt_div_jpg_pig.id = 'div_jpg_pig';
 const imgPig = new Image(100, 100);
 imgPig.src = jpgPig;
-elt_div_jpg_pig.appendChild(imgPig);
-document.body.appendChild(elt_div_jpg_pig);
+const divPig = document.createElement('div');
+divPig.id = 'divPig';
+divPig.appendChild(imgPig);
+document.body.appendChild(divPig);
+
+// import xml:
+import xmlData from '../data/data.xml'; // xmlData is object type
+console.log(xmlData);
