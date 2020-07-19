@@ -48,7 +48,8 @@ module.exports = {
     output: { // 匯出 bundle 檔案
         // path: must be an absolute path
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+        // [contenthash]: 如果內容改變檔名亦隨之變動，可讓 browsers caching 重載檔案
+        filename: '[name].[contenthash].js' // '[name].bundle.js'
     },
     devServer: { // webpack-dev-server setting
         // contentBase: Tell the server where to serve content from.
@@ -74,8 +75,20 @@ module.exports = {
     optimization: {
         // SplitChunksPlugin: 將各個 entry 重複引用的模組，獨立出一個 chunk，避免重複 bundle
         splitChunks: {
-            chunks: 'all',
+            // chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    // This might result in a large chunk containing all external packages.
+                    // It is recommended to only include your core frameworks and utilities
+                    // and dynamically load the rest of the dependencies.
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                }
+            }
         },
+        // runtimeChunk: split runtime code into a separate chunk.
+        runtimeChunk: 'single'
     },
     module: {
         rules: [
