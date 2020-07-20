@@ -40,6 +40,7 @@ module.exports = {
     mode: 'development',
     // devtool: track down errors, map compiled code back to original source code
     // 'source-map': most detailed at the expense of build speed.
+    // "eval": has the best performance, but doesn't assist you for transpiled code.
     devtool: 'source-map',
     entry: { // bundle 起點，可多個檔案
         main: './src/js/main.js',
@@ -48,7 +49,7 @@ module.exports = {
     output: { // 匯出 bundle 檔案
         // path: must be an absolute path
         path: path.resolve(__dirname, 'dist'),
-        // [contenthash]: 如果內容改變檔名亦隨之變動，可讓 browsers caching 重載檔案
+        // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
         filename: '[name].[contenthash].js' // '[name].bundle.js'
     },
     devServer: { // webpack-dev-server setting
@@ -73,6 +74,10 @@ module.exports = {
         // }
     },
     optimization: {
+        // runtimeChunk: split runtime code into a separate chunk.
+        runtimeChunk: 'single',
+        // moduleIds: Tells webpack which algorithm to use when choosing module ids.
+        moduleIds: 'hashed',
         // SplitChunksPlugin: 將各個 entry 重複引用的模組，獨立出一個 chunk，避免重複 bundle
         splitChunks: {
             // chunks: 'all',
@@ -86,9 +91,7 @@ module.exports = {
                     chunks: 'all',
                 }
             }
-        },
-        // runtimeChunk: split runtime code into a separate chunk.
-        runtimeChunk: 'single'
+        }
     },
     module: {
         rules: [
