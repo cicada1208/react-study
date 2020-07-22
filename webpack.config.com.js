@@ -50,6 +50,10 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const TerserWebpackPlugin = require('terser-webpack-plugin');
+// const TerserWebpackPluginConfig = new TerserWebpackPlugin({
+//     test: /\.m?js(\?.*)?$/i,
+//     exclude: /(node_modules|bower_components)/
+// })
 
 module.exports = {
     // // 'development': 開發模式
@@ -111,12 +115,7 @@ module.exports = {
             }
         },
         // minimize: true,
-        // minimizer: [
-        //     new TerserWebpackPlugin({
-        //         test: /\.m?js(\?.*)?$/i,
-        //         exclude: /(node_modules|bower_components)/
-        //     })
-        // ]
+        // minimizer: [TerserWebpackPluginConfig]
     },
     module: {
         rules: [
