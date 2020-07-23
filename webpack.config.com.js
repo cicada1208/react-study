@@ -27,19 +27,26 @@
 // import xml: npm install --save-dev xml-loader
 
 // 執行方法1:
-// 1. running by webpack-dev-server
-// npm run webpack-dev by define package.json
-// scripts: {"webpack-dev": "webpack-dev-server --devtool eval --progress --colors --content-base build"}
-// 2. webpack-dev-server doesn't write any output files after compiling. 
-// Instead, it keeps bundle files in memory 
+// 1. running by webpack-dev-server:
+// npm run webpack-dev-build by package.json
+// scripts: {"webpack-dev-build": "webpack-dev-server --config webpack.config.dev.js --progress --color"}
+// 2. webpack-dev-server doesn't write any output files after compiling.
+// Instead, it keeps bundle files in memory
 // and serves them as if they were real files mounted at the server's root path.
+// 3. debug:
+// browser chrome devtool -> Sources page
 
 // 執行方法2:
-// 1. build: npx webpack --config webpack.config.js
-// or npm run webpack-build by define package.json
-// scripts: {"webpack-build": "webpack --config webpack.config.js"}
-// 2. 指令 webpack: 一次性建置，產生 webpack_bundle.js, index.html
-// 3. running by live server (CORS問題待解決？)
+// 1. build:
+// npx webpack --config webpack.config.prod.js
+// or npm run webpack-prod-build by package.json
+// scripts: {"webpack-prod-build": "webpack --config webpack.config.prod.js"}
+// after building it will create webpack_bundle.js, index.html.
+// 2. running by http-server:
+// npm install --save-dev http-server
+// there is CORS problem?
+// 3. debug:
+// browser chrome devtool -> Sources page
 
 const Path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
