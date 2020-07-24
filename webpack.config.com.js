@@ -127,7 +127,7 @@ module.exports = {
     module: {
         rules: [
             {
-                // 篩選條件: test, include, exclude
+                // 篩選條件: test, include, exclude
                 test: /\.m?js$/, // 指定轉換的檔案，這裡指所有.js or .mjs
                 // exclude: takes preferrence over test and include
                 exclude: /(node_modules|bower_components)/,
