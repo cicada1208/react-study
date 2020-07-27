@@ -1,3 +1,5 @@
+console.log("process.env.NODE_ENV(main.js): " + process.env.NODE_ENV);
+
 // // commomJS:
 // var utils = require('./utils')
 // console.log(utils.cal(30)) // 9
@@ -37,8 +39,9 @@ ReactDom.render(<App />, divReact);
 document.body.appendChild(divReact);
 
 
-// import css:
-import '../css/style.css'
+// // import css:
+// import '../css/style.css'
+import '../css/style.scss'
 
 // import image:
 import jpgPig from '../img/pig.jpg'

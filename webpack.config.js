@@ -42,10 +42,9 @@
 // 3. debug:
 // browser chrome devtool -> Sources page
 
-console.log("process.env.NODE_ENV(webpack.config.com): " + process.env.NODE_ENV);
-
-const Path = require('path');
+console.log("process.env.NODE_ENV(webpack.config): " + process.env.NODE_ENV);
 const boolModeDev = process.env.NODE_ENV !== 'production';
+const Path = require('path');
 
 // clean-webpack-plugin: A webpack plugin to remove/clean your build folder(s).
 // clean the /dist folder before each build, so that only used files will be generated.
@@ -61,13 +60,13 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     inject: 'body', // 將 bundle 的 <script> 插入至 body
 });
 
-// // terser-webpack-plugin: minify your JavaScript.
-// // npm install --save-dev terser-webpack-plugin
-// const TerserWebpackPlugin = require('terser-webpack-plugin');
-// const TerserWebpackPluginConfig = new TerserWebpackPlugin({
-//     test: /\.m?js(\?.*)?$/i,
-//     exclude: /(node_modules|bower_components)/
-// })
+// terser-webpack-plugin: minify your JavaScript.
+// npm install --save-dev terser-webpack-plugin
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+const TerserWebpackPluginConfig = new TerserWebpackPlugin({
+    test: /\.m?js(\?.*)?$/i,
+    exclude: /(node_modules|bower_components)/
+})
 
 // mini-css-extract-plugin: This plugin extracts CSS into separate files. 
 // It creates a CSS file per JS file which contains CSS.
@@ -82,19 +81,19 @@ const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
     // ignoreOrder: false, // Enable to remove warnings about conflicting order
 })
 
-// // optimize-css-assets-webpack-plugin: A Webpack plugin to optimize \ minimize CSS assets.
-// // npm install --save-dev optimize-css-assets-webpack-plugin
-// const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
+// optimize-css-assets-webpack-plugin: A Webpack plugin to optimize \ minimize CSS assets.
+// npm install --save-dev optimize-css-assets-webpack-plugin
+const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
-    // // 'development': 開發模式
-    // // 'production': 產品模式，自動壓縮及優化
-    // mode: 'development',
-    // // devtool: track down errors, map compiled code back to original source code
-    // // 'source-map': most detailed at the expense of build speed.(ideal for production)
-    // // "eval": has the best performance, but doesn't assist you for transpiled code.(ideal for development)
-    // // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
-    // devtool: 'source-map',
+    // 'development': 開發模式
+    // 'production': 產品模式，自動壓縮及優化
+    mode: boolModeDev ? 'development' : 'production',
+    // devtool: track down errors, map compiled code back to original source code
+    // 'source-map': most detailed at the expense of build speed.(ideal for production)
+    // "eval": has the best performance, but doesn't assist you for transpiled code.(ideal for development)
+    // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
+    devtool: 'source-map',
     entry: { // bundle 起點，可多個檔案
         main: './src/js/main.js',
         api_query: './src/js/api_query.js'
@@ -109,27 +108,27 @@ module.exports = {
         // publicPath: '/assets/',
         // path: Path.resolve(__dirname, 'dist/assets')
     },
-    // devServer: { // webpack-dev-server setting // for development
-    //     // contentBase: Tell the server where to serve content from.
-    //     // This is only necessary if you want to serve static files.
-    //     // devServer.publicPath will be used to determine where
-    //     // the bundles should be served from, and takes precedence.
-    //     // It is recommended to use an absolute path.
-    //     contentBase: Path.resolve(__dirname, 'dist'),
-    //     // port: Specify a port number to listen for requests on
-    //     port: 8008,
-    //     // inline: A script will be inserted in your bundle to take care of live reloading,
-    //     // and build messages will appear in the browser console.
-    //     inline: true,
-    //     // open: Tells dev-server to open the browser after server had been started.
-    //     // set true to default browser, or specify 'Google Chrome'
-    //     // (The browser application name is platform dependent.)
-    //     open: true,
-    //     // // headers: Adds headers to all responses
-    //     // headers: {
-    //     //     'X-Custom-Foo': 'bar'
-    //     // }
-    // },
+    devServer: { // webpack-dev-server setting // for development
+        // contentBase: Tell the server where to serve content from.
+        // This is only necessary if you want to serve static files.
+        // devServer.publicPath will be used to determine where
+        // the bundles should be served from, and takes precedence.
+        // It is recommended to use an absolute path.
+        contentBase: Path.resolve(__dirname, 'dist'),
+        // port: Specify a port number to listen for requests on
+        port: 8008,
+        // inline: A script will be inserted in your bundle to take care of live reloading,
+        // and build messages will appear in the browser console.
+        inline: true,
+        // open: Tells dev-server to open the browser after server had been started.
+        // set true to default browser, or specify 'Google Chrome'
+        // (The browser application name is platform dependent.)
+        open: true,
+        // // headers: Adds headers to all responses
+        // headers: {
+        //     'X-Custom-Foo': 'bar'
+        // }
+    },
     optimization: {
         // runtimeChunk: split runtime code into a separate chunk.
         runtimeChunk: 'single',
@@ -156,9 +155,9 @@ module.exports = {
                 },
             }
         },
-        // // for production
-        // minimize: true,
-        // minimizer: [TerserWebpackPluginConfig, new OptimizeCSSAssetsWebpackPlugin({})]
+        // minimize and minimizer for production
+        minimize: boolModeDev ? false : true,
+        minimizer: [TerserWebpackPluginConfig, new OptimizeCSSAssetsWebpackPlugin({})]
     },
     module: {
         rules: [
