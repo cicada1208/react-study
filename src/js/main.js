@@ -7,16 +7,16 @@ console.log("process.env.NODE_ENV(main.js): " + process.env.NODE_ENV);
 
 
 // // ES6:
-// import utils from './utils.js' // ES6 需明確給予副檔名
-// import pad from 'pad-left'
-// console.log(utils.cal(30))
-// console.log(utils.name)
-// console.log(pad('4', 4, 0))
+import utils from './utils.js' // ES6 需明確給予副檔名
+import padLeft from 'pad-left'
+console.log(utils.cal(30))
+console.log(utils.name)
+console.log(padLeft('4', 4, 0))
 
 
 // React:
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 
 class App extends React.Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class App extends React.Component {
 
 const divReact = document.createElement('div');
 divReact.id = 'div_react';
-ReactDom.render(<App />, divReact);
+ReactDOM.render(<App />, divReact);
 document.body.appendChild(divReact);
 
 
