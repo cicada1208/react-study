@@ -111,10 +111,10 @@ module.exports = {
     devServer: { // webpack-dev-server setting // for development
         // contentBase: Tell the server where to serve content from.
         // This is only necessary if you want to serve static files.
+        // It is recommended to use an absolute path.
         // devServer.publicPath will be used to determine where
         // the bundles should be served from, and takes precedence.
-        // It is recommended to use an absolute path.
-        contentBase: Path.resolve(__dirname, 'dist'),
+        contentBase: Path.resolve(__dirname, 'src'),
         // port: Specify a port number to listen for requests on
         port: 8008,
         // inline: A script will be inserted in your bundle to take care of live reloading,
@@ -177,6 +177,7 @@ module.exports = {
             },
             {
                 test: /\.(sa|sc|c)ss$/i, // /\.css$/i
+                // loader 需按順序擺放，由後往前讀取
                 use: [
                     // // style-loader: Creates `style` nodes from JS strings.
                     // // Inject CSS into the DOM.
