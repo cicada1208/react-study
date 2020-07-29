@@ -17,14 +17,14 @@
             "type": "chrome",
             "request": "launch",
             "name": "launch chrome with index.html",
-            "file": "${workspaceFolder}/dist/index.html"
+            "file": "${workspaceFolder}/src/index.html"
         },
         {
             "type": "chrome",
             "request": "launch",
             "name": "launch chrome with live server",
-            "url": "http://localhost:5500",
-            "webRoot": "${workspaceFolder}/dist"
+            "url": "http://localhost:5500/src",
+            "webRoot": "${workspaceFolder}/src"
         }
     ]
 }
