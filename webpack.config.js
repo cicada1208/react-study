@@ -15,7 +15,7 @@
 
 // babel: npm install -D babel-loader @babel/core @babel/preset-env @babel/preset-react
 // import css: npm install --save-dev style-loader css-loader sass-loader node-sass
-// import image, font: npm install --save-dev file-loader
+// import image, font...: npm install --save-dev file-loader url-loader
 // import JSON: 預設支持
 // import csv: npm install --save-dev csv-loader
 // import xml: npm install --save-dev xml-loader
@@ -200,18 +200,34 @@ module.exports = {
             },
             {
                 test: /\.(png|svg|jpe?g|gif)$/i,
-                // The file-loader resolves import/require() on a file into a url 
-                // and emits the file into the output directory.
-                loader: 'file-loader',
-                options: {
-                    // name: default is [contenthash].[ext]
-                    // By default the filename of the resulting file
-                    // is the hash of the file's contents with the original extension of
-                    // the required resource.
-                    name: '[name].[ext]', // '[folder][name].[ext]'
-                    // outputPath: Specify a filesystem path where the target file(s) will be placed.
-                    // outputPath: 'img'
-                }
+                use: [
+                    {
+                        // The file-loader resolves import/require() on a file into a url 
+                        // and emits the file into the output directory.
+                        loader: 'file-loader',
+                        options: {
+                            // name: default is [contenthash].[ext]
+                            // By default the filename of the resulting file
+                            // is the hash of the file's contents with the original extension of
+                            // the required resource.
+                            name: '[name].[ext]', // '[folder][name].[ext]'
+                            // outputPath: Specify a filesystem path where the target file(s) will be placed.
+                            // outputPath: 'img'
+                        }
+                    },
+                    // {
+                    //     // A loader for webpack which transforms files into base64 URIs.
+                    //     // 可壓縮檔案 for production
+                    //     loader: 'url-loader',
+                    //     options: {
+                    //         // limit: Boolean|Number|String Default: undefined (no limit)
+                    //         // If the file size is equal or greater than the limit file-loader
+                    //         // will be used (by default) and all query parameters are passed to it.
+                    //         limit: true,
+                    //         name: '[name].[ext]'
+                    //     }
+                    // }
+                ]
             },
             {
                 test: /\.(csv|tsv)$/,
