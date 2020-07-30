@@ -3,14 +3,14 @@
 
 // // commomJS:
 // var utils = require('./utils')
-// console.log(utils.cal(30)) // 9
-// console.log(utils.name) // hello
+// console.log(utils.cal(1))
+// console.log(utils.name)
 
 
 // ES6:
 import utils from './utils.js' // ES6 需明確給予副檔名
 // import padLeft from 'pad-left'
-console.log(utils.cal(30))
+console.log(utils.cal(1))
 console.log(utils.name)
 // console.log(padLeft('4', 4, 0))
 
