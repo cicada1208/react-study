@@ -44,7 +44,7 @@
 
 console.log("process.env.NODE_ENV(webpack.config): " + process.env.NODE_ENV);
 const boolModeDev = process.env.NODE_ENV !== 'production';
-const Path = require('path');
+const path = require('path');
 
 // clean-webpack-plugin: A webpack plugin to remove/clean your build folder(s).
 // clean the /dist folder before each build, so that only used files will be generated.
@@ -58,6 +58,21 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     template: './src/index.html', // 以此為樣本
     filename: 'index.html', // 產出該檔並包含 bundle 的 <script>
     inject: 'body', // 將 bundle 的 <script> 插入至 body
+    // minify: {
+    //     collapseBooleanAttributes: true,
+    //     collapseWhitespace: true,
+    //     removeAttributeQuotes: true,
+    //     removeComments: true,
+    //     removeEmptyAttributes: true,
+    //     removeRedundantAttributes: true,
+    //     removeScriptTypeAttributes: true,
+    //     removeStyleLinkTypeAttributes: true,
+    //     minifyCSS: true,
+    //     minifyJS: true,
+    //     sortAttributes: true,
+    //     useShortDoctype: true
+    // },
+    minify: 'auto',
 });
 
 // terser-webpack-plugin: minify your JavaScript.
@@ -76,7 +91,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // all options are optional
-    filename: boolModeDev ? '[name].css' : '[name].[contenthash].css',
+    filename: boolModeDev ? './css/[name].css' : './css/[name].[contenthash].css',
     // chunkFilename: boolModeDev ? '[id].css' : '[id].[contenthash].css',
     // ignoreOrder: false, // Enable to remove warnings about conflicting order
 })
@@ -99,35 +114,14 @@ module.exports = {
         api_query: './src/js/api_query.js'
     },
     output: { // 匯出 bundle 檔案
-        // path: The output directory as an absolute path.
-        path: Path.resolve(__dirname, 'dist'),
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
-        filename: '[name].[contenthash].js', // '[name].bundle.js'
+        filename: boolModeDev ? './js/[name].js' : './js/[name].[contenthash].js',
+        // path: The output directory as an absolute path.
+        path: path.resolve(__dirname, 'dist'),
+        // path: path.resolve(__dirname, 'dist/assets'),
         // // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
         // // A relative URL is resolved relative to the HTML page
         // publicPath: '/assets/',
-        // path: Path.resolve(__dirname, 'dist/assets')
-    },
-    devServer: { // webpack-dev-server setting // for development
-        // contentBase: Tell the server where to serve content from.
-        // This is only necessary if you want to serve static files.
-        // It is recommended to use an absolute path.
-        // devServer.publicPath will be used to determine where
-        // the bundles should be served from, and takes precedence.
-        contentBase: Path.resolve(__dirname, 'src'),
-        // port: Specify a port number to listen for requests on
-        port: 8008,
-        // inline: A script will be inserted in your bundle to take care of live reloading,
-        // and build messages will appear in the browser console.
-        inline: true,
-        // open: Tells dev-server to open the browser after server had been started.
-        // set true to default browser, or specify 'Google Chrome'
-        // (The browser application name is platform dependent.)
-        open: true,
-        // // headers: Adds headers to all responses
-        // headers: {
-        //     'X-Custom-Foo': 'bar'
-        // }
     },
     optimization: {
         // runtimeChunk: split runtime code into a separate chunk.
@@ -146,13 +140,13 @@ module.exports = {
                 //     name: 'vendors',
                 //     chunks: 'all',
                 // },
-                styles: {
-                    // the CSS can be extracted in one CSS file
-                    test: /\.(sa|sc|c)ss$/i, // /\.css$/i
-                    name: 'styles',
-                    chunks: 'all',
-                    enforce: true,
-                },
+                // styles: {
+                //     // the CSS can be extracted in one CSS file
+                //     test: /\.(sa|sc|c)ss$/i, // /\.css$/i
+                //     name: 'styles',
+                //     chunks: 'all',
+                //     enforce: true,
+                // },
             }
         },
         // minimize and minimizer for production
@@ -210,9 +204,10 @@ module.exports = {
                             // By default the filename of the resulting file
                             // is the hash of the file's contents with the original extension of
                             // the required resource.
-                            name: '[name].[ext]', // '[folder][name].[ext]'
+                            name: boolModeDev ? '[name].[ext]' : '[name].[contenthash].[ext]', // '[folder][name].[ext]'
                             // outputPath: Specify a filesystem path where the target file(s) will be placed.
-                            // outputPath: 'img'
+                            outputPath: './img',
+                            publicPath: '../img/'
                         }
                     },
                     // {
@@ -248,5 +243,26 @@ module.exports = {
         new CleanWebpackPlugin(),
         HtmlWebpackPluginConfig,
         MiniCssExtractPluginConfig
-    ]
+    ],
+    devServer: { // webpack-dev-server setting // for development
+        // contentBase: Tell the server where to serve content from.
+        // This is only necessary if you want to serve static files.
+        // It is recommended to use an absolute path.
+        // devServer.publicPath will be used to determine where
+        // the bundles should be served from, and takes precedence.
+        contentBase: path.resolve(__dirname, 'src'),
+        // port: Specify a port number to listen for requests on
+        port: 8008,
+        // inline: A script will be inserted in your bundle to take care of live reloading,
+        // and build messages will appear in the browser console.
+        inline: true,
+        // open: Tells dev-server to open the browser after server had been started.
+        // set true to default browser, or specify 'Google Chrome'
+        // (The browser application name is platform dependent.)
+        open: true,
+        // // headers: Adds headers to all responses
+        // headers: {
+        //     'X-Custom-Foo': 'bar'
+        // }
+    }
 };
