@@ -157,14 +157,14 @@ module.exports = {
         rules: [
             {
                 // 篩選條件: test, include, exclude
-                test: /\.m?js$/, // 指定轉換的檔案，這裡指所有.js or .mjs
+                test: /\.m?jsx?$/, // 指定轉換的檔案，.js or .mjs or jsx
                 // exclude: takes preferrence over test and include
                 exclude: /(node_modules|bower_components)/,
                 // use: 使用 loader
                 use: {
-                    // Loads ES2015+ code(ES6, JSX...) and transpiles to ES5 using Babel
+                    // Loads ES2015+ code(ES6) and transpiles to ES5 using Babel
                     loader: 'babel-loader',
-                    options: {
+                    options: { // '@babel/preset-react': 支援JSX
                         presets: ['@babel/preset-env', '@babel/preset-react']
                     }
                 }
