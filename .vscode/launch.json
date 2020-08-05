@@ -14,7 +14,13 @@
                 "<node_internals>/**",
                 // "node_modules"
             ],
-            "program": "${file}"
+            "program": "${file}",
+            // outputCapture: if set to std, output from the process stdout/stderr 
+            // will be shown in the Debug Console, instead of listening to output 
+            // over the debug port. This is useful for programs or log libraries 
+            // that write directly to the stdout/stderr streams instead of using 
+            // console.* APIs.
+            "outputCapture": "std"
         },
         {
             "type": "chrome",

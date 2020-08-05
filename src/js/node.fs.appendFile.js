@@ -1,5 +1,5 @@
 const fs = require('fs'); // File System module
-var strFile = 'test.txt'
+var strFile = __dirname + '/node.fs.txt';
 
 // append data to a file asynchronously,
 // creating the file if it does not yet exist.
