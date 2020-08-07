@@ -24,6 +24,7 @@
     "homepage": "https://github.com/cicada1208/test#readme",
     "dependencies": {
         "axios": "^0.19.2",
+        "formidable": "^1.2.2",
         "jquery": "^3.5.1",
         "node-fetch": "^2.6.0",
         "pad-left": "^2.1.0",
