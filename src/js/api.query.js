@@ -5,14 +5,14 @@ const url = 'https://itunes.apple.com/search?term=twice&limit=10'
 
 function printData(data) {
     let dataObj = data
+    var $divApiQuery = $("<div id='divApiQuery'></div>")
+    $('body').append($divApiQuery)
     dataObj.results.forEach(el => {
         const { artistName, collectionName, collectionViewUrl, artworkUrl100 } = el
-        $('body').append(`
-        <div class="card">
-            <div class="image">
-                <img src="${artworkUrl100}" onclick="window.open('${collectionViewUrl}')"/>
-            </div>
-            <div class="info">
+        $('#divApiQuery').append(`
+        <div id="divApiQueryAlbum">
+            <img class="divApiQueryImg" src="${artworkUrl100}" onclick="window.open('${collectionViewUrl}')"/>
+            <div>
                 <p>${artistName}</p>
                 <p>${collectionName}</p>
             </div>

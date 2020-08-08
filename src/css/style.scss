@@ -4,21 +4,17 @@ body {
   background-color: $background-color;
 }
 
-#divPig {
-  background: url('../img/pig.jpg');
-}
-
-img {
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.card {
+#divApiQueryAlbum {
   display: inline-flex;
   margin: 25px;
   width: 100%;
 }
 
-.image {
-  width: 120px;
+.divApiQueryImg {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+#divWebpackES6 {
+  background: url('../img/pig.jpg');
 }
