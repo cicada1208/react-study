@@ -34,4 +34,4 @@ function run(a) {
 }
 var obj = { name: 'obj' }
 run(obj)
-console.log('obj: ', obj) // obj:  { name: 'obj' }
+console.log('obj:', obj) // obj: { name: 'obj' }
