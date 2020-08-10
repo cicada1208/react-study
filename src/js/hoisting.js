@@ -19,14 +19,16 @@ function test(v) {
 }
 test(1)
 
+
 console.log('testa:')
 function testa() {
     // 2. 產生的 VO: { a: undefined, ab: undefined }
     console.log(a) // undefined
     var a = 'aa' // 4. 一行行執行程式碼, a = 'aa'
-    var ab = 'ab' // 4. 一行行執行程式碼, ab = 'ab'
+    var a2 = 'a2' // 4. 一行行執行程式碼, a2 = 'a2'
 }
 testa()
+
 
 console.log('testb:')
 var b = 'b'

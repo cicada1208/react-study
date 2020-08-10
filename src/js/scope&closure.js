@@ -12,6 +12,7 @@ function test() {
 var inner = test()
 inner()
 
+
 console.log('testa:')
 var a = 100
 function testa() {
@@ -23,6 +24,7 @@ function testa() {
 }
 testa()
 
+
 console.log('testb:')
 var b = 100
 function testb() {
@@ -33,6 +35,7 @@ function outer() {
     console.log(b) // 100
 }
 testb()
+
 
 console.log('testc:')
 function testc() {
