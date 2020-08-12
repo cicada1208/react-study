@@ -110,10 +110,11 @@ module.exports = {
     // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
     devtool: 'source-map',
     entry: { // bundle 起點，可多個檔案
-        webpack_es6: './src/js/webpack.es6.js',
-        webpack_cjs: './src/js/webpack.cjs.js',
-        react_ex: './src/js/react.ex.js',
-        api_query: './src/js/api.query.js'
+        // webpack_es6: './src/js/webpack.es6.js',
+        // webpack_cjs: './src/js/webpack.cjs.js',
+        // react_ex: './src/js/react.ex.js',
+        // api_query: './src/js/api.query.js',
+        test: './src/js/test.js',
     },
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
