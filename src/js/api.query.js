@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import axios from 'axios'
 
-const url = 'https://itunes.apple.com/search?term=twice&limit=10'
+const url = 'https://itunes.apple.com/search?term=twice&limit=3'
 
 function printData(data) {
     let dataObj = data

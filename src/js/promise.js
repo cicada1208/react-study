@@ -3,7 +3,7 @@
 // 狀態：
 // pending：初始狀態。
 // fulfilled：代表操作成功所以對應到 resolve()。
-// rejected：代表操作失敗所以對應到 reject() 。
+// rejected：代表操作失敗所以對應到 reject()。
 
 
 const $ = require('jquery')
@@ -28,11 +28,11 @@ let promise = new Promise((resolve, reject) => {
 // Promise.then() and Promise.catch()
 // 都回傳 Promise 物件且括號內都是 callback funciton
 promise.then(
-    // 當 Promise 狀態為 fulfill 時，可用 Promise.then() 來操作 resolve() 的回傳值
+    // 當 Promise 狀態為 fulfill 時，可用 Promise.then() 來操作 resolve() 接收的資料
     // output: "ok_data"
     data => console.log("test1:", data)
 ).catch(
-    // 當 Promise 狀態為 reject 時，可用 Promise.catch() 來操作 reject() 的錯誤值
+    // 當 Promise 狀態為 reject 時，可用 Promise.catch() 來操作 reject() 接收的錯誤訊息
     // output: "err_msg"
     err => console.error("test1:", err)
 );
@@ -47,10 +47,10 @@ promise = new Promise(function (resolve, reject) {
 // to transform values or run additional async actions one after another.
 // You can transform values simply by returning the new value.
 promise.then(function (val) {
-    console.log('test2:', val); // 1
+    console.log('test2:', val); // test2: 1
     return val + 2;
 }).then(function (val) {
-    console.log('test2:', val); // 3
+    console.log('test2:', val); // test2: 3
 })
 
 
@@ -61,20 +61,25 @@ var p3 = new Promise((resolve, reject) => {
     setTimeout(resolve, 2000, 'three');
 });
 var p4 = new Promise((resolve, reject) => {
-    reject(new Error('fail'));
+    reject(Error('fail'));
 });
 
 // 括號內所有的 Promise 其狀態都是 fulfilled 後才實現
 // 抑或其一 Promise rejected 後回傳該訊息
-// output: Error: fail
-Promise.all([p1, p2, p3, p4]).then(
-    data => console.log('test3:', data)
+Promise.all([p1, p2, p3]).then(
+    data => console.log('test3:', data) // test3: [ 1, 2, 'three' ]
 ).catch(
     err => console.error('test3:', err)
 );
+Promise.all([p1, p2, p3, p4]).then(
+    data => console.log('test3.2:', data)
+).catch(
+    err => console.error('test3.2:', err) // test3: Error: fail
+);
 
 
-// test4: run in browser
+// test4:
+// XMLHttpRequest run in browser
 // Promisifying XMLHttpRequest
 function get_test4(url) {
     // Return a new promise.
@@ -108,76 +113,38 @@ function get_test4(url) {
 }
 
 get_test4(url).then(function (response) {
-    console.log("test4:", "Success!", response);
+    console.log("test4:", response);
 }, function (error) {
-    console.error("test4:", "Failed!", error);
+    console.error("test4:", error);
 })
 
 
-// test5: run in browser
-// Promisifying XMLHttpRequest
+// test5: 
+// run in browser
 function get_test5(url) {
-    // Return a new promise.
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         var request = $.ajax({
             url,
             method: 'get'
-        });
-        request.done(function (data, textStatus, jqXHR) {
-            resolve(JSON.parse(data))
-        });
-        request.fail(function (jqXHR, textStatus, errorThrown) {
-            reject(textStatus)
+        }).done((data, textStatus, jqXHR) => {
+            resolve(data)
+        }).fail((jqXHR, textStatus, errorThrown) => {
+            reject(Error(textStatus))
         });
     });
 }
 
-get_test5(url).then(function (response) {
-    console.log("test5:", "Success!", response);
-}, function (error) {
-    console.error("test5:", "Failed!", error);
-})
-
-
-// import $ from 'jquery'
-
-// getArticleList()
-//     .then(articles => getArticle(articles[0].id))
-//     .then(article => getAuthor(article))
-//     .then(author => {
-//         alert(author.email);
-//     });
-
-// function getAuthor(id) {
-//     return new Promise(function (resolve, reject) {
-//         $.ajax("http://beta.json-generator.com/api/json/get/E105pDLh", {
-//             author: id,
-//             method: 'post'
-//         }).done(function (result) {
-//             resolve(result);
-//         })
-//     });
-// }
-
-// function getArticle(id) {
-//     return new Promise(function (resolve, reject) {
-//         $.ajax("http://beta.json-generator.com/api/json/get/EkI02vUn", {
-//             id: id,
-//             method: 'post'
-//         }).done(function (result) {
-//             resolve(result);
-//         })
-//     });
-// }
-
-// function getArticleList() {
-//     return new Promise(function (resolve, reject) {
-//         $.ajax("http://beta.json-generator.com/api/json/get/Ey8JqwIh", {
-//             method: 'post'
-//         }).done(function (result) {
-//             resolve(result);
-//         }).catch(err =>
-//             console.log(err)
-//         );
-//     });
-// }
+get_test5(url).then(
+    // 簡化2
+    JSON.parse
+    // 簡化1: 單行即表示return
+    // response => JSON.parse(response)
+    // 原式
+    // // response => {
+    // //     return JSON.parse(response);
+    // // }
+).then(json =>
+    console.log("test5:", json)
+).catch(error =>
+    console.error("test5:", error)
+)
