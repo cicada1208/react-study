@@ -51,6 +51,11 @@ promise.then(function (val) {
     return val + 2;
 }).then(function (val) {
     console.log('test2:', val); // test2: 3
+    throw Error('raise error')
+}).catch(function (err) {
+    console.error('test2:', err); // test2: Error: raise error
+}).then(function () {
+    console.log('test2:', "all done");  // test2: all done
 })
 
 
@@ -71,6 +76,7 @@ Promise.all([p1, p2, p3]).then(
 ).catch(
     err => console.error('test3:', err)
 );
+
 Promise.all([p1, p2, p3, p4]).then(
     data => console.log('test3.2:', data)
 ).catch(
@@ -119,7 +125,7 @@ get_test4(url).then(function (response) {
 })
 
 
-// test5: 
+// test5:
 // run in browser
 function get_test5(url) {
     return new Promise((resolve, reject) => {
@@ -137,8 +143,10 @@ function get_test5(url) {
 get_test5(url).then(
     // 簡化2
     JSON.parse
+
     // 簡化1: 單行即表示return
     // response => JSON.parse(response)
+
     // 原式
     // // response => {
     // //     return JSON.parse(response);
@@ -148,3 +156,57 @@ get_test5(url).then(
 ).catch(error =>
     console.error("test5:", error)
 )
+
+
+// test6:
+promise = new Promise(function (resolve, reject) {
+    // JSON.parse throws an error if you feed it some
+    // invalid JSON, so this implicitly rejects:
+    var json = JSON.parse("This ain't JSON")
+    resolve(json);
+});
+
+promise.then(function (data) {
+    // This never happens:
+    console.log("test6:", data);
+}).catch(function (err) {
+    // Instead, this happens:
+    console.error("test6:", err); // test6: SyntaxError: Unexpected token T in JSON at position 0
+})
+
+
+// test7:
+function getPromise(data, time) {
+    return new Promise((resolve, reject) =>
+        setTimeout(resolve, time, data)
+    ).then(data =>
+        console.log('test7:', data)
+    ).catch(err =>
+        console.log('test7:', err)
+    )
+}
+
+let aryData = [1, 2, 3]
+let aryTime = [3000, 2000, 1000]
+
+aryData.forEach((data, idx) => {
+    // 因每個 Promise 執行時間不同，故不會照順序印出
+    // output:
+    // 3
+    // 2
+    // 1
+    getPromise(data, aryTime[idx])
+})
+
+aryData = ['a', 'b', 'c']
+var sequence = Promise.resolve();
+aryData.forEach((data, idx) => {
+    // 以 then 串接，按順序執行
+    // output:
+    // a
+    // b
+    // c
+    sequence = sequence.then(() =>
+        getPromise(data, aryTime[idx])
+    )
+})

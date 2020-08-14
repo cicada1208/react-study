@@ -3,11 +3,10 @@ import axios from 'axios'
 
 const url = 'https://itunes.apple.com/search?term=twice&limit=3'
 
-function printData(data) {
-    let dataObj = data
+function printData(objJson) {
     var $divApiQuery = $("<div id='divApiQuery'></div>")
     $('body').append($divApiQuery)
-    dataObj.results.forEach(el => {
+    objJson.results.forEach(el => {
         const { artistName, collectionName, collectionViewUrl, artworkUrl100 } = el
         $('#divApiQuery').append(`
         <div id="divApiQueryAlbum">
