@@ -144,7 +144,7 @@ get_test5(url).then(
     // 簡化2
     JSON.parse
 
-    // 簡化1: 單行即表示return
+    // 簡化1: 單行即表示以該行值return
     // response => JSON.parse(response)
 
     // 原式
@@ -190,7 +190,7 @@ let aryData = [1, 2, 3]
 let aryTime = [3000, 2000, 1000]
 
 aryData.forEach((data, idx) => {
-    // 因每個 Promise 執行時間不同，故不會照順序印出
+    // 每個 Promise 執行時間不同，故不會照順序印出
     // output:
     // 3
     // 2
@@ -210,3 +210,19 @@ aryData.forEach((data, idx) => {
         getPromise(data, aryTime[idx])
     )
 })
+
+// arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue])
+aryData = ['x', 'y', 'z']
+aryData.reduce((sequence2, data, idx) => {
+    // 以 then 串接，按順序執行
+    // output:
+    // x
+    // y
+    // z
+    return sequence2.then(() =>
+        getPromise(data, aryTime[idx])
+    )
+}, Promise.resolve())
+
+
+console.log('promise test end.')
