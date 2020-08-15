@@ -8,8 +8,8 @@
 // 4. 一行行執行程式碼
 // 5. 當 function 執行完後，就會把 EC 給 pop 出來
 
-console.log('test:')
-function test(v) {
+console.log('test1:')
+function test1(v) {
     // 2. 產生的 VO: { v: 1 }, 覆蓋為 { v: [Function: v] }, 忽略 function 裡宣告的變數 var v
     console.log(v) // [Function: v]
     console.log(v()) // 2
@@ -17,23 +17,23 @@ function test(v) {
     var v = 3 // 4. 一行行執行程式碼, v = 3
     console.log(v) // 3
 }
-test(1)
+test1(1)
 
 
-console.log('testa:')
-function testa() {
-    // 2. 產生的 VO: { a: undefined, ab: undefined }
-    console.log(a) // undefined
-    var a = 'aa' // 4. 一行行執行程式碼, a = 'aa'
+console.log('test2:')
+function test2() {
+    // 2. 產生的 VO: { a1: undefined, a2: undefined }
+    console.log(a1) // undefined
+    var a1 = 'a1' // 4. 一行行執行程式碼, a1 = 'a1'
     var a2 = 'a2' // 4. 一行行執行程式碼, a2 = 'a2'
 }
-testa()
+test2()
 
 
-console.log('testb:')
+console.log('test3:')
 var b = 'b'
-function testb() {
+function test3() {
     console.log(b) // ReferenceError: Cannot access 'b' before initialization
     let b // let、const 的 hoisting 行為與 var 不同
 }
-testb()
+test3()

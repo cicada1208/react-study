@@ -5,7 +5,6 @@
 // fulfilled：代表操作成功所以對應到 resolve()。
 // rejected：代表操作失敗所以對應到 reject()。
 
-
 const $ = require('jquery')
 const url = 'https://itunes.apple.com/search?term=twice&limit=2'
 
@@ -48,7 +47,7 @@ promise = new Promise(function (resolve, reject) {
 // You can transform values simply by returning the new value.
 promise.then(function (val) {
     console.log('test2:', val); // test2: 1
-    return val + 2;
+    return val + 2; // return 後下個 then 便能接受此值
 }).then(function (val) {
     console.log('test2:', val); // test2: 3
     throw Error('raise error')
@@ -69,8 +68,8 @@ var p4 = new Promise((resolve, reject) => {
     reject(Error('fail'));
 });
 
-// 括號內所有的 Promise 其狀態都是 fulfilled 後才實現
-// 抑或其一 Promise rejected 後回傳該訊息
+// 括號內所有的 Promise 其狀態都是 fulfilled 後才執行下一步驟
+// 抑或其一 Promise rejected 後回傳錯誤訊息
 Promise.all([p1, p2, p3]).then(
     data => console.log('test3:', data) // test3: [ 1, 2, 'three' ]
 ).catch(
@@ -186,9 +185,8 @@ function getPromise(data, time) {
     )
 }
 
-let aryData = [1, 2, 3]
 let aryTime = [3000, 2000, 1000]
-
+let aryData = [1, 2, 3]
 aryData.forEach((data, idx) => {
     // 每個 Promise 執行時間不同，故不會照順序印出
     // output:
@@ -200,8 +198,8 @@ aryData.forEach((data, idx) => {
 
 aryData = ['a', 'b', 'c']
 var sequence = Promise.resolve();
-aryData.forEach((data, idx) => {
-    // 以 then 串接，按順序執行
+aryData.forEach((data, idx) =>
+    // 以 then 串接，便會按順序執行
     // output:
     // a
     // b
@@ -209,20 +207,53 @@ aryData.forEach((data, idx) => {
     sequence = sequence.then(() =>
         getPromise(data, aryTime[idx])
     )
-})
+)
 
 // arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue])
 aryData = ['x', 'y', 'z']
-aryData.reduce((sequence2, data, idx) => {
+aryData.reduce((sequence2, currentData, idx) =>
     // 以 then 串接，按順序執行
     // output:
     // x
     // y
     // z
-    return sequence2.then(() =>
-        getPromise(data, aryTime[idx])
+    sequence2.then(() =>
+        getPromise(currentData, aryTime[idx])
     )
-}, Promise.resolve())
+    , Promise.resolve() // initialValue
+)
+
+function getPromise2(data, time) {
+    return new Promise((resolve, reject) =>
+        setTimeout(resolve, time, data)
+    )
+}
+
+aryData = ['e', 'f', 'g']
+// Promise.all 各個 promise 一起執行，按順序儲值於 aryResult
+// 所有 promise 執行完後，aryResult 再按順序印出，此方法比以 then 串接較為快速
+Promise.all(
+    aryData.map((data, idx) => getPromise2(data, aryTime[idx]))
+).then(aryResult =>
+    // output:
+    // e
+    // f
+    // g
+    aryResult.forEach(rst => console.log('test7:', rst))
+).catch(err =>
+    console.log('test7:', err)
+)
+
+aryData = ['h', 'i', 'j']
+aryData.map((data, idx) => getPromise2(data, aryTime[idx]))
+    .reduce((sequence, chapterPromise) =>
+        sequence.then(() =>
+            chapterPromise
+        ).then(rst =>
+            console.log('test7:', rst)
+        )
+        , Promise.resolve()
+    )
 
 
 console.log('promise test end.')
