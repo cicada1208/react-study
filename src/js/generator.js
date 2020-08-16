@@ -75,3 +75,6 @@ console.log('test4:', iter.next()) // test4: { value: 'line1: manman', done: fal
 console.log('test4:', iter.next()) // test4: { value: 'line2', done: false }
 console.log('test4:', iter.next()) // test4: { value: 'line4', done: false }
 console.log('test4:', iter.next()) // test4: { value: undefined, done: true } // 抵達 generator function 尾端，done: true
+
+
+console.log('generator test end.')
