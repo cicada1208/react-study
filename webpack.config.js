@@ -13,7 +13,9 @@
 // and merges objects creating a new object.
 // npm install --save-dev webpack-merge
 
-// babel: npm install -D babel-loader @babel/core @babel/preset-env @babel/preset-react
+// babel:
+// npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime
+
 // import css: npm install --save-dev style-loader css-loader sass-loader node-sass
 // import image, font...: npm install --save-dev file-loader url-loader
 // import JSON: 預設支持
@@ -114,7 +116,9 @@ module.exports = {
         // webpack_cjs: './src/js/webpack.cjs.js',
         // react_ex: './src/js/react.ex.js',
         // api_query: './src/js/api.query.js',
-        promise: './src/js/promise.js',
+        // promise: './src/js/promise.js',
+        // generator: './src/js/generator.js',
+        async_await: './src/js/async.await.js',
     },
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
@@ -168,7 +172,8 @@ module.exports = {
                     // Loads ES2015+ code(ES6) and transpiles to ES5 using Babel
                     loader: 'babel-loader',
                     options: { // '@babel/preset-react': 支援JSX
-                        presets: ['@babel/preset-env', '@babel/preset-react']
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: ['@babel/plugin-transform-runtime'] // '@babel/plugin-transform-runtime': 支援async/await
                     }
                 }
             },

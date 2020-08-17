@@ -1,5 +1,7 @@
 // async & await:
 
+const url = 'https://itunes.apple.com/search?term=twice&limit=2'
+
 // test1:
 function resolveAfter2Seconds(x) {
     return new Promise(resolve => {
@@ -9,7 +11,7 @@ function resolveAfter2Seconds(x) {
     });
 }
 
-// async function return a Promise.resolve
+// async function return a Promise
 async function add1(x) {
     let a, b;
     // try {
@@ -19,27 +21,53 @@ async function add1(x) {
     b = await resolveAfter2Seconds(30);
     // }
     // catch (rejectedValue) {
-    //     return Promise.reject(rejectedValue)
+    //      return Promise.reject(rejectedValue)
     // }
     return x + a + b; // Promise.resolve(x + a + b)
 }
 
-add1(10).then(v => {
+add1(10).then(v =>
     console.log('test1:', v, 'after 4 seconds.')
-}).catch(err =>
+).catch(err =>
     console.log('test1:', err)
 )
 
-async function add2(x) {
-    let p_a, p_b
-    p_a = resolveAfter2Seconds(20); // p_a is promise
-    p_b = resolveAfter2Seconds(30); // p_b is promise
-    return x + await p_a + await p_b;
-}
+// async function add2(x) {
+//     let p_a, p_b
+//     p_a = resolveAfter2Seconds(20); // p_a is promise
+//     p_b = resolveAfter2Seconds(30); // p_b is promise
+//     return x + await p_a + await p_b;
+// }
 
-add2(10).then(v => {
-    console.log('test1:', v, 'after 2 seconds.')
-})
+// add2(10).then(v =>
+//     console.log('test1:', v, 'after 2 seconds.')
+// )
+
+
+// // test2:
+// // fetch run in browser
+// function logFetch(url) {
+//     return fetch(url)
+//         .then(response =>
+//             response.json()
+//         ).then(json =>
+//             console.log('test2.1:', json)
+//         ).catch(err =>
+//             console.error('test2.1:', err)
+//         );
+// }
+// logFetch(url)
+
+// async function logFetch2(url) {
+//     try {
+//         const response = await fetch(url);
+//         console.log('test2.2:', await response.json());
+//     }
+//     catch (err) {
+//         console.log('test2.2:', err);
+//     }
+// }
+// logFetch2(url) // logFetch 與 logFetch2 作用相同
 
 
 console.log('async test end.')
