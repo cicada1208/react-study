@@ -47,14 +47,19 @@ add2(10).then(v =>
 // test2:
 // fetch run in browser
 function logFetch(url) {
-    return fetch(url)
-        .then(response =>
-            response.json()
-        ).then(json =>
-            console.log('test2.1:', json)
-        ).catch(err =>
-            console.error('test2.1:', err)
-        );
+    try {
+        return fetch(url)
+            .then(response =>
+                response.json()
+            ).then(json =>
+                console.log('test2.1:', json)
+            ).catch(err =>
+                console.error('test2.1:', err)
+            );
+    }
+    catch (err) {
+        console.log('test2.1:', err);
+    }
 }
 logFetch(url)
 
@@ -71,16 +76,58 @@ logFetch2(url) // logFetch 與 logFetch2 作用相同
 
 
 // test3:
-var aryUrl = [url, url]
-// map some URLs to json-promises
-const aryJsonPromises = aryUrl.map(async url => {
-    const response = await fetch(url);
-    return response.json();
+function resolveAfterTime(val, time) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(val);
+        }, time);
+    });
+}
+
+var aryVal = ['a1', 'a2']
+var aryTime = ['2000', '1000']
+async function logInOrder(aryVal) {
+    for (const [idx, val] of aryVal.entries()) {
+        // run resolveAfterTime one by one
+        const response = await resolveAfterTime(val, aryTime[idx]);
+        // log in sequence
+        console.log('test3.1:', response);
+    }
+}
+logInOrder(aryVal)
+
+aryVal = ['b1', 'b2']
+async function logInOrderParallel(aryVal) {
+    // run resolveAfterTime in parallel
+    // array.map(async func): It won't wait for the first function to complete
+    // before calling the second.
+    const valPromises = aryVal.map(async (val, idx) => {
+        const response = await resolveAfterTime(val, aryTime[idx]);
+        return response;
+    });
+
+    for (const valPromise of valPromises) {
+        // log in sequence
+        console.log('test3.2:', await valPromise);
+    }
+}
+logInOrderParallel(aryVal)
+
+aryVal = ['c1', 'c2']
+const valPromises = aryVal.map(async (val, idx) => {
+    // run resolveAfterTime in parallel
+    const response = await resolveAfterTime(val, aryTime[idx]);
+    return response;
 });
-aryJsonPromises.forEach(jsonPromise => {
-    jsonPromise.then(json =>
-        console.log('test3:', json)
+valPromises.forEach(valPromise => {
+    // log not in sequence
+    valPromise.then(val =>
+        console.log('test3.3:', val)
     )
+})
+valPromises.forEach(async valPromise => {
+    // log not in sequence
+    console.log('test3.4:', await valPromise);
 })
 
 
@@ -88,12 +135,19 @@ aryJsonPromises.forEach(jsonPromise => {
 // Object methods
 const obj = {
     async jsonPromise(url) {
-        const response = await fetch(url);
-        return response.json();
+        try {
+            const response = await fetch(url);
+            return response.json();
+        }
+        catch (err) {
+            return Promise.reject(err)
+        }
     }
 };
 obj.jsonPromise(url).then(json =>
     console.log('test4:', json)
+).catch(err =>
+    console.log('test4:', err)
 )
 
 
@@ -110,10 +164,15 @@ class cls {
         return res.json();
     }
 }
-const cls1 = new cls(url);
-cls1.jsonPromise().then(json =>
-    console.log('test5:', json)
-)
+try {
+    const cls1 = new cls(url);
+    cls1.jsonPromise().then(json =>
+        console.log('test5:', json)
+    )
+}
+catch (err) {
+    console.log('test5:', err)
+}
 
 
 console.log('async test end.')
