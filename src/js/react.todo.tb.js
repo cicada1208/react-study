@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
-import Todo from './react.todo.js';
+import TodoTr from './react.todo.tr.js';
 
-class App extends Component {
+class TodoTb extends Component {
 
     // 建構子，每個 class 第一次產生時都會執行到這邊
     constructor(props) {
         super(props);
 
         // 這一行有點難解釋，想深入研究的麻煩自己查資料
-        this.onClick = this.onClick.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.setCompleted = this.setCompleted.bind(this);
-        this.removeTodo = this.removeTodo.bind(this);
+        this.textChange = this.textChange.bind(this);
+        this.todoAdd = this.todoAdd.bind(this);
+        this.todoRemove = this.todoRemove.bind(this);
+        this.todoComplete = this.todoComplete.bind(this);
 
-        // 設定 state
+        // state 是每個元件裡面的狀態，可想成是資料，之後可在 render 裡取出 this.state
         this.state = {
             todos: [
-                { id: 1, name: 'hello', completed: false },
-                { id: 2, name: 'aaaaaa', completed: true },
-                { id: 3, name: 'world', completed: false }
+                { id: 1, name: 'a', completed: false },
+                { id: 2, name: 'b', completed: true },
+                { id: 3, name: 'c', completed: false }
             ]
         }
     }
 
-    // input 改變，設定 value
-    onChange(e) {
+    // DOM input 改變，設定 this.state.text
+    textChange(e) {
         this.setState({
             text: e.target.value
         })
     }
 
-    onClick() {
-
+    todoAdd() {
         const { todos, text } = this.state;
         const newId = todos[todos.length - 1].id + 1;
 
@@ -45,18 +44,18 @@ class App extends Component {
         })
     }
 
-    removeTodo(id) {
+    todoRemove(id) {
         const { todos } = this.state;
 
-        // 直接用 filter 來把資料砍掉
+        // 直接用 filter 把資料移除
         let newTodos = todos.filter((item) => item.id !== id);
 
         this.setState({
-            todos: newTodos // 這個為什麼不寫成 todos: newTodos 呢?
+            todos: newTodos
         })
     }
 
-    setCompleted(id) {
+    todoComplete(id) {
         const { todos } = this.state;
 
         // 直接用 map 來找到要更改的資料，其他不變
@@ -72,17 +71,17 @@ class App extends Component {
         })
     }
 
+    // 若使用 this.setState 方式改變 state，便會重新呼叫一次 render 函式，只要資料改變，畫面就跟著改變
     render() {
-
         // 從 state 取出資料
         const { todos, text } = this.state;
 
         return (
             <div>
                 <div>
-                    <input name="name" type="text" value={text} onChange={this.onChange} />
+                    <input name="name" type="text" value={text} onChange={this.textChange} />
                 </div>
-                <button onClick={this.onClick}>Add item</button>
+                <button onClick={this.todoAdd}>Add item</button>
                 <table className="table table-bordered">
                     <thead>
                         <tr>
@@ -94,8 +93,8 @@ class App extends Component {
                     <tbody>
                         {
                             todos.map((todo) => (
-                                <Todo id={todo.id} name={todo.name} completed={todo.completed}
-                                    remove={this.removeTodo} setCompleted={this.setCompleted} />
+                                <TodoTr id={todo.id} name={todo.name} completed={todo.completed}
+                                    todoRemove={this.todoRemove} todoComplete={this.todoComplete} />
                             ))
                         }
                     </tbody>
@@ -105,4 +104,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default TodoTb;
