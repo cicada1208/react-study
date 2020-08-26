@@ -6,13 +6,7 @@ import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom";
 import TodoTb from './react.todo.tb.js';
 import jpgPig from '../img/pig.jpg';
 
-class App extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //     };
-    // }
-
+class Home extends React.Component {
     render() {
         return (
             <div>
@@ -31,7 +25,7 @@ class App extends React.Component {
 
 class Users extends React.Component {
     render() {
-        const id = this.props.params.userId;
+        const id = this.props.match.params.userId;
         return (
             <div>
                 user id: {id}
@@ -45,24 +39,9 @@ divReactEx.id = 'divReactEx';
 document.body.appendChild(divReactEx);
 ReactDOM.render(
     <HashRouter>
-        <Route path="/" component={App} />
+        <Route path="/" component={Home} />
         <Route path="/todo" component={TodoTb} />
         <Route path="/users/:userId" component={Users} />
-    </HashRouter>
-    ,
+    </HashRouter>,
     divReactEx
 );
-
-
-// const divReactEx = document.createElement('div');
-// divReactEx.id = 'divReactEx';
-// ReactDOM.render(<App />, divReactEx);
-// document.body.appendChild(divReactEx);
-
-
-// import TodoTb from './react.todo.tb.js';
-
-// const divReactEx2 = document.createElement('div');
-// divReactEx2.id = 'divReactEx2';
-// ReactDOM.render(<TodoTb />, divReactEx2);
-// document.body.appendChild(divReactEx2);

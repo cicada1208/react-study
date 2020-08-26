@@ -75,7 +75,6 @@ class TodoTb extends Component {
     render() {
         // 從 state 取出資料
         const { todos, text } = this.state;
-
         return (
             <div>
                 <div>
