@@ -13,6 +13,7 @@ class Home extends React.Component {
                 <h1>react.ex</h1>
                 <img width='100' src={jpgPig} />
                 <ul>
+                    {/* Link 組件一定置於 HashRouter 組件中 */}
                     <li><Link to="/todo">Todo</Link></li>
                     <li><Link to="/users/1">Users 1</Link></li>
                     <li><Link to="/users/2">Users 2</Link></li>
@@ -37,6 +38,13 @@ class Users extends React.Component {
 const divReactEx = document.createElement('div');
 divReactEx.id = 'divReactEx';
 document.body.appendChild(divReactEx);
+
+// <Route path="/" component={Home} />：
+// 無論訪問什麼路徑，都會包含path="/"的路徑，故都會匹配到。
+
+// <Route path="/todo" component={TodoTb} />：
+// 瀏覽器地址輸入 http://localhost:8008/todo，React Router 匹配到，會在當前位置渲染對應的 component，
+// 相當於將 component TodoTb 內容替換掉 < Route path = "/todo" component = { TodoTb } /> 這行。
 ReactDOM.render(
     <HashRouter>
         <Route path="/" component={Home} />
