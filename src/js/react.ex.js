@@ -51,7 +51,8 @@ document.body.appendChild(divReactEx);
 
 // <Route path="/todo" component={TodoTb} />：
 // 瀏覽器地址輸入 http://localhost:8008/todo，React Router 匹配到，會在當前位置渲染對應的 component，
-// 相當於將 component TodoTb 內容替換掉 <Route path="/todo" component={TodoTb} /> 這行。
+// 相當於將 component TodoTb 內容替換掉 <Route path="/todo" component={TodoTb} /> 這行，
+// 其他未匹配到的 Route 則刪去。
 ReactDOM.render(
     <HashRouter>
         <Route path="/" component={Home} />
