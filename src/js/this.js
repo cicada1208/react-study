@@ -85,7 +85,7 @@ var a = { value: 1, hello5 }
 var b = { value: 2, hello5 }
 hello5() // hello5.call() => undefined
 a.hello5() // a.hello5.call(a) => a
-b.hello5() // b.hello5.call(a) => b
+b.hello5() // b.hello5.call(b) => b
 b.hello5.apply(a) // a
 
 
@@ -108,7 +108,7 @@ const obj7 = {
     x: 20,
     fn: function () {
         // 這邊印出來的 this 是什麼，test 的 this 就是什麼
-        // obj7.fn()呼叫时，宣告 Arrow functions 的地方，this 是什麼，test 的 this 就是什麼
+        // obj7.fn()呼叫時，宣告 Arrow functions 的地方，this 是什麼，test 的 this 就是什麼
         const test = () => {
             console.log(this.x)
         }

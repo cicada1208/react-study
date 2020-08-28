@@ -29,9 +29,19 @@ class TodoTb extends Component {
 
     // DOM input 改變，設定 this.state.text
     textChange(e) {
-        this.setState({
-            text: e.target.value
-        })
+        var objStateVal
+        switch (e.target.name) {
+            case 'name':
+                objStateVal = { text: e.target.value }
+                break
+            default:
+                objStateVal = { text: '' }
+                break
+        }
+        this.setState(objStateVal)
+        // this.setState({
+        //     text: e.target.value
+        // })
     }
 
     todoAdd() {
