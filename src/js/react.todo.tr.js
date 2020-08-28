@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default class TodoTr extends React.Component {
-
     constructor(props) {
         super(props);
 

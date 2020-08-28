@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Route, Link } from "react-router-dom";
 import TodoTr from './react.todo.tr.js';
 
 class TodoTb extends Component {
-
     // 建構子，每個 class 第一次產生時都會執行到這邊
     constructor(props) {
         super(props);
@@ -22,6 +22,10 @@ class TodoTb extends Component {
             ]
         }
     }
+
+    // componentDidMount() {
+    //     console.log(this.props.match.path);
+    // }
 
     // DOM input 改變，設定 this.state.text
     textChange(e) {
@@ -75,11 +79,20 @@ class TodoTb extends Component {
     render() {
         // 從 state 取出資料
         const { todos, text } = this.state;
+        // this.props.match.path: 該 component 匹配到的路徑，此為 /todo，可用此配置第2層 Route and Link
         return (
             <div>
-                <div>
-                    <input name="name" type="text" value={text} onChange={this.textChange} />
+                <div className="child-link">
+                    <ul>
+                        <li><Link to={`${this.props.match.path}/child/1`}>child 1</Link></li>
+                        <li><Link to={`${this.props.match.path}/child/2`}>child 2</Link></li>
+                    </ul>
                 </div>
+                <div className="child-router">
+                    <Route path={`${this.props.match.path}/child/1`} render={() => { return <h1>child 1 content</h1> }} />
+                    <Route path={`${this.props.match.path}/child/2`} render={() => { return <h1>child 2 content</h1> }} />
+                </div>
+                <input name="name" type="text" value={text} onChange={this.textChange} />
                 <button onClick={this.todoAdd}>Add item</button>
                 <table className="table table-bordered">
                     <thead>
@@ -98,7 +111,7 @@ class TodoTb extends Component {
                         }
                     </tbody>
                 </table>
-            </div>
+            </div >
         );
     }
 }

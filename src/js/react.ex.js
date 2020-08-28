@@ -13,13 +13,13 @@ class Home extends React.Component {
                 <h1>react.ex</h1>
                 <img width='100' src={jpgPig} />
                 <ul>
-                    {/* Link 組件需置於 HashRouter 組件中 */}
-                    <li><Link to="/todo">Todo</Link></li>
-                    <li><Link to="/users/1">Users 1</Link></li>
-                    <li><Link to="/users/2">Users 2</Link></li>
-                    <li><Link to="/render">render</Link></li>
+                    {/* Link 組件需置於 HashRouter, BrowserRouter 組件中 */}
+                    <li><Link to="/todo">Todo</Link ></li>
+                    <li><Link to="/users/1">Users 1</Link ></li>
+                    <li><Link to="/users/2">Users 2</Link ></li>
+                    <li><Link to="/render">render</Link ></li>
                 </ul>
-                {this.props.children} {/* 對應的 component，例如：TodoTb */}
+                {/* {this.props.children} 對應的 component，例如：TodoTb，v5還有此用法嗎? */}
             </div>
         );
     }
@@ -27,6 +27,8 @@ class Home extends React.Component {
 
 class Users extends React.Component {
     render() {
+        // this.props.match.params.userId: 取得網址上的參數
+        // <Route path="/users/:userId" component={Users} />
         const id = this.props.match.params.userId;
         return (
             <div>
@@ -52,7 +54,7 @@ document.body.appendChild(divReactEx);
 // <Route path="/todo" component={TodoTb} />：
 // 瀏覽器地址輸入 http://localhost:8008/todo，React Router 匹配到，會在當前位置渲染對應的 component，
 // 相當於將 component TodoTb 內容替換掉 <Route path="/todo" component={TodoTb} /> 這行，
-// 其他未匹配到的 Route 則刪去。
+// 其他未匹配到的 Route 則刪去。
 ReactDOM.render(
     <HashRouter>
         <Route path="/" component={Home} />
