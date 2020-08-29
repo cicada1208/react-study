@@ -73,11 +73,11 @@ class TodoTb extends Component {
         const { todos } = this.state;
 
         // 直接用 map 來找到要更改的資料，其他不變
-        let newTodos = todos.map((item) => {
-            if (item.id === id) {
-                item.completed = true;
+        let newTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                todo.completed = true;
             }
-            return item;
+            return todo;
         })
 
         this.setState({
@@ -89,7 +89,7 @@ class TodoTb extends Component {
     render() {
         // 從 state 取出資料
         const { todos, text } = this.state;
-        // this.props.match.path: 該 component 匹配到的路徑，此為 /todo，可用此配置第2層 Route and Link
+        // this.props.match.path: 該 component 匹配到的路徑，在此為 /todo，可用此配置第2層 Route and Link
         return (
             <div>
                 <div className="child-link">

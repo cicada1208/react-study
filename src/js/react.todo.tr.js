@@ -9,7 +9,6 @@ export default class TodoTr extends React.Component {
     }
 
     todoComplete() {
-        // this.props: 父子元件透過此來傳資料
         this.props.todoComplete(this.props.id);
     }
 
@@ -18,6 +17,7 @@ export default class TodoTr extends React.Component {
     }
 
     render() {
+        // this.props: 父子元件透過此來傳資料
         const { name, completed } = this.props;
         return (
             <tr>
