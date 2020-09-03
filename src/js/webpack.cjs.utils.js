@@ -1,4 +1,5 @@
 // commomJS module:
+
 function prnt() {
     return ' print'
 }
