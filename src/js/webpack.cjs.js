@@ -26,12 +26,14 @@ console.log('in webpack.cjs:', 'require.main is module', require.main === module
 console.log('in webpack.cjs:', 'require.main is module.parent', require.main === module.parent) // false
 
 
+// require 後 counter 已被緩存, module 內 counter++ 的變化無法取得
 console.log('counter:', utils.counter); // counter: 1
 console.log('counter:', utils.prt()); // counter:  print counter and then ++:1
-console.log('counter:', utils.counter); // counter: 1, require 後 counter 已被緩存, module 內 counter++ 的變化無法取得
+console.log('counter:', utils.counter); // counter: 1
 
 
-// const divWebpackCjs = document.createElement('div');
-// divWebpackCjs.id = 'divWebpackCjs';
-// divWebpackCjs.innerText = utils.name + utils.prt();
-// document.body.appendChild(divWebpackCjs);
+// run in browser
+const divWebpackCjs = document.createElement('div');
+divWebpackCjs.id = 'divWebpackCjs';
+divWebpackCjs.innerText = utils.name + utils.prt();
+document.body.appendChild(divWebpackCjs);
