@@ -1,12 +1,15 @@
 // React:
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom";
-import TodoTb from './react.todo.tb.js';
-import jpgPig from '../img/pig.jpg';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
+import TodoTb from './react.todo.tb.js'
+import jpgPig from '../img/pig.jpg'
 
+// React Component 撰寫的主要兩種方式:
+// 1. ES6 Class based Component: 可進行較複雜操作和元件生命週期控制，相對於 stateless components 耗資源
 class Home extends React.Component {
+    // render 是 Class based 元件唯一必須的方法
     render() {
         return (
             <div>
@@ -18,10 +21,11 @@ class Home extends React.Component {
                     <li><Link to="/users/1">Users 1</Link ></li>
                     <li><Link to="/users/2">Users 2</Link ></li>
                     <li><Link to="/render">render</Link ></li>
+                    <li><Link to="/render2">render2</Link ></li>
                 </ul>
                 {/* {this.props.children} 對應的 component，例如：TodoTb，v5還有此用法嗎? */}
             </div>
-        );
+        )
     }
 }
 
@@ -29,7 +33,7 @@ class Users extends React.Component {
     render() {
         // this.props.match.params.userId: 取得網址上的參數
         // <Route path="/users/:userId" component={Users} />
-        const id = this.props.match.params.userId;
+        const id = this.props.match.params.userId
         return (
             <div>
                 user id: {id}
@@ -38,9 +42,18 @@ class Users extends React.Component {
     }
 }
 
-const divReactEx = document.createElement('div');
-divReactEx.id = 'divReactEx';
-document.body.appendChild(divReactEx);
+// 2. Functional Component: 單純地 render UI 的 stateless components
+// 沒有內部狀態、沒有實作物件和 ref，沒有生命週期函數
+// 若非需要控制生命週期的話建議多使用 stateless components 獲得較好的效能
+// 使用 arrow function 來設計 Functional Component 讓 UI 設計更單純（f(D) => UI），減少副作用（side effect）
+const Render2 = () => (
+    <h1>render2 test</h1>
+)
+
+
+const divReactEx = document.createElement('div')
+divReactEx.id = 'divReactEx'
+document.body.appendChild(divReactEx)
 
 // <Route path="/" component={Home} />：
 // 此為非嚴格匹配，無論訪問什麼路徑，都會包含path="/"，故都會匹配到。
@@ -60,7 +73,8 @@ ReactDOM.render(
         <Route path="/" component={Home} />
         <Route path="/todo" component={TodoTb} />
         <Route path="/users/:userId" component={Users} />
-        <Route path="/render" render={() => { return <h1>我是匹配到的路由</h1> }} />
+        <Route path="/render" render={() => { return <h1>render test</h1> }} />
+        <Route path="/render2" component={Render2} />
     </HashRouter>,
     divReactEx
-);
+)

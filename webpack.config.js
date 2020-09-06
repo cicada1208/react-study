@@ -1,4 +1,4 @@
-// webpack: 瀏覽器不支援引用 CommonJS module 或 npm 安裝的模組時，可以此工具打包
+// webpack: 瀏覽器不支援引用 ES6+, JSX, CommonJS 或 npm 安裝的模組時，可以此工具打包
 // npm install --save-dev webpack webpack-cli
 
 // cross-env: 定義環境參數 process.env.NODE_ENV，使其可在 webpack.config 中使用
@@ -24,23 +24,23 @@
 
 // 執行方法1:
 // 1. running by webpack-dev-server:
-// npm run webpack-dev-build by package.json
-// scripts: {"webpack-dev-build": "webpack-dev-server --config webpack.config.dev.js --progress --color"}
+// npm run webpack-dev-server-run by package.json
+// scripts: {"webpack-dev-server-run": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --progress"}
 // 2. webpack-dev-server doesn't write any output files after compiling.
 // Instead, it keeps bundle files in memory
 // and serves them as if they were real files mounted at the server's root path.
 // 3. debug:
 // browser chrome devtool -> Sources page
+// or launch.json -> "name": "launch chrome against webpack-dev-server"
 
 // 執行方法2:
 // 1. build:
-// npx webpack --config webpack.config.prod.js
+// npx cross-env NODE_ENV=production webpack --config webpack.config.js --progress
 // or npm run webpack-prod-build by package.json
-// scripts: {"webpack-prod-build": "webpack --config webpack.config.prod.js"}
+// scripts: {"webpack-prod-build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress"}
 // after building it will create webpack_bundle.js, index.html.
 // 2. running by http-server:
 // npm install --save-dev http-server
-// there is CORS problem?
 // 3. debug:
 // browser chrome devtool -> Sources page
 
@@ -112,13 +112,13 @@ module.exports = {
     // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
     devtool: 'source-map',
     entry: { // bundle 起點，可多個檔案
-        webpack_es6: './src/js/webpack.es6.js',
-        // webpack_cjs: './src/js/webpack.cjs.js',
-        // react_ex: './src/js/react.ex.js',
         // api_query: './src/js/api.query.js',
         // promise: './src/js/promise.js',
         // generator: './src/js/generator.js',
         // async_await: './src/js/async.await.js',
+        // webpack_es6: './src/js/webpack.es6.js',
+        // webpack_cjs: './src/js/webpack.cjs.js',
+        react_ex: './src/js/react.ex.js',
     },
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
@@ -169,7 +169,7 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 // use: 使用 loader
                 use: {
-                    // Loads ES2015+ code(ES6) and transpiles to ES5 using Babel
+                    // Loads ES6+, JSX and transpiles to ES5 using Babel
                     loader: 'babel-loader',
                     options: { // '@babel/preset-react': 支援JSX
                         presets: ['@babel/preset-env', '@babel/preset-react'],
