@@ -1,24 +1,23 @@
-import React from 'react';
+import React from 'react'
 
 export default class TodoTr extends React.Component {
     constructor(props) {
-        super(props);
-
-        this.todoComplete = this.todoComplete.bind(this);
-        this.todoRemove = this.todoRemove.bind(this);
+        super(props)
+        this.todoComplete = this.todoComplete.bind(this)
+        this.todoRemove = this.todoRemove.bind(this)
     }
 
     todoComplete() {
-        this.props.todoComplete(this.props.id);
+        this.props.todoComplete(this.props.id)
     }
 
     todoRemove() {
-        this.props.todoRemove(this.props.id);
+        this.props.todoRemove(this.props.id)
     }
 
     render() {
         // this.props: 父子元件透過此來傳資料
-        const { name, completed } = this.props;
+        const { name, completed } = this.props
         return (
             <tr>
                 <td>{name}</td>
@@ -28,6 +27,6 @@ export default class TodoTr extends React.Component {
                     <div className="btn btn-danger" onClick={this.todoRemove}>刪除</div>
                 </td>
             </tr>
-        );
+        )
     }
 }

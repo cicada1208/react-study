@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { Route, Link } from "react-router-dom";
-import TodoTr from './react.todo.tr.js';
+import React, { Component } from 'react'
+import { Route, Link } from "react-router-dom"
+import TodoTr from './react.todo.tr.js'
 
 class TodoTb extends Component {
     // 建構子，每個 class 第一次產生時都會執行到這邊
     constructor(props) {
-        super(props);
+        super(props)
 
         // 這一行有點難解釋，想深入研究的麻煩自己查資料
-        this.textChange = this.textChange.bind(this);
-        this.todoAdd = this.todoAdd.bind(this);
-        this.todoRemove = this.todoRemove.bind(this);
-        this.todoComplete = this.todoComplete.bind(this);
+        this.textChange = this.textChange.bind(this)
+        this.todoAdd = this.todoAdd.bind(this)
+        this.todoRemove = this.todoRemove.bind(this)
+        this.todoComplete = this.todoComplete.bind(this)
 
-        // state 是每個元件裡面的狀態，可想成是資料，之後可在 render 裡取出 this.state
+        // state 是每個元件裡的狀態，可想成是資料，之後可在 render 裡取出 this.state
         this.state = {
             todos: [
                 { id: 1, name: 'a', completed: false },
@@ -24,7 +24,7 @@ class TodoTb extends Component {
     }
 
     // componentDidMount() {
-    //     console.log(this.props.match.path);
+    //     console.log(this.props.match.path)
     // }
 
     // DOM input 改變，設定 this.state.text
@@ -45,8 +45,8 @@ class TodoTb extends Component {
     }
 
     todoAdd() {
-        const { todos, text } = this.state;
-        const newId = todos[todos.length - 1].id + 1;
+        const { todos, text } = this.state
+        const newId = todos[todos.length - 1].id + 1
 
         // 設定 state
         this.setState({
@@ -59,10 +59,10 @@ class TodoTb extends Component {
     }
 
     todoRemove(id) {
-        const { todos } = this.state;
+        const { todos } = this.state
 
         // 直接用 filter 把資料移除
-        let newTodos = todos.filter((item) => item.id !== id);
+        let newTodos = todos.filter((item) => item.id !== id)
 
         this.setState({
             todos: newTodos
@@ -70,14 +70,14 @@ class TodoTb extends Component {
     }
 
     todoComplete(id) {
-        const { todos } = this.state;
+        const { todos } = this.state
 
         // 直接用 map 來找到要更改的資料，其他不變
         let newTodos = todos.map((todo) => {
             if (todo.id === id) {
-                todo.completed = true;
+                todo.completed = true
             }
-            return todo;
+            return todo
         })
 
         this.setState({
@@ -88,19 +88,19 @@ class TodoTb extends Component {
     // 若使用 this.setState 方式改變 state，便會重新呼叫一次 render 函式，只要資料改變，畫面就跟著改變
     render() {
         // 從 state 取出資料
-        const { todos, text } = this.state;
+        const { todos, text } = this.state
         // this.props.match.path: 該 component 匹配到的路徑，在此為 /todo，可用此配置第2層 Route and Link
         return (
             <div>
                 <div className="child-link">
                     <ul>
-                        <li><Link to={`${this.props.match.path}/child/1`}>child 1</Link></li>
-                        <li><Link to={`${this.props.match.path}/child/2`}>child 2</Link></li>
+                        <li><Link to={`${this.props.match.path}/child/1`}>child1</Link></li>
+                        <li><Link to={`${this.props.match.path}/child/2`}>child2</Link></li>
                     </ul>
                 </div>
                 <div className="child-router">
-                    <Route path={`${this.props.match.path}/child/1`} render={() => { return <h1>child 1 content</h1> }} />
-                    <Route path={`${this.props.match.path}/child/2`} render={() => { return <h1>child 2 content</h1> }} />
+                    <Route path={`${this.props.match.path}/child/1`} render={() => { return <div>child1 test</div> }} />
+                    <Route path={`${this.props.match.path}/child/2`} render={() => { return <div>child2 test</div> }} />
                 </div>
                 <input name="name" type="text" value={text} onChange={this.textChange} />
                 <button onClick={this.todoAdd}>Add item</button>
@@ -122,8 +122,8 @@ class TodoTb extends Component {
                     </tbody>
                 </table>
             </div >
-        );
+        )
     }
 }
 
-export default TodoTb;
+export default TodoTb
