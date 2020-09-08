@@ -3,7 +3,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
-import TodoTb from './react.todo.tb.js'
+import TbTodo from './react.tb.todo.js'
+import Clock from './react.clock.js'
 import jpgPig from '../img/pig.jpg'
 
 
@@ -24,10 +25,10 @@ ReactDOM.render(
 )
 
 
-// React Component 撰寫的主要兩種方式:
-// 1. Class Component: 可進行較複雜操作和元件生命週期控制，相對於 stateless components 耗資源
+// React Component 撰寫的兩種方式:
+// 1. Class Component: 可進行較複雜操作和元件生命週期控制，相對於 stateless component 耗資源
 class Home extends React.Component {
-    // render 是 Class based 元件唯一必須的方法
+    // render 是 Class Component 唯一必須的方法
     render() {
         return (
             <div>
@@ -36,12 +37,13 @@ class Home extends React.Component {
                 <ul>
                     {/* Link 組件需置於 HashRouter, BrowserRouter 組件中 */}
                     <li><Link to="/todo">Todo</Link ></li>
+                    <li><Link to="/clock">Clock</Link ></li>
                     <li><Link to="/users/1">Users1</Link ></li>
                     <li><Link to="/users/2">Users2</Link ></li>
                     <li><Link to="/render1">render1</Link ></li>
                     <li><Link to="/render2">render2</Link ></li>
                 </ul>
-                {/* {this.props.children} 對應的 component，例如：TodoTb，v5還有此用法嗎? */}
+                {/* {this.props.children} 對應的 component，例如：TbTodo，v5還有此用法嗎? */}
             </div>
         )
     }
@@ -61,17 +63,16 @@ class Users extends React.Component {
 }
 
 
-// 2. Function Component: 單純地 render UI 的 stateless components
-// 沒有內部狀態、沒有實作物件和 ref，沒有生命週期函數
-// 若非需要控制生命週期的話建議多使用 stateless components 獲得較好的效能
-// 使用 arrow function 來設計 Functional Component 讓 UI 設計更單純（f(D) => UI），減少副作用（side effect）
+// 2. Function Component: 單純地 render UI 的 stateless component
+// 沒有內部狀態、實作物件、ref和生命週期方法，有較好的效能
+// 使用 arrow function 設計 Functional Component 讓 UI 設計更單純(f(D) => UI)，減少副作用
 // const Render2 = () => {
 //     return (
 //         <div>Function Component test</div>
 //     )
 // }
 const Render2 = (props) => (
-    <div>Function Component test {props.value}</div>
+    <div>Function Component test2 {props.value}</div>
 )
 
 function Render2Parent() {
@@ -88,9 +89,9 @@ const divReactEx2 = document.createElement('div')
 divReactEx2.id = 'divReactEx2'
 document.body.appendChild(divReactEx2)
 
-// Component 字首須為大寫，React 將小寫字母開頭的組件視為原始 DOM 標籤，
-// 舉例來說，<div /> 會被視為是 HTML 的 div 標籤，
-// 但是 <Render2 /> 則視為 component，且需在作用域中使用 Render2。
+// component 字首須大寫，React 將小寫開頭的組件視為原始 DOM 標籤，
+// <div /> 視為 HTML 的 div 標籤，
+// <Render2Parent /> 視為 component，且需在作用域中使用。
 ReactDOM.render(
     <Render2Parent />,
     divReactEx2
@@ -110,17 +111,18 @@ document.body.appendChild(divReactEx3)
 // <Route exact path="/" component={Home} />:
 // 此為嚴格匹配，訪問根路徑 http://localhost:8008/ 才會匹配到。
 
-// <Route path="/todo" component={TodoTb} />:
+// <Route path="/todo" component={TbTodo} />:
 // 瀏覽器地址輸入 http://localhost:8008/todo，React Router 匹配到，會在當前位置渲染對應的 component，
-// 相當於將 component TodoTb 內容替換掉 <Route path="/todo" component={TodoTb} /> 這行，
+// 相當於將 component TbTodo 內容替換掉 <Route path="/todo" component={TbTodo} /> 這行，
 // 其他未匹配到的 Route 則刪去。
 ReactDOM.render(
     <HashRouter>
         <Route path="/" component={Home} />
-        <Route path="/todo" component={TodoTb} />
+        <Route path="/todo" component={TbTodo} />
+        <Route path="/clock" component={Clock} />
         <Route path="/users/:userId" component={Users} />
-        <Route path="/render1" render={() => { return <div>render1 test</div> }} />
-        <Route path="/render2" component={Render2} />
+        <Route path="/render1" render={() => { return <div>Function Component test1</div> }} />
+        <Route path="/render2" render={Render2} />
     </HashRouter>,
     divReactEx3
 )

@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route, Link } from "react-router-dom"
-import TodoTr from './react.todo.tr.js'
+import TrTodo from './react.tr.todo.js'
 
-class TodoTb extends Component {
-    // 建構子，每個 class 第一次產生時都會執行到這邊
+class TbTodo extends React.Component {
+    // constructor: 首先執行
     constructor(props) {
         super(props)
 
@@ -13,7 +13,7 @@ class TodoTb extends Component {
         this.todoRemove = this.todoRemove.bind(this)
         this.todoComplete = this.todoComplete.bind(this)
 
-        // state 是每個元件裡的狀態，可想成是資料，之後可在 render 裡取出 this.state
+        // this.state: 元件的狀態，可想成是資料，之後可在 render 裡取出
         this.state = {
             todos: [
                 { id: 1, name: 'a', completed: false },
@@ -23,11 +23,7 @@ class TodoTb extends Component {
         }
     }
 
-    // componentDidMount() {
-    //     console.log(this.props.match.path)
-    // }
-
-    // DOM input 改變，設定 this.state.text
+    // DOM input 改變，則設定 this.state.text
     textChange(e) {
         var objStateVal
         switch (e.target.name) {
@@ -38,6 +34,7 @@ class TodoTb extends Component {
                 objStateVal = { text: '' }
                 break
         }
+        // 設定 state
         this.setState(objStateVal)
         // this.setState({
         //     text: e.target.value
@@ -48,7 +45,6 @@ class TodoTb extends Component {
         const { todos, text } = this.state
         const newId = todos[todos.length - 1].id + 1
 
-        // 設定 state
         this.setState({
             text: '',
             todos: [
@@ -61,7 +57,7 @@ class TodoTb extends Component {
     todoRemove(id) {
         const { todos } = this.state
 
-        // 直接用 filter 把資料移除
+        // 使用 filter 把資料移除
         let newTodos = todos.filter((item) => item.id !== id)
 
         this.setState({
@@ -72,7 +68,7 @@ class TodoTb extends Component {
     todoComplete(id) {
         const { todos } = this.state
 
-        // 直接用 map 來找到要更改的資料，其他不變
+        // 使用 map 找到要更改的資料，其他不變
         let newTodos = todos.map((todo) => {
             if (todo.id === id) {
                 todo.completed = true
@@ -85,7 +81,8 @@ class TodoTb extends Component {
         })
     }
 
-    // 若使用 this.setState 方式改變 state，便會重新呼叫一次 render 函式，只要資料改變，畫面就跟著改變
+    // render: 負責更新 DOM 來符合 React Component
+    // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變
     render() {
         // 從 state 取出資料
         const { todos, text } = this.state
@@ -115,15 +112,15 @@ class TodoTb extends Component {
                     <tbody>
                         {
                             todos.map((todo) => (
-                                <TodoTr id={todo.id} name={todo.name} completed={todo.completed}
+                                <TrTodo id={todo.id} name={todo.name} completed={todo.completed}
                                     todoRemove={this.todoRemove} todoComplete={this.todoComplete} />
                             ))
                         }
                     </tbody>
                 </table>
-            </div >
+            </div>
         )
     }
 }
 
-export default TodoTb
+export default TbTodo

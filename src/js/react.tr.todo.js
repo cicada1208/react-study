@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-export default class TodoTr extends React.Component {
+export default class TrTodo extends Component {
     constructor(props) {
         super(props)
         this.todoComplete = this.todoComplete.bind(this)

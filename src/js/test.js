@@ -1,4 +1,10 @@
-var obj = { x: '10' }
-obj.y = 20
+var intervalID = setInterval(myCallback, 3000, 'Parameter 1', 'Parameter 2');
 
-console.log(obj.x, obj.y)
+function myCallback(a, b) {
+    // Your code here
+    // Parameters are purely optional.
+    console.log(a);
+    console.log(b);
+}
+
+console.log(intervalID);
