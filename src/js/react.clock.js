@@ -18,13 +18,20 @@ export class Clock extends React.Component {
             1000
         )
 
-        const { dates } = this.state
-        this.setState({
+        // const { dates } = this.state
+        // this.setState({
+        //     dates: [
+        //         ...dates,
+        //         { date: new Date() }
+        //     ]
+        // })
+        // 若 state 的更新是非同步，透過 callback 來設定值
+        this.setState(state => ({
             dates: [
-                ...dates,
+                ...state.dates,
                 { date: new Date() }
             ]
-        })
+        }))
     }
 
     // 生命週期方法 componentWillUnmount: Clock component 從 DOM 移除後執行。

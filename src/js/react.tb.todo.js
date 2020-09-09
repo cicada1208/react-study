@@ -7,7 +7,7 @@ class TbTodo extends React.Component {
     constructor(props) {
         super(props)
 
-        // 這一行有點難解釋，想深入研究的麻煩自己查資料
+        // 為了讓 this 能在 callback 中被使用，例如 onChange={this.textChange}，這裡的綁定是必要的
         this.textChange = this.textChange.bind(this)
         this.todoAdd = this.todoAdd.bind(this)
         this.todoRemove = this.todoRemove.bind(this)
