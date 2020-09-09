@@ -1,10 +1,5 @@
-var intervalID = setInterval(myCallback, 3000, 'Parameter 1', 'Parameter 2');
+var date = new Date()
 
-function myCallback(a, b) {
-    // Your code here
-    // Parameters are purely optional.
-    console.log(a);
-    console.log(b);
-}
-
-console.log(intervalID);
+console.log(date.toLocaleTimeString());
+date.setHours(10)
+console.log(date.toLocaleTimeString());

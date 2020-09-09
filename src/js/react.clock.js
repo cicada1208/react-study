@@ -1,9 +1,13 @@
 import React from 'react'
 
-export default class Clock extends React.Component {
+export class Clock extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { date: new Date() }
+        // 修改 this.state，不會異動 this.props (唯讀)
+        this.state = {
+            date: this.props.date,
+            dates: this.props.dates
+        }
     }
 
     // 生命週期方法 componentDidMount: Clock component 被 render 到 DOM 後才執行。
@@ -13,6 +17,14 @@ export default class Clock extends React.Component {
             () => this.tick(),
             1000
         )
+
+        const { dates } = this.state
+        this.setState({
+            dates: [
+                ...dates,
+                { date: new Date() }
+            ]
+        })
     }
 
     // 生命週期方法 componentWillUnmount: Clock component 從 DOM 移除後執行。
@@ -30,7 +42,28 @@ export default class Clock extends React.Component {
     render() {
         return (
             <div>
-                It is {this.state.date.toLocaleTimeString()}.
+                date: {this.state.date.toLocaleTimeString()}.
+                last date in dates: {this.state.dates[this.state.dates.length - 1].date.toLocaleTimeString()}.
+            </div>
+        )
+    }
+}
+
+export class Clocks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            date: new Date(),
+            dates: [{ date: new Date() }]
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {/* 上至下的「單向」資料流，parent state as prop to child */}
+                <Clock date={this.state.date} dates={this.state.dates} />
+                <Clock date={this.state.date} dates={this.state.dates} />
             </div>
         )
     }

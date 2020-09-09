@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
 import TbTodo from './react.tb.todo.js'
-import Clock from './react.clock.js'
+import { Clock, Clocks } from './react.clock.js'
 import jpgPig from '../img/pig.jpg'
 
 
@@ -26,7 +26,8 @@ ReactDOM.render(
 
 
 // React Component 撰寫的兩種方式:
-// 1. Class Component: 可進行較複雜操作和元件生命週期控制，相對於 stateless component 耗資源
+// 1. Class Component: stateful component
+// 可進行較複雜操作和元件生命週期控制，較耗資源
 class Home extends React.Component {
     // render 是 Class Component 唯一必須的方法
     render() {
@@ -42,6 +43,7 @@ class Home extends React.Component {
                     <li><Link to="/users/2">Users2</Link ></li>
                     <li><Link to="/render1">render1</Link ></li>
                     <li><Link to="/render2">render2</Link ></li>
+                    <li><Link to="/render3">render3</Link ></li>
                 </ul>
                 {/* {this.props.children} 對應的 component，例如：TbTodo，v5還有此用法嗎? */}
             </div>
@@ -63,8 +65,8 @@ class Users extends React.Component {
 }
 
 
-// 2. Function Component: 單純地 render UI 的 stateless component
-// 沒有內部狀態、實作物件、ref和生命週期方法，有較好的效能
+// 2. Function Component: stateless component
+// 單純 render UI，沒有內部狀態、實作物件、ref和生命週期方法，有較好效能
 // 使用 arrow function 設計 Functional Component 讓 UI 設計更單純(f(D) => UI)，減少副作用
 // const Render2 = () => {
 //     return (
@@ -78,7 +80,7 @@ const Render2 = (props) => (
 function Render2Parent() {
     return (
         <div>
-            {/* props 是唯讀的 */}
+            {/* props 唯讀 */}
             <Render2 value="props value1" />
             <Render2 value="props value2" />
         </div>
@@ -96,6 +98,20 @@ ReactDOM.render(
     <Render2Parent />,
     divReactEx2
 )
+
+
+function ActionLink() {
+    function handleClick(e) {
+        e.preventDefault();
+        alert('The link was clicked.');
+    }
+
+    return (
+        <a href="#" onClick={handleClick}>
+            Click me
+        </a>
+    );
+}
 
 
 const divReactEx3 = document.createElement('div')
@@ -119,10 +135,11 @@ ReactDOM.render(
     <HashRouter>
         <Route path="/" component={Home} />
         <Route path="/todo" component={TbTodo} />
-        <Route path="/clock" component={Clock} />
+        <Route path="/clock" component={Clocks} />
         <Route path="/users/:userId" component={Users} />
         <Route path="/render1" render={() => { return <div>Function Component test1</div> }} />
         <Route path="/render2" render={Render2} />
+        <Route path="/render3" render={ActionLink} />
     </HashRouter>,
     divReactEx3
 )

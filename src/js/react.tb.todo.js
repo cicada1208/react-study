@@ -14,6 +14,8 @@ class TbTodo extends React.Component {
         this.todoComplete = this.todoComplete.bind(this)
 
         // this.state: 元件的狀態，可想成是資料，之後可在 render 裡取出
+        // 只可在 constructor 初始
+        // 之後需透過 this.setState 更改 this.state，重新 render component
         this.state = {
             todos: [
                 { id: 1, name: 'a', completed: false },
@@ -34,7 +36,7 @@ class TbTodo extends React.Component {
                 objStateVal = { text: '' }
                 break
         }
-        // 設定 state
+        // this.setState: 設定 state，會 merge 你提供的 object 到目前的 state
         this.setState(objStateVal)
         // this.setState({
         //     text: e.target.value
