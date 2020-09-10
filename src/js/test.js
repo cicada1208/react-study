@@ -1,5 +1,7 @@
-var date = new Date()
-
-console.log(date.toLocaleTimeString());
-date.setHours(10)
-console.log(date.toLocaleTimeString());
+// ES5寫法 
+var na = 'Andy';
+var obj = { na: na };
+console.log(obj)
+// ES6寫法，key 與 value 名稱一樣，可省略 key 
+obj = { na };
+console.log(obj)

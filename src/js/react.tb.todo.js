@@ -7,8 +7,8 @@ class TbTodo extends React.Component {
     constructor(props) {
         super(props)
 
-        // 為了讓 this 能在 callback 中被使用，例如 onChange={this.textChange}，這裡的綁定是必要的
-        this.textChange = this.textChange.bind(this)
+        // 為了讓 this 能在 callback 中被使用，例如 onChange={this.handleChange}，這裡的綁定是必要的
+        this.handleChange = this.handleChange.bind(this)
         this.todoAdd = this.todoAdd.bind(this)
         this.todoRemove = this.todoRemove.bind(this)
         this.todoComplete = this.todoComplete.bind(this)
@@ -17,17 +17,16 @@ class TbTodo extends React.Component {
         // 只可在 constructor 初始
         // 之後需透過 this.setState 更改 this.state，重新 render component
         this.state = {
-            name: '',
-            desp: '',
+            name: '', desp: '', slt: '',
             todos: [
-                { id: 1, name: 'a', desp: 'a content', completed: false },
-                { id: 2, name: 'b', desp: 'b content', completed: true },
+                { id: 1, name: 'a', desp: 'adesp', slt: 'aslt', completed: false },
+                { id: 2, name: 'b', desp: 'bdesp', slt: 'bslt', completed: true },
             ]
         }
     }
 
     // DOM input 改變，則設定 this.state.name
-    textChange(e) {
+    handleChange(e) {
         // this.setState({
         //     name: e.target.value
         // })
@@ -39,8 +38,11 @@ class TbTodo extends React.Component {
             case 'desp':
                 objStateVal = { desp: e.target.value }
                 break
+            case 'slt':
+                objStateVal = { slt: e.target.value }
+                break
             default:
-                objStateVal = { name: '', desp: '' }
+                objStateVal = { name: '', desp: '', slt: '' }
                 break
         }
         // this.setState: 設定 state，會 merge 你提供的 object 到目前的 state
@@ -48,15 +50,14 @@ class TbTodo extends React.Component {
     }
 
     todoAdd() {
-        const { todos, name, desp } = this.state
+        const { todos, name, desp, slt } = this.state
         const newId = (todos.length === 0 ? 1 : todos[todos.length - 1].id + 1)
 
         this.setState({
-            name: '',
-            desp: '',
+            name: '', desp: '', slt: '',
             todos: [
                 ...todos,
-                { id: newId, name: name, desp: desp, completed: false }
+                { id: newId, name, desp, slt, completed: false }
             ]
         })
     }
@@ -92,7 +93,7 @@ class TbTodo extends React.Component {
     // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變
     render() {
         // 從 state 取出資料
-        const { todos, name, desp } = this.state
+        const { todos, name, desp, slt } = this.state
         // this.props.match.path: 該 component 匹配到的路徑，在此為 /todo，可用此配置第2層 Route and Link
         return (
             <div>
@@ -108,15 +109,21 @@ class TbTodo extends React.Component {
                 </div>
                 {/* 訊息 Warning: A component is changing an uncontrolled input of type text to be controlled.
                 React Controlled Component: form element <input>, <textarea>, <select>
-                可將 value attribute 顯示為 this.state.text 並透過 this.textChange 異動 this.state.text 的方式來達成繫結 */}
-                <input name="name" type="text" value={name} onChange={this.textChange} /><br />
-                <textarea name="desp" value={desp} onChange={this.textChange} /><br />
+                可將 value attribute 顯示為 this.state.name 並透過 this.handleChange 異動 this.state.name 的方式來達成繫結 */}
+                <input name="name" type="text" value={name} onChange={this.handleChange} /><br />
+                <textarea name="desp" value={desp} onChange={this.handleChange} /><br />
+                <select name="slt" value={slt} onChange={this.handleChange}>
+                    <option value="">請選擇</option>
+                    <option value="aslt">aslt</option>
+                    <option value="bslt">bslt</option>
+                </select>
                 <button onClick={this.todoAdd}>Add item</button>
                 <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th>名稱</th>
                             <th>描述</th>
+                            <th>選取</th>
                             <th>狀態</th>
                             <th>操作</th>
                         </tr>
@@ -127,8 +134,8 @@ class TbTodo extends React.Component {
                             // key: 幫助 React 分辨哪些項目被改變、增加或刪除，給予每個 element 一個固定的身份，
                             // 僅提示 React，但不會被傳遞到 TrTodo component。
                             todos.map((todo) => (
-                                <TrTodo key={todo.id} id={todo.id} name={todo.name} desp={todo.desp} completed={todo.completed}
-                                    todoRemove={this.todoRemove} todoComplete={this.todoComplete} />
+                                <TrTodo key={todo.id} id={todo.id} name={todo.name} desp={todo.desp} slt={todo.slt}
+                                    completed={todo.completed} todoRemove={this.todoRemove} todoComplete={this.todoComplete} />
                             ))
                         }
                     </tbody>
