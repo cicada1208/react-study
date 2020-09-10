@@ -17,41 +17,46 @@ class TbTodo extends React.Component {
         // 只可在 constructor 初始
         // 之後需透過 this.setState 更改 this.state，重新 render component
         this.state = {
+            name: '',
+            desp: '',
             todos: [
-                { id: 1, name: 'a', completed: false },
-                { id: 2, name: 'b', completed: true },
-                { id: 3, name: 'c', completed: false }
+                { id: 1, name: 'a', desp: 'a content', completed: false },
+                { id: 2, name: 'b', desp: 'b content', completed: true },
             ]
         }
     }
 
-    // DOM input 改變，則設定 this.state.text
+    // DOM input 改變，則設定 this.state.name
     textChange(e) {
+        // this.setState({
+        //     name: e.target.value
+        // })
         var objStateVal
         switch (e.target.name) {
             case 'name':
-                objStateVal = { text: e.target.value }
+                objStateVal = { name: e.target.value }
+                break
+            case 'desp':
+                objStateVal = { desp: e.target.value }
                 break
             default:
-                objStateVal = { text: '' }
+                objStateVal = { name: '', desp: '' }
                 break
         }
         // this.setState: 設定 state，會 merge 你提供的 object 到目前的 state
         this.setState(objStateVal)
-        // this.setState({
-        //     text: e.target.value
-        // })
     }
 
     todoAdd() {
-        const { todos, text } = this.state
-        const newId = todos[todos.length - 1].id + 1
+        const { todos, name, desp } = this.state
+        const newId = (todos.length === 0 ? 1 : todos[todos.length - 1].id + 1)
 
         this.setState({
-            text: '',
+            name: '',
+            desp: '',
             todos: [
                 ...todos,
-                { id: newId, name: text, completed: false }
+                { id: newId, name: name, desp: desp, completed: false }
             ]
         })
     }
@@ -87,7 +92,7 @@ class TbTodo extends React.Component {
     // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變
     render() {
         // 從 state 取出資料
-        const { todos, text } = this.state
+        const { todos, name, desp } = this.state
         // this.props.match.path: 該 component 匹配到的路徑，在此為 /todo，可用此配置第2層 Route and Link
         return (
             <div>
@@ -101,20 +106,28 @@ class TbTodo extends React.Component {
                     <Route path={`${this.props.match.path}/child/1`} render={() => { return <div>child1 test</div> }} />
                     <Route path={`${this.props.match.path}/child/2`} render={() => { return <div>child2 test</div> }} />
                 </div>
-                <input name="name" type="text" value={text} onChange={this.textChange} />
+                {/* 訊息 Warning: A component is changing an uncontrolled input of type text to be controlled.
+                React Controlled Component: form element <input>, <textarea>, <select>
+                可將 value attribute 顯示為 this.state.text 並透過 this.textChange 異動 this.state.text 的方式來達成繫結 */}
+                <input name="name" type="text" value={name} onChange={this.textChange} /><br />
+                <textarea name="desp" value={desp} onChange={this.textChange} /><br />
                 <button onClick={this.todoAdd}>Add item</button>
                 <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th>名稱</th>
+                            <th>描述</th>
                             <th>狀態</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
+                            // 訊息 Warning: Each child in a list should have a unique "key" prop.
+                            // key: 幫助 React 分辨哪些項目被改變、增加或刪除，給予每個 element 一個固定的身份，
+                            // 僅提示 React，但不會被傳遞到 TrTodo component。
                             todos.map((todo) => (
-                                <TrTodo id={todo.id} name={todo.name} completed={todo.completed}
+                                <TrTodo key={todo.id} id={todo.id} name={todo.name} desp={todo.desp} completed={todo.completed}
                                     todoRemove={this.todoRemove} todoComplete={this.todoComplete} />
                             ))
                         }

@@ -17,10 +17,11 @@ export default class TrTodo extends Component {
 
     render() {
         // this.props: 父子元件透過此來傳資料
-        const { name, completed } = this.props
+        const { name, desp, completed } = this.props
         return (
             <tr>
                 <td>{name}</td>
+                <td>{desp}</td>
                 <td>{completed ? '已完成' : '未完成'}</td>
                 <td>
                     <div className="btn btn-primary" onClick={this.todoComplete}>完成</div>

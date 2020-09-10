@@ -16,10 +16,21 @@ divReactEx2.id = 'divReactEx2'
 document.body.appendChild(divReactEx2)
 
 
-// React Element: 是單純的 object，與瀏覽器的 DOM Element 不同，很容易被建立
+// React Element: 是單純的 object，與瀏覽器的 DOM Element 不同，容易被建立
 const time = new Date().toLocaleDateString()
-// const element = (<div>React Element {time}</div>)
-const element = <div>React Element test {time}</div>
+// const element = <div>React Element {time}</div>
+const boolShow = true
+const element = (
+    <div>
+        {
+            // JavaScript:
+            // true && expression 回傳 expression
+            // false && expression 回傳 false
+            boolShow && <div>{time}</div>
+        }
+        React Element test
+    </div>
+)
 // React DOM 負責更新 DOM 來符合 React Element or React Component
 ReactDOM.render(
     element,
@@ -28,40 +39,23 @@ ReactDOM.render(
 
 
 // React Component 撰寫的兩種方式:
-// 1. Class Component: stateful component
-// 可進行較複雜操作和元件生命週期控制，較耗資源
-// Component 由 Element 組成
-class User extends React.Component {
-    render() {
-        // this.props.match.params.userId: 取得網址上的參數
-        // <Route path="/user/:userId" component={User} />
-        const id = this.props.match.params.userId
-        return (
-            <div>
-                user id: {id}
-            </div>
-        )
-    }
-}
-
-
-// 2. Function Component: stateless component
+// 1. Function Component: stateless component
 // 單純 render UI，沒有內部狀態、實作物件、ref和生命週期方法，有較好效能
-// const FCAF = () => {
-//     return (
-//         <div>Function Component arrow function</div>
-//     )
-// }
-const FCAF = (props) => (
-    <div>Function Component arrow function {props.value}</div>
-)
+// const FCAF = (props) => (
+//     <div>Function Component arrow function {props.value}</div>
+// )
+const FCAF = (props) => {
+    return (
+        !props.nshow ? <div>Function Component arrow function {props.value}</div> : null
+    )
+}
 
 function FCAFS() {
     return (
         <div>
             {/* props 唯讀 */}
-            <FCAF value="props value1" />
-            <FCAF value="props value2" />
+            <FCAF value="props value1" nshow={true} />
+            <FCAF value="props value2" nshow={false} />
         </div>
     )
 }
@@ -92,6 +86,22 @@ function ClickLink() {
     );
 }
 
+
+// 2. Class Component: stateful component
+// 可進行較複雜操作和元件生命週期控制，較耗資源
+// Component 由 Element 組成
+class User extends React.Component {
+    render() {
+        // this.props.match.params.userId: 取得網址上的參數
+        // <Route path="/user/:userId" component={User} />
+        const id = this.props.match.params.userId
+        return (
+            <div>
+                user id: {id}
+            </div>
+        )
+    }
+}
 
 class Home extends React.Component {
     // render 是 Class Component 唯一必須的方法
