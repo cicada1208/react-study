@@ -1,7 +1,6 @@
 // ES5寫法 
 var na = 'Andy';
-var obj = { na: na };
+var obj = { na: na, ps: '123' };
 console.log(obj)
-// ES6寫法，key 與 value 名稱一樣，可省略 key 
-obj = { na };
-console.log(obj)
+console.log(JSON.stringify(obj, null, 2))
+

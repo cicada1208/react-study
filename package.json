@@ -25,9 +25,9 @@
     "dependencies": {
         "axios": "^0.19.2",
         "formidable": "^1.2.2",
+        "formik": "^2.1.5",
         "jquery": "^3.5.1",
         "node-fetch": "^2.6.0",
-        "pad-left": "^2.1.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-router-dom": "^5.2.0"

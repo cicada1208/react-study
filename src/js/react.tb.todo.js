@@ -17,7 +17,7 @@ class TbTodo extends React.Component {
         // 只可在 constructor 初始
         // 之後需透過 this.setState 更改 this.state，重新 render component
         this.state = {
-            name: '', desp: '', slt: '',
+            name: '', desp: '', slt: '', completed: false,
             todos: [
                 { id: 1, name: 'a', desp: 'adesp', slt: 'aslt', completed: false },
                 { id: 2, name: 'b', desp: 'bdesp', slt: 'bslt', completed: true },
@@ -25,39 +25,34 @@ class TbTodo extends React.Component {
         }
     }
 
-    // DOM input 改變，則設定 this.state.name
     handleChange(e) {
         // this.setState({
         //     name: e.target.value
         // })
-        var objStateVal
-        switch (e.target.name) {
+        let strName = e.target.name
+        let objVal = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+        switch (strName) {
             case 'name':
-                objStateVal = { name: e.target.value }
-                break
             case 'desp':
-                objStateVal = { desp: e.target.value }
-                break
             case 'slt':
-                objStateVal = { slt: e.target.value }
+            case 'completed':
+                // this.setState: 設定 state，會 merge 你提供的 object 到目前的 state
+                this.setState({ [strName]: objVal })
                 break
             default:
-                objStateVal = { name: '', desp: '', slt: '' }
                 break
         }
-        // this.setState: 設定 state，會 merge 你提供的 object 到目前的 state
-        this.setState(objStateVal)
     }
 
     todoAdd() {
-        const { todos, name, desp, slt } = this.state
+        const { todos, name, desp, slt, completed } = this.state
         const newId = (todos.length === 0 ? 1 : todos[todos.length - 1].id + 1)
 
         this.setState({
-            name: '', desp: '', slt: '',
+            name: '', desp: '', slt: '', completed: false,
             todos: [
                 ...todos,
-                { id: newId, name, desp, slt, completed: false }
+                { id: newId, name, desp, slt, completed }
             ]
         })
     }
@@ -93,7 +88,7 @@ class TbTodo extends React.Component {
     // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變
     render() {
         // 從 state 取出資料
-        const { todos, name, desp, slt } = this.state
+        const { todos, name, desp, slt, completed } = this.state
         // this.props.match.path: 該 component 匹配到的路徑，在此為 /todo，可用此配置第2層 Route and Link
         return (
             <div>
@@ -110,13 +105,20 @@ class TbTodo extends React.Component {
                 {/* 訊息 Warning: A component is changing an uncontrolled input of type text to be controlled.
                 React Controlled Component: form element <input>, <textarea>, <select>
                 可將 value attribute 顯示為 this.state.name 並透過 this.handleChange 異動 this.state.name 的方式來達成繫結 */}
-                <input name="name" type="text" value={name} onChange={this.handleChange} /><br />
-                <textarea name="desp" value={desp} onChange={this.handleChange} /><br />
+                <label>名稱:</label>
+                <input name="name" type="text" value={name} onChange={this.handleChange} />
+                <br />
+                <label>描述:</label>
+                <textarea name="desp" value={desp} onChange={this.handleChange} />
+                <br />
+                <label>選取:</label>
                 <select name="slt" value={slt} onChange={this.handleChange}>
                     <option value="">請選擇</option>
                     <option value="aslt">aslt</option>
                     <option value="bslt">bslt</option>
                 </select>
+                <label>狀態:</label>
+                <input name="completed" type="checkbox" checked={completed} onChange={this.handleChange} />
                 <button onClick={this.todoAdd}>Add item</button>
                 <table className="table table-bordered">
                     <thead>
