@@ -42,26 +42,34 @@ ReactDOM.render(
 // 1. Function Component: stateless component
 // 單純 render UI，沒有內部狀態、實作物件、ref和生命週期方法，有較好效能
 // const FCAF = (props) => (
-//     <div>Function Component arrow function {props.value}</div>
+//     <div>Function Component {props.value}</div>
 // )
 const FCAF = (props) => {
     return (
-        !props.nshow ? <div>Function Component arrow function {props.value}</div> : null
+        <div>
+            {!props.nshow ? <div>Function Component {props.value}</div> : null}
+            {props.children}
+            {props.bottom}
+        </div>
     )
 }
 
 function FCAFS() {
     return (
         <div>
-            {/* props 唯讀 */}
-            <FCAF value="props value1" nshow={true} />
-            <FCAF value="props value2" nshow={false} />
+            {/* props: 唯讀，可為 primitive value、React element、function */}
+            <FCAF nshow={false} value="props value1" />
+            <FCAF nshow={true} value="props value2" >
+                {/* 透過巢狀的 JSX 將任意的 props.children 傳遞給其他 component */}
+                <div>Function Component props children</div>
+            </FCAF>
+            <FCAF nshow={true} bottom={<FCAF nshow={false} value="props value3" />} />
         </div>
     )
 }
 
-// component 字首須大寫，小寫開頭的組件視為原始 DOM 標籤，
-// <div /> 視為 HTML div 標籤，
+// component 字首須大寫，小寫開頭的組件視為原始 DOM tag，
+// <div /> 視為 HTML div tag，
 // <FCAFS /> 視為 component，且需在作用域中使用。
 // ReactDOM.render(
 //     <FCAFS />,
@@ -121,7 +129,7 @@ class Home extends React.Component {
                     <li><Link to="/fcafs">fcafs</Link ></li>
                     <li><Link to="/clicklink">clicklink</Link ></li>
                 </ul>
-                {/* {this.props.children} 對應的 component，例如：TbTodo，v5還有此用法嗎? */}
+                {/* {this.props.children} 對應的 component，例如：TbTodo，? */}
             </div>
         )
     }
@@ -146,7 +154,7 @@ ReactDOM.render(
         <Route path="/todo" component={TbTodo} />
         <Route path="/clocks" component={Clocks} />
         <Route path="/user/:userId" component={User} />
-        <Route path="/fcraf" render={() => { return <div>Function Component render arrow function</div> }} />
+        <Route path="/fcraf" render={() => { return <div>Function Component</div> }} />
         <Route path="/fcaf" render={FCAF} />
         <Route path="/fcafs" render={FCAFS} />
         <Route path="/clicklink" render={ClickLink} />

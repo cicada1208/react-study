@@ -117,8 +117,10 @@ class TbTodo extends React.Component {
                     <option value="aslt">aslt</option>
                     <option value="bslt">bslt</option>
                 </select>
+                {' '} {/* 空白隔開 */}
                 <label>狀態:</label>
                 <input name="completed" type="checkbox" checked={completed} onChange={this.handleChange} />
+                {' '}
                 <button onClick={this.todoAdd}>Add item</button>
                 <table className="table table-bordered">
                     <thead>

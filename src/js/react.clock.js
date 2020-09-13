@@ -68,7 +68,7 @@ export class Clocks extends React.Component {
     render() {
         return (
             <div>
-                {/* 上至下的「單向」資料流，parent state as prop to child */}
+                {/* 上至下的「單向」資料流，parent state as props to child */}
                 <Clock date={this.state.date} dates={this.state.dates} />
                 <Clock date={this.state.date} dates={this.state.dates} />
             </div>
