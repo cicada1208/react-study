@@ -11,6 +11,8 @@
 // export 與 import name 不需相同
 // module 中只能有一個 default export
 
+console.log('webpack.es6.utils run.')
+
 function prnt() {
     return 'print'
 }

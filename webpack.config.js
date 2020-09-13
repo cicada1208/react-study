@@ -123,6 +123,8 @@ module.exports = {
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
         filename: boolModeDev ? './js/[name].js' : './js/[name].[contenthash].js',
+        // chunkFilename: provides a template for naming code-split bundles (optional)
+        chunkFilename: boolModeDev ? './js/[name].js' : './js/[name].[contenthash].js',
         // path: The output directory as an absolute path.
         path: path.resolve(__dirname, 'dist'),
         // path: path.resolve(__dirname, 'dist/assets'),

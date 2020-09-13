@@ -78,20 +78,20 @@ function FCAFS() {
 
 function ClickLink() {
     function handleClick(e) {
-        e.preventDefault(); // 避免瀏覽器預設行為(換頁)
-        window.alert('The link was clicked.');
+        e.preventDefault() // 避免瀏覽器預設行為(換頁)
+        window.alert('The link was clicked.')
     }
 
     // 事件名稱: 在 React 是 camelCase；在 HTML DOM 是小寫。
     // 事件的值: 在 JSX 是 function；在 HTML DOM 是 string。
     // HTML範例: <button onclick="handleClick()">
     return (
-        // HTML範例: <a href="#" onclick="window.alert('The link was clicked.'); return false"></a>
+        // HTML範例: <a href="#" onclick="window.alert('The link was clicked.') return false"></a>
         // 在 React 需使用 preventDefault 達成此功能
         <a href="#" onClick={handleClick}>
             Click me
         </a>
-    );
+    )
 }
 
 
@@ -161,3 +161,12 @@ ReactDOM.render(
     </HashRouter>,
     divReactEx2
 )
+
+
+// Code Splitting Dynamic Imports
+import(
+    /* webpackChunkName: "webpack.es6.utils" */
+    './webpack.es6.utils.js'
+).then(utils => {
+    console.log('Code Splitting Dynamic Imports:', utils.utils_x)
+})
