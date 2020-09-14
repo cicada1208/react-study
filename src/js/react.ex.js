@@ -1,6 +1,6 @@
 // React:
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
 import TbTodo from './react.tb.todo.js'
@@ -41,10 +41,10 @@ ReactDOM.render(
 // React Component 撰寫的兩種方式:
 // 1. Function Component: stateless component
 // 單純 render UI，沒有內部狀態、實作物件、ref和生命週期方法，有較好效能
-// const FCAF = (props) => (
+// const FunComp = (props) => (
 //     <div>Function Component {props.value}</div>
 // )
-const FCAF = (props) => {
+const FunComp = (props) => {
     return (
         <div>
             {!props.nshow ? <div>Function Component {props.value}</div> : null}
@@ -54,25 +54,25 @@ const FCAF = (props) => {
     )
 }
 
-function FCAFS() {
+function FunComps() {
     return (
         <div>
             {/* props: 唯讀，可為 primitive value、React element、function */}
-            <FCAF nshow={false} value="props value1" />
-            <FCAF nshow={true} value="props value2" >
+            <FunComp nshow={false} value="props value1" />
+            <FunComp nshow={true} value="props value2" >
                 {/* 透過巢狀的 JSX 將任意的 props.children 傳遞給其他 component */}
                 <div>Function Component props children</div>
-            </FCAF>
-            <FCAF nshow={true} bottom={<FCAF nshow={false} value="props value3" />} />
+            </FunComp>
+            <FunComp nshow={true} bottom={<FunComp nshow={false} value="props value3" />} />
         </div>
     )
 }
 
 // component 字首須大寫，小寫開頭的組件視為原始 DOM tag，
 // <div /> 視為 HTML div tag，
-// <FCAFS /> 視為 component，且需在作用域中使用。
+// <FunComps /> 視為 component，且需在作用域中使用。
 // ReactDOM.render(
-//     <FCAFS />,
+//     <FunComps />,
 //     divReactEx
 // )
 
@@ -111,6 +111,44 @@ class User extends React.Component {
     }
 }
 
+
+// Code Splitting Dynamic Imports:
+// Dynamically load modules.
+// Calls to import() are treated as split points, meaning the requested module
+// and its children are split out into a separate chunk.
+// webpackChunkName: A name for the new chunk.
+// importing a ES6 module:
+import(
+    /* webpackChunkName: "webpack.es6.utils" */
+    './webpack.es6.utils.js'
+).then(module => {
+    const module_def = module.default;
+    console.log('Code Splitting Dynamic Imports:', module_def.name, module.utils_x)
+})
+// importing a CommonJS module:
+import(
+    /* webpackChunkName: "webpack.cjs.utils" */
+    './webpack.cjs.utils.js'
+).then(({ default: module }) => {
+    console.log('Code Splitting Dynamic Imports:', module.name)
+})
+
+
+const ClockLazyComp = React.lazy(() =>
+    import('./react.clock.js')
+)
+
+function ClockSuspenseComp() {
+    return (
+        <div>
+            <Suspense fallback={<div>Loading...</div>}>
+                <ClockLazyComp />
+            </Suspense>
+        </div>
+    );
+}
+
+
 class Home extends React.Component {
     // render 是 Class Component 唯一必須的方法
     render() {
@@ -124,12 +162,13 @@ class Home extends React.Component {
                     <li><Link to="/clocks">clocks</Link ></li>
                     <li><Link to="/user/1">user1</Link ></li>
                     <li><Link to="/user/2">user2</Link ></li>
-                    <li><Link to="/fcraf">fcraf</Link ></li>
-                    <li><Link to="/fcaf">fcaf</Link ></li>
-                    <li><Link to="/fcafs">fcafs</Link ></li>
+                    <li><Link to="/funcompr">funcompr</Link ></li>
+                    <li><Link to="/funcomp">funcomp</Link ></li>
+                    <li><Link to="/funcomps">funcomps</Link ></li>
                     <li><Link to="/clicklink">clicklink</Link ></li>
+                    <li><Link to="/lazycomp">lazycomp</Link ></li>
                 </ul>
-                {/* {this.props.children} 對應的 component，例如：TbTodo，? */}
+                {/* {this.props.children} 對應的 component，例如：TbTodo? */}
             </div>
         )
     }
@@ -154,19 +193,11 @@ ReactDOM.render(
         <Route path="/todo" component={TbTodo} />
         <Route path="/clocks" component={Clocks} />
         <Route path="/user/:userId" component={User} />
-        <Route path="/fcraf" render={() => { return <div>Function Component</div> }} />
-        <Route path="/fcaf" render={FCAF} />
-        <Route path="/fcafs" render={FCAFS} />
+        <Route path="/funcompr" render={() => { return <div>Function Component render</div> }} />
+        <Route path="/funcomp" render={FunComp} />
+        <Route path="/funcomps" render={FunComps} />
         <Route path="/clicklink" render={ClickLink} />
+        <Route path="/lazycomp" render={ClockSuspenseComp} />
     </HashRouter>,
     divReactEx2
 )
-
-
-// Code Splitting Dynamic Imports
-import(
-    /* webpackChunkName: "webpack.es6.utils" */
-    './webpack.es6.utils.js'
-).then(utils => {
-    console.log('Code Splitting Dynamic Imports:', utils.utils_x)
-})
