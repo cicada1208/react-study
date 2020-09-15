@@ -56,7 +56,7 @@ class Clock extends React.Component {
     }
 }
 
-export default class Clocks extends React.Component {
+export class Clocks extends React.Component {
     constructor(props) {
         super(props)
         this.state = {

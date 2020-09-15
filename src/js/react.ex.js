@@ -134,19 +134,23 @@ import(
 })
 
 
-// React.lazy:
+// React.lazy: dynamic import component
+// request module: react.clock.js 需是 default export
+// React.lazy 和 Suspense 還無法在 server-side render 使用。
 const ClockLazyComp = React.lazy(() =>
-    import('./react.clock.js')
+    import('./react.clock.defexp.js')
 )
-
-function ClockSuspenseComp() {
+// Lazy Component: 應在 suspense component 內 render，
+// 同時可在等待 lazy component 載入時，顯示 fallback prop(可為 React element 像是載入中)。
+// Suspense Component: 可包覆多個 lazy component。
+function ClockSuspComp() {
     return (
         <div>
             <Suspense fallback={<div>Loading...</div>}>
                 <ClockLazyComp />
             </Suspense>
         </div>
-    );
+    )
 }
 
 
@@ -190,15 +194,17 @@ class Home extends React.Component {
 // 其他未匹配到的 Route 則刪去。
 ReactDOM.render(
     <HashRouter>
-        <Route path="/" component={Home} />
-        <Route path="/todo" component={TbTodo} />
-        <Route path="/clocks" component={Clocks} />
-        <Route path="/user/:userId" component={User} />
-        <Route path="/funcompr" render={() => { return <div>Function Component render</div> }} />
-        <Route path="/funcomp" render={FunComp} />
-        <Route path="/funcomps" render={FunComps} />
-        <Route path="/clicklink" render={ClickLink} />
-        <Route path="/lazycomp" render={ClockSuspenseComp} />
+        <Suspense fallback={<div>Loading...</div>}>
+            <Route path="/" component={Home} />
+            <Route path="/todo" component={TbTodo} />
+            <Route path="/clocks" component={Clocks} />
+            <Route path="/user/:userId" component={User} />
+            <Route path="/funcompr" render={() => { return <div>Function Component render</div> }} />
+            <Route path="/funcomp" render={FunComp} />
+            <Route path="/funcomps" render={FunComps} />
+            <Route path="/clicklink" render={ClickLink} />
+            <Route path="/lazycomp" component={ClockLazyComp} />
+        </Suspense>
     </HashRouter>,
     divReactEx2
 )

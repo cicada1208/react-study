@@ -14,7 +14,7 @@
 // npm install --save-dev webpack-merge
 
 // babel:
-// npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime
+// npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime @babel/plugin-syntax-dynamic-import
 
 // import css: npm install --save-dev style-loader css-loader sass-loader node-sass
 // import image, font...: npm install --save-dev file-loader url-loader
@@ -175,7 +175,12 @@ module.exports = {
                     loader: 'babel-loader',
                     options: { // '@babel/preset-react': 支援JSX
                         presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins: ['@babel/plugin-transform-runtime'] // '@babel/plugin-transform-runtime': 支援async/await
+                        // '@babel/plugin-transform-runtime': 支援async/await
+                        // '@babel/plugin-transform-runtime': 支援dynamic imports when compile JSX to JavaScript
+                        plugins: [
+                            '@babel/plugin-transform-runtime',
+                            '@babel/plugin-syntax-dynamic-import'
+                        ]
                     }
                 }
             },
