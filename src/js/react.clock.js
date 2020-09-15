@@ -1,6 +1,6 @@
 import React from 'react'
 
-export class Clock extends React.Component {
+class Clock extends React.Component {
     constructor(props) {
         super(props)
         // 修改 this.state，不會異動 this.props (唯讀)
@@ -56,7 +56,7 @@ export class Clock extends React.Component {
     }
 }
 
-export class Clocks extends React.Component {
+export default class Clocks extends React.Component {
     constructor(props) {
         super(props)
         this.state = {

@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
 import TbTodo from './react.tb.todo.js'
-import { Clock, Clocks } from './react.clock.js'
+import Clocks from './react.clock.js'
 import jpgPig from '../img/pig.jpg'
 
 
@@ -123,17 +123,18 @@ import(
     './webpack.es6.utils.js'
 ).then(module => {
     const module_def = module.default;
-    console.log('Code Splitting Dynamic Imports:', module_def.name, module.utils_x)
+    console.log('Code Splitting Dynamic Imports (ES6):', module_def.name, module.utils_x)
 })
 // importing a CommonJS module:
 import(
     /* webpackChunkName: "webpack.cjs.utils" */
     './webpack.cjs.utils.js'
-).then(({ default: module }) => {
-    console.log('Code Splitting Dynamic Imports:', module.name)
+).then(({ name, x, default: module }) => {
+    console.log('Code Splitting Dynamic Imports (CommonJS):', module.name, name, x)
 })
 
 
+// React.lazy:
 const ClockLazyComp = React.lazy(() =>
     import('./react.clock.js')
 )
