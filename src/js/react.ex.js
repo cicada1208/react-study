@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
 import TbTodo from './react.tb.todo.js'
-import Clocks from './react.clock.js'
+import { Clocks } from './react.clock.js'
 import jpgPig from '../img/pig.jpg'
 
 
@@ -138,7 +138,10 @@ import(
 // request module: react.clock.js 需是 default export
 // React.lazy 和 Suspense 還無法在 server-side render 使用。
 const ClockLazyComp = React.lazy(() =>
-    import('./react.clock.defexp.js')
+    import(
+        /* webpackChunkName: "react.clock.defexp" */
+        './react.clock.defexp.js'
+    )
 )
 // Lazy Component: 應在 suspense component 內 render，
 // 同時可在等待 lazy component 載入時，顯示 fallback prop(可為 React element 像是載入中)。
