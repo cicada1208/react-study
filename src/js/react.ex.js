@@ -53,7 +53,7 @@ const FunComp = (props) => {
         </div>
     )
 }
-
+// component composition
 function FunComps() {
     return (
         <div>
@@ -67,7 +67,6 @@ function FunComps() {
         </div>
     )
 }
-
 // component 字首須大寫，小寫開頭的組件視為原始 DOM tag，
 // <div /> 視為 HTML div tag，
 // <FunComps /> 視為 component，且需在作用域中使用。

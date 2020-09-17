@@ -1,6 +1,12 @@
-var na = 'Andy';
-var obj = { na: na, ps: '123' };
-console.log(obj)
-console.log(JSON.stringify(obj, null, 2))
+var ary = [{ na: '1' }]
+console.log(ary.push({ na: '2' }))
+console.log(ary)
 
-console.log(Math.round(10.1235 * 1000) / 1000)
+ary = [
+    ...ary,
+    { na: '3' }
+]
+console.log(ary)
+
+ary.pop()
+console.log(ary)
