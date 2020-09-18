@@ -118,7 +118,7 @@ module.exports = {
         // async_await: './src/js/async.await.js',
         // webpack_es6: './src/js/webpack.es6.js',
         // webpack_cjs: './src/js/webpack.cjs.js',
-        react_ex: './src/js/react.ex.js',
+        react_ex: './src/js/react.main.js',
     },
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
