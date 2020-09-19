@@ -11,6 +11,7 @@ import { Clocks } from './react.clock.js'
 import ClickLink from './react.clicklink.js'
 import { ClockLazyComp, ClockSuspComp } from './react.dynamicimport.js'
 import ThemeToggler from './react.context.js'
+import ErrorBoundary, { BuggyDisplay } from './react.errboundary.js'
 import jpgPig from '../img/pig.jpg'
 
 
@@ -41,6 +42,7 @@ class Home extends React.Component {
                     <li><Link to="/clicklink">clicklink</Link ></li>
                     <li><Link to="/lazycomp">lazycomp</Link ></li>
                     <li><Link to="/reactcontext">reactcontext</Link ></li>
+                    <li><Link to="/errboundary">errboundary</Link ></li>
                 </ul>
                 {/* {this.props.children} 對應的 component，例如：TbTodo? */}
             </React.Fragment>
@@ -65,19 +67,22 @@ class Home extends React.Component {
 // React DOM 負責更新 DOM 來符合 React Element or React Component
 ReactDOM.render(
     <HashRouter>
-        <Suspense fallback={<div>Loading...</div>}>
-            <Route path="/" component={Home} />
-            <Route path="/reactelmt" render={() => { return ReactElmt }} />
-            <Route path="/funcompr" render={() => { return <div>Function Component render</div> }} />
-            <Route path="/funcomp" render={FunComp} />
-            <Route path="/funcomps" render={FunComps} />
-            <Route path="/classcomp/:id" component={ClassComp} />
-            <Route path="/tbtodo" component={TbTodo} />
-            <Route path="/clocks" component={Clocks} />
-            <Route path="/clicklink" render={ClickLink} />
-            <Route path="/lazycomp" component={ClockLazyComp} />
-            <Route path="/reactcontext" component={ThemeToggler} />
-        </Suspense>
-    </HashRouter>,
+        <ErrorBoundary>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Route path="/" component={Home} />
+                <Route path="/reactelmt" render={() => { return ReactElmt }} />
+                <Route path="/funcompr" render={() => { return <div>Function Component render</div> }} />
+                <Route path="/funcomp" render={FunComp} />
+                <Route path="/funcomps" render={FunComps} />
+                <Route path="/classcomp/:id" component={ClassComp} />
+                <Route path="/tbtodo" component={TbTodo} />
+                <Route path="/clocks" component={Clocks} />
+                <Route path="/clicklink" render={ClickLink} />
+                <Route path="/lazycomp" component={ClockLazyComp} />
+                <Route path="/reactcontext" component={ThemeToggler} />
+                <Route path="/errboundary" component={BuggyDisplay} />
+            </Suspense>
+        </ErrorBoundary>
+    </HashRouter >,
     divReactEx
 )
