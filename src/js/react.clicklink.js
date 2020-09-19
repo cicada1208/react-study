@@ -11,7 +11,7 @@ class BtnClick extends React.Component {
 
 export default function ClickLink() {
     function handleClick(e) {
-        e.preventDefault() // 避免瀏覽器預設行為(換頁)
+        e.preventDefault() // 在 React 中使用，以避免瀏覽器預設行為(換頁)
         window.alert('The link was clicked.')
     }
 
@@ -20,11 +20,10 @@ export default function ClickLink() {
     // HTML範例: <button onclick="handleClick()">
     return (
         // HTML範例: <a href="#" onclick="window.alert('The link was clicked.') return false"></a>
-        // 在 React 需使用 preventDefault 達成此功能
-        <div>
+        <>
             <a href="#" onClick={handleClick}>Anchor Click</a>
             <br />
             <BtnClick onClick={handleClick} >Button Click</BtnClick>
-        </div >
+        </>
     )
 }

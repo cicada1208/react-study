@@ -3,13 +3,14 @@
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
-import { ReactElmt } from './react.elmt.js'
+import ReactElmt from './react.elmt.js'
 import { FunComp, FunComps } from './react.funcomp.js'
 import ClassComp from './react.classcomp.js'
 import TbTodo from './react.tb.todo.js'
 import { Clocks } from './react.clock.js'
 import ClickLink from './react.clicklink.js'
 import { ClockLazyComp, ClockSuspComp } from './react.dynamicimport.js'
+import ThemeToggler from './react.context.js'
 import jpgPig from '../img/pig.jpg'
 
 
@@ -22,7 +23,9 @@ class Home extends React.Component {
     // render 是 Class Component 唯一必須的方法
     render() {
         return (
-            <div>
+            // React.Fragment: 能在不額外增加 html dom 情況下，重新組合多個 child component
+            // 簡寫: <></>
+            <React.Fragment>
                 <div>React</div>
                 <img width='100' src={jpgPig} />
                 <ul>
@@ -37,9 +40,10 @@ class Home extends React.Component {
                     <li><Link to="/clocks">clocks</Link ></li>
                     <li><Link to="/clicklink">clicklink</Link ></li>
                     <li><Link to="/lazycomp">lazycomp</Link ></li>
+                    <li><Link to="/reactcontext">reactcontext</Link ></li>
                 </ul>
                 {/* {this.props.children} 對應的 component，例如：TbTodo? */}
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -63,7 +67,7 @@ ReactDOM.render(
     <HashRouter>
         <Suspense fallback={<div>Loading...</div>}>
             <Route path="/" component={Home} />
-            <Route path="/reactelmt" component={() => { return ReactElmt }} />
+            <Route path="/reactelmt" render={() => { return ReactElmt }} />
             <Route path="/funcompr" render={() => { return <div>Function Component render</div> }} />
             <Route path="/funcomp" render={FunComp} />
             <Route path="/funcomps" render={FunComps} />
@@ -72,6 +76,7 @@ ReactDOM.render(
             <Route path="/clocks" component={Clocks} />
             <Route path="/clicklink" render={ClickLink} />
             <Route path="/lazycomp" component={ClockLazyComp} />
+            <Route path="/reactcontext" component={ThemeToggler} />
         </Suspense>
     </HashRouter>,
     divReactEx

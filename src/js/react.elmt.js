@@ -4,7 +4,7 @@ import React from 'react'
 const time = new Date().toLocaleDateString()
 const boolShow = true
 // export const ReactElmt = <div>React Element {time}</div>
-export const ReactElmt = (
+const ReactElmt = (
     <div>
         {
             // JavaScript:
@@ -15,3 +15,5 @@ export const ReactElmt = (
         React Element test
     </div>
 )
+
+export default ReactElmt

@@ -91,7 +91,7 @@ class TbTodo extends React.Component {
         const { todos, name, desp, slt, completed } = this.state
         // this.props.match.path: 該 component 匹配到的路徑，在此為 /todo，可用此配置第2層 Route and Link
         return (
-            <div>
+            <>
                 <div className="child-link">
                     <ul>
                         <li><Link to={`${this.props.match.path}/child/1`}>child1</Link></li>
@@ -144,7 +144,7 @@ class TbTodo extends React.Component {
                         }
                     </tbody>
                 </table>
-            </div>
+            </>
         )
     }
 }

@@ -14,7 +14,7 @@
 // npm install --save-dev webpack-merge
 
 // babel:
-// npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime @babel/plugin-syntax-dynamic-import
+// npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime @babel/plugin-syntax-dynamic-import @babel/plugin-proposal-class-properties
 
 // import css: npm install --save-dev style-loader css-loader sass-loader node-sass
 // import image, font...: npm install --save-dev file-loader url-loader
@@ -177,9 +177,11 @@ module.exports = {
                         presets: ['@babel/preset-env', '@babel/preset-react'],
                         // '@babel/plugin-transform-runtime': 支援async/await
                         // '@babel/plugin-transform-runtime': 支援dynamic imports when compile JSX to JavaScript
+                        // '@babel/plugin-proposal-class-properties': This plugin transforms static class properties as well as properties declared with the property initializer syntax.
                         plugins: [
                             '@babel/plugin-transform-runtime',
-                            '@babel/plugin-syntax-dynamic-import'
+                            '@babel/plugin-syntax-dynamic-import',
+                            '@babel/plugin-proposal-class-properties'
                         ]
                     }
                 }

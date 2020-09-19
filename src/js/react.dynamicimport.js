@@ -36,10 +36,8 @@ export const ClockLazyComp = React.lazy(() =>
 // Suspense Component: 可包覆多個 lazy component。
 export function ClockSuspComp() {
     return (
-        <div>
-            <Suspense fallback={<div>Loading...</div>}>
-                <ClockLazyComp />
-            </Suspense>
-        </div>
+        <Suspense fallback={<div>Loading...</div>}>
+            <ClockLazyComp />
+        </Suspense>
     )
 }

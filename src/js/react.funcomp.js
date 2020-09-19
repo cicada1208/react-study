@@ -8,18 +8,18 @@ import React from 'react'
 // )
 export const FunComp = (props) => {
     return (
-        <div>
+        <>
             {!props.nshow ? <div>Function Component {props.value}</div> : null}
             {props.children}
             {props.bottom}
-        </div>
+        </>
     )
 }
 
 // component composition
 export function FunComps() {
     return (
-        <div>
+        <>
             {/* props: 唯讀，可為 primitive value、function、React element */}
             <FunComp nshow={false} value="props value1" />
             <FunComp nshow={true} value="props value2" >
@@ -27,7 +27,7 @@ export function FunComps() {
                 <div>Function Component props children</div>
             </FunComp>
             <FunComp nshow={true} bottom={<FunComp nshow={false} value="props value3" />} />
-        </div>
+        </>
     )
 }
 
