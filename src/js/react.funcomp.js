@@ -7,9 +7,11 @@ import React from 'react'
 //     <div>Function Component {props.value}</div>
 // )
 export const FunComp = (props) => {
+    let x = 'test'
     return (
         <>
             {!props.nshow ? <div>Function Component {props.value}</div> : null}
+            {props.render && props.render(x)}
             {props.children}
             {props.bottom}
         </>
@@ -22,10 +24,13 @@ export function FunComps() {
         <>
             {/* props: 唯讀，可為 primitive value、function、React element */}
             <FunComp nshow={false} value="props value1" />
+            {/* props.render 返回 React element 的 function */}
+            <FunComp nshow={true} render={(x) => (<div>Function Component props render: {x}</div>)} />
             <FunComp nshow={true} value="props value2" >
-                {/* 透過巢狀的 JSX 將任意的 props.children 傳遞給其他 component */}
+                {/* 透過巢狀的 JSX 將任意的 props.children 傳遞給 component */}
                 <div>Function Component props children</div>
             </FunComp>
+            {/* 自定義 props bottom 並傳入 React element */}
             <FunComp nshow={true} bottom={<FunComp nshow={false} value="props value3" />} />
         </>
     )

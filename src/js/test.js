@@ -1,21 +1,10 @@
-var ary = [{ na: '1' }]
+// var fs = (x) => {
+//     return x
+// }
 
-ary = [
-    ...ary,
-    { na: '3' }
-]
+// function f(fs) {
+//     var y = 'test'
+//     return fs(y)
+// }
 
-let aryBabelPluginsPrd = [
-    '@babel/plugin-transform-runtime',
-    '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-proposal-class-properties',
-]
-
-let aryBabelPluginsDev = [
-    ...aryBabelPluginsPrd,
-    '@babel/plugin-transform-react-jsx-source',
-]
-
-console.log(aryBabelPluginsPrd)
-console.log('------')
-console.log(aryBabelPluginsDev)
+// console.log(f(fs))

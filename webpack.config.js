@@ -106,7 +106,7 @@ const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 // '@babel/plugin-transform-runtime': 支援async/await
 // '@babel/plugin-transform-runtime': 支援dynamic imports when compile JSX to JavaScript
 // '@babel/plugin-proposal-class-properties': This plugin transforms static class properties as well as properties declared with the property initializer syntax.
-// '@babel/plugin-transform-react-jsx-source': 可在 component stack trace 中看到錯誤所在行數(for development)
+// '@babel/plugin-transform-react-jsx-source': 可在 ErrorBoundary component stack trace 中看到錯誤所在行數(for development)
 let aryBabelPluginsPrd = [
     '@babel/plugin-transform-runtime',
     '@babel/plugin-syntax-dynamic-import',

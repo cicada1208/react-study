@@ -70,7 +70,7 @@ ReactDOM.render(
         <ErrorBoundary>
             <Suspense fallback={<div>Loading...</div>}>
                 <Route path="/" component={Home} />
-                <Route path="/reactelmt" render={() => { return ReactElmt }} />
+                <Route path="/reactelmt" render={() => (ReactElmt)} />
                 <Route path="/funcompr" render={() => { return <div>Function Component render</div> }} />
                 <Route path="/funcomp" render={FunComp} />
                 <Route path="/funcomps" render={FunComps} />
