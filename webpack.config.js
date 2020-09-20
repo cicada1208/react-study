@@ -14,7 +14,7 @@
 // npm install --save-dev webpack-merge
 
 // babel:
-// npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime @babel/plugin-syntax-dynamic-import @babel/plugin-proposal-class-properties
+// npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/plugin-transform-runtime @babel/plugin-syntax-dynamic-import @babel/plugin-proposal-class-properties @babel/plugin-transform-react-jsx-source
 
 // import css: npm install --save-dev style-loader css-loader sass-loader node-sass
 // import image, font...: npm install --save-dev file-loader url-loader
@@ -102,6 +102,21 @@ const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
 // npm install --save-dev optimize-css-assets-webpack-plugin
 const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 
+// babel-loader plugins
+// '@babel/plugin-transform-runtime': 支援async/await
+// '@babel/plugin-transform-runtime': 支援dynamic imports when compile JSX to JavaScript
+// '@babel/plugin-proposal-class-properties': This plugin transforms static class properties as well as properties declared with the property initializer syntax.
+// '@babel/plugin-transform-react-jsx-source': 可在 component stack trace 中看到錯誤所在行數(for development)
+let aryBabelPluginsPrd = [
+    '@babel/plugin-transform-runtime',
+    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-proposal-class-properties',
+]
+let aryBabelPluginsDev = [
+    ...aryBabelPluginsPrd,
+    '@babel/plugin-transform-react-jsx-source',
+]
+
 module.exports = {
     // 'development': 開發模式
     // 'production': 產品模式，自動壓縮及優化
@@ -118,7 +133,7 @@ module.exports = {
         // async_await: './src/js/async.await.js',
         // webpack_es6: './src/js/webpack.es6.js',
         // webpack_cjs: './src/js/webpack.cjs.js',
-        react_ex: './src/js/react.main.js',
+        react_main: './src/js/react.main.js',
     },
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
@@ -175,14 +190,7 @@ module.exports = {
                     loader: 'babel-loader',
                     options: { // '@babel/preset-react': 支援JSX
                         presets: ['@babel/preset-env', '@babel/preset-react'],
-                        // '@babel/plugin-transform-runtime': 支援async/await
-                        // '@babel/plugin-transform-runtime': 支援dynamic imports when compile JSX to JavaScript
-                        // '@babel/plugin-proposal-class-properties': This plugin transforms static class properties as well as properties declared with the property initializer syntax.
-                        plugins: [
-                            '@babel/plugin-transform-runtime',
-                            '@babel/plugin-syntax-dynamic-import',
-                            '@babel/plugin-proposal-class-properties'
-                        ]
+                        plugins: boolModeDev ? aryBabelPluginsDev : aryBabelPluginsPrd,
                     }
                 }
             },

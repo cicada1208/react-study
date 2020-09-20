@@ -2,8 +2,14 @@ import React from 'react'
 
 // ErrorBoundary:
 // 截取 child component tree 中 JavaScript 錯誤、記錄錯誤、並顯示一個 fallback UI
-// child component tree 中 render 期間、生命週期方法、constructor 內都能截取到錯誤
-// 定義 static getDerivedStateFromError() 和 componentDidCatch() 其一，即為 ErrorBoundary
+// render 期間、生命週期方法、constructor 內都能截取到錯誤
+// static getDerivedStateFromError()、componentDidCatch() 定義其一，即為 ErrorBoundary
+
+// 無法捕捉到的錯誤:
+// Event handlers(因不是發生在 render 的時候)
+// 非同步的程式碼
+// Server side rendering
+// 錯誤邊界裡的錯誤
 export default class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props)
@@ -14,7 +20,7 @@ export default class ErrorBoundary extends React.Component {
     }
 
     // getDerivedStateFromError:
-    // 該生命週期方法會在某錯誤被 descendant component 拋出後被呼叫
+    // 該生命週期方法會在錯誤被 descendant component 拋出後被呼叫
     // 接收該錯誤為其參數並回傳一個值以更新 state
     // static getDerivedStateFromError(error) {
     //     // 更新 state，如此下次 render 時 React 才能顯示 fallback UI
@@ -22,7 +28,7 @@ export default class ErrorBoundary extends React.Component {
     // }
 
     // componentDidCatch:
-    // 該生命週期方法會在某錯誤被 descendant component 拋出後被呼叫
+    // 該生命週期方法會在錯誤被 descendant component 拋出後被呼叫
     // error: 被拋出的錯誤
     // info: 有 componentStack key 的 object，該 key 包含有那個 component 拋出錯誤的資訊
     componentDidCatch(error, info) {

@@ -9,9 +9,9 @@ import ClassComp from './react.classcomp.js'
 import TbTodo from './react.tb.todo.js'
 import { Clocks } from './react.clock.js'
 import ClickLink from './react.clicklink.js'
-import { ClockLazyComp, ClockSuspComp } from './react.dynamicimport.js'
+import { ClockLazyComp, ClockSuspComp } from './react.dynamic.import.js'
 import ThemeToggler from './react.context.js'
-import ErrorBoundary, { BuggyDisplay } from './react.errboundary.js'
+import ErrorBoundary, { BuggyDisplay } from './react.err.boundary.js'
 import jpgPig from '../img/pig.jpg'
 
 

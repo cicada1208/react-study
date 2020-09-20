@@ -1,12 +1,21 @@
 var ary = [{ na: '1' }]
-console.log(ary.push({ na: '2' }))
-console.log(ary)
 
 ary = [
     ...ary,
     { na: '3' }
 ]
-console.log(ary)
 
-ary.pop()
-console.log(ary)
+let aryBabelPluginsPrd = [
+    '@babel/plugin-transform-runtime',
+    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-proposal-class-properties',
+]
+
+let aryBabelPluginsDev = [
+    ...aryBabelPluginsPrd,
+    '@babel/plugin-transform-react-jsx-source',
+]
+
+console.log(aryBabelPluginsPrd)
+console.log('------')
+console.log(aryBabelPluginsDev)
