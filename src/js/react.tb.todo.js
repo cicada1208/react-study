@@ -23,6 +23,37 @@ class TbTodo extends React.Component {
                 { id: 2, name: 'b', desp: 'bdesp', slt: 'bslt', completed: true },
             ]
         }
+
+        // ref 使用時機:
+        // 管理 focus、選擇文字、或影音播放。
+        // 觸發即時的動畫。
+        // 與第三方 DOM 函式庫整合。
+
+        // ref 使用地方: 關聯 HTML DOM element、class component
+        // 無法使用 ref 關聯 function component 因為不是 instance
+
+        // React.createRef: 創建 ref，之後用來關聯 DOM element <input name="name" />
+        this.refName = React.createRef()
+
+        // Callback Refs: 設定 ref 的另種方式
+        // 該 function 將 HTML DOM element 或 React component instance 當作參數
+        // this.refName = null
+        // this.setRefName = element => {
+        //     this.refName = element
+        // }
+    }
+
+    componentDidMount() {
+        // current: 取得 DOM element
+        // React 在 component mount 時將 DOM element 賦值予 current 屬性，並在 unmount 時將它清空回 null。
+        // ref 的更新發生在生命週期 componentDidMount 或 componentDidUpdate 之前。
+        // focus: focus DOM element <input name="name" />
+        if (this.refName)
+            this.refName.current.focus()
+
+        // Callback Refs:
+        // if (this.refName)
+        //     this.refName.focus()
     }
 
     handleChange(e) {
@@ -55,6 +86,14 @@ class TbTodo extends React.Component {
                 { id: newId, name, desp, slt, completed }
             ]
         })
+
+        // React.createRef:
+        if (this.refName)
+            this.refName.current.focus()
+
+        // Callback Refs:
+        // if (this.refName)
+        //     this.refName.focus()
     }
 
     todoRemove(id) {
@@ -106,7 +145,9 @@ class TbTodo extends React.Component {
                 React Controlled Component: form element <input>, <textarea>, <select>
                 可將 value attribute 顯示為 this.state.name 並透過 this.handleChange 異動 this.state.name 的方式來達成繫結 */}
                 <label>名稱:</label>
-                <input name="name" type="text" value={name} onChange={this.handleChange} />
+                {/* ref: 將 <input name="name" /> 關聯到 this.refName，之後便可在 component 裡透過 this.refName 操作 */}
+                {/* Callback Refs: ref={this.setRefName} */}
+                <input name="name" type="text" value={name} onChange={this.handleChange} ref={this.refName} />
                 <br />
                 <label>描述:</label>
                 <textarea name="desp" value={desp} onChange={this.handleChange} />
