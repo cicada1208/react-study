@@ -29,14 +29,14 @@ class TbTodo extends React.Component {
         // 觸發即時的動畫。
         // 與第三方 DOM 函式庫整合。
 
-        // ref 使用地方: 關聯 HTML DOM element、class component
-        // 無法使用 ref 關聯 function component 因為不是 instance
+        // ref 使用地方: 關聯 HTML DOM element or class component instance
+        // 無法關聯 function component 因為不是 instance
 
-        // React.createRef: 創建 ref，之後用來關聯 DOM element <input name="name" />
+        // React.createRef: 創建 ref，之後用來關聯 HTML DOM element <input name="name" /> or class component instance
         this.refName = React.createRef()
 
         // Callback Refs: 設定 ref 的另種方式
-        // 該 function 將 HTML DOM element 或 React component instance 當作參數
+        // 該 function 將 HTML DOM element 或 class component instance 當作參數
         // this.refName = null
         // this.setRefName = element => {
         //     this.refName = element
@@ -44,7 +44,7 @@ class TbTodo extends React.Component {
     }
 
     componentDidMount() {
-        // current: 取得 DOM element
+        // current: 取得 HTML DOM element or class component instance
         // React 在 component mount 時將 DOM element 賦值予 current 屬性，並在 unmount 時將它清空回 null。
         // ref 的更新發生在生命週期 componentDidMount 或 componentDidUpdate 之前。
         // focus: focus DOM element <input name="name" />
