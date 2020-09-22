@@ -12,6 +12,7 @@ class TbTodo extends React.Component {
         this.todoAdd = this.todoAdd.bind(this)
         this.todoRemove = this.todoRemove.bind(this)
         this.todoComplete = this.todoComplete.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this) // 若未加入此段會出現 TypeError: Cannot read property 'refFile' of undefined
 
         // this.state: 元件的狀態，可想成是資料，之後可在 render 裡取出
         // 只可在 constructor 初始
@@ -88,8 +89,10 @@ class TbTodo extends React.Component {
         })
 
         // React.createRef:
-        if (this.refName)
+        if (this.refName) {
             this.refName.current.focus()
+            console.log('Name:', this.refName.current.value)
+        }
 
         // Callback Refs:
         // if (this.refName)
@@ -123,6 +126,14 @@ class TbTodo extends React.Component {
         })
     }
 
+    handleSubmit(e) {
+        e.preventDefault()
+        if (this.refFile)
+            alert(
+                `Selected file - ${this.refFile.files[0].name}`
+            )
+    }
+
     // render: 負責更新 DOM 來符合 React Component
     // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變
     render() {
@@ -141,28 +152,39 @@ class TbTodo extends React.Component {
                     <Route path={`${this.props.match.path}/child/1`} render={() => { return <div>child1 test</div> }} />
                     <Route path={`${this.props.match.path}/child/2`} render={() => { return <div>child2 test</div> }} />
                 </div>
-                {/* 訊息 Warning: A component is changing an uncontrolled input of type text to be controlled.
-                React Controlled Component: form element <input>, <textarea>, <select>
-                可將 value attribute 顯示為 this.state.name 並透過 this.handleChange 異動 this.state.name 的方式來達成繫結 */}
-                <label>名稱:</label>
-                {/* ref: 將 <input name="name" /> 關聯到 this.refName，之後便可在 component 裡透過 this.refName 操作 */}
-                {/* Callback Refs: ref={this.setRefName} */}
-                <input name="name" type="text" value={name} onChange={this.handleChange} ref={this.refName} />
-                <br />
-                <label>描述:</label>
-                <textarea name="desp" value={desp} onChange={this.handleChange} />
-                <br />
-                <label>選取:</label>
-                <select name="slt" value={slt} onChange={this.handleChange}>
-                    <option value="">請選擇</option>
-                    <option value="aslt">aslt</option>
-                    <option value="bslt">bslt</option>
-                </select>
-                {' '} {/* 空白隔開 */}
-                <label>狀態:</label>
-                <input name="completed" type="checkbox" checked={completed} onChange={this.handleChange} />
-                {' '}
-                <button onClick={this.todoAdd}>Add item</button>
+                <form onSubmit={this.handleSubmit}>
+                    {/* 訊息 Warning: A component is changing an uncontrolled input of type text to be controlled.
+                    React Controlled Component:
+                    form element <input>, <textarea>, <select> 可將 value attribute 顯示為 this.state.name
+                    並透過 this.handleChange 異動 this.state.name 的方式來達成繫結。
+                        
+                    React Uncontrolled Component:
+                    也可使用 ref 取得 form element <input>, <textarea>, <select>，而不透過 this.state 繫結。
+                    defaultValue='...'、defaultChecked attribute: Uncontrolled Componen 的預設值。 */}
+                    <label>名稱:</label>
+                    {/* ref: 將 <input name="name" /> 關聯到 this.refName，之後便可在 component 裡透過 this.refName 操作此 DOM */}
+                    {/* Callback Refs: <input ref={this.setRefName} /> or <input ref={element => this.refName = element} /> */}
+                    <input name="name" type="text" value={name} onChange={this.handleChange} ref={this.refName} />
+                    <br />
+                    <label>描述:</label>
+                    <textarea name="desp" value={desp} onChange={this.handleChange} />
+                    <br />
+                    <label>選取:</label>
+                    <select name="slt" value={slt} onChange={this.handleChange}>
+                        <option value="">請選擇</option>
+                        <option value="aslt">aslt</option>
+                        <option value="bslt">bslt</option>
+                    </select>
+                    {' '} {/* 空白隔開 */}
+                    <label>狀態:</label>
+                    <input name="completed" type="checkbox" checked={completed} onChange={this.handleChange} />
+                    {' '}
+                    <button onClick={this.todoAdd}>Add item</button>
+                    <br />
+                    {/* <input type="file" /> 永遠都是 uncontrolled component */}
+                    <input type="file" ref={element => { this.refFile = element }} />
+                    <button type="submit">Submit</button>
+                </form>
                 <table className="table table-bordered">
                     <thead>
                         <tr>
