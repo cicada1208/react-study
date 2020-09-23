@@ -31,6 +31,7 @@ export const ClockLazyComp = React.lazy(() =>
         './react.clock.defexp.js'
     )
 )
+
 // Lazy Component: 應在 suspense component 內 render，
 // 同時可在等待 lazy component 載入時，顯示 fallback prop(可為 React element 像是載入中)。
 // Suspense Component: 可包覆多個 lazy component。

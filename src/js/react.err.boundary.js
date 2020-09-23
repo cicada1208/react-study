@@ -1,5 +1,19 @@
 import React from 'react'
 
+const ErrorCatch = (props) => {
+    return (
+        <>
+            <h2>ErrorCatch.</h2>
+            <details style={{ whiteSpace: 'pre-wrap' }}>
+                {props.error && props.error.message}
+                <br />
+                {props.error && props.error.stack}
+            </details>
+        </>
+    )
+}
+export default ErrorCatch
+
 // ErrorBoundary:
 // 截取 child component tree 中 JavaScript 錯誤、記錄錯誤、並顯示一個 fallback UI
 // render 期間、生命週期方法、constructor 內都能截取到錯誤
@@ -10,7 +24,7 @@ import React from 'react'
 // 非同步的程式碼
 // Server side rendering
 // 錯誤邊界裡的錯誤
-export default class ErrorBoundary extends React.Component {
+export class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -52,7 +66,7 @@ export default class ErrorBoundary extends React.Component {
             // when error render 任何自訂的 fallback UI
             return (
                 <>
-                    <h2>Something went wrong.</h2>
+                    <h2>ErrorBoundary.</h2>
                     <details style={{ whiteSpace: 'pre-wrap' }}>
                         {this.state.error && this.state.error.toString()}
                         <br />

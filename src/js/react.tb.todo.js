@@ -7,7 +7,7 @@ class TbTodo extends React.Component {
     constructor(props) {
         super(props)
 
-        // 為了讓 this 能在 callback 中被使用，例如 onChange={this.handleChange}，這裡的綁定是必要的
+        // 為了讓 this 能在 callback 中被使用，這裡的綁定是必要的
         this.handleChange = this.handleChange.bind(this)
         this.todoAdd = this.todoAdd.bind(this)
         this.todoRemove = this.todoRemove.bind(this)
@@ -22,7 +22,8 @@ class TbTodo extends React.Component {
             todos: [
                 { id: 1, name: 'a', desp: 'adesp', slt: 'aslt', completed: false },
                 { id: 2, name: 'b', desp: 'bdesp', slt: 'bslt', completed: true },
-            ]
+            ],
+            error: null
         }
 
         // ref 使用時機:
@@ -127,16 +128,34 @@ class TbTodo extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault()
-        if (this.refFile)
-            alert(
-                `Selected file - ${this.refFile.files[0].name}`
-            )
+        try {
+            e.preventDefault()
+            if (this.refFile && this.refFile.files.length > 0) {
+                let strfiles = '', strSplit = ''
+                for (var file of this.refFile.files) {
+                    strfiles += strSplit + file.name
+                    strSplit = ', '
+                }
+                alert(`Selected file: ${strfiles}`)
+            }
+        } catch (error) {
+            this.setState({ error })
+        }
     }
 
     // render: 負責更新 DOM 來符合 React Component
     // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變
     render() {
+        if (this.state.error) {
+            const ErrorCatch = React.lazy(() =>
+                import(
+                    /* webpackChunkName: "react.err.boundary" */
+                    './react.err.boundary.js'
+                )
+            )
+            return <ErrorCatch error={this.state.error} />
+        }
+
         // 從 state 取出資料
         const { todos, name, desp, slt, completed } = this.state
         // this.props.match.path: 該 component 匹配到的路徑，在此為 /todo，可用此配置第2層 Route and Link
@@ -181,8 +200,8 @@ class TbTodo extends React.Component {
                     {' '}
                     <button onClick={this.todoAdd}>Add item</button>
                     <br />
-                    {/* <input type="file" /> 永遠都是 uncontrolled component */}
-                    <input type="file" ref={element => { this.refFile = element }} />
+                    {/* <input type="file" /> 永遠都是 Uncontrolled Component */}
+                    <input type="file" multiple ref={element => this.refFile = element} />
                     <button type="submit">Submit</button>
                 </form>
                 <table className="table table-bordered">

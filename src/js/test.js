@@ -8,3 +8,10 @@
 // }
 
 // console.log(f(fs))
+
+let ary = ['a', 'b']
+let strfiles = ''
+ary.forEach(file => {
+    strfiles += file
+})
+console.log(strfiles)
