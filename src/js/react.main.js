@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
 import ReactElmt from './react.elmt.js'
-import { FunComp, FunComps } from './react.funcomp.js'
+import { FunComp, FunComps, RuntimeComp } from './react.funcomp.js'
 import ClassComp from './react.classcomp.js'
 import TbTodo from './react.tb.todo.js'
 import { Clocks } from './react.clock.js'
@@ -43,6 +43,7 @@ class Home extends React.Component {
                     <li><Link to="/lazycomp">lazycomp</Link ></li>
                     <li><Link to="/reactcontext">reactcontext</Link ></li>
                     <li><Link to="/errboundary">errboundary</Link ></li>
+                    <li><Link to="/runtimecomp">runtimecomp</Link ></li>
                 </ul>
                 {/* {this.props.children} 對應的 component，例如：TbTodo? */}
             </React.Fragment>
@@ -81,6 +82,7 @@ ReactDOM.render(
                 <Route path="/lazycomp" component={ClockLazyComp} />
                 <Route path="/reactcontext" component={ThemeToggler} />
                 <Route path="/errboundary" component={BuggyDisplay} />
+                <Route path="/runtimecomp" component={RuntimeComp} />
             </Suspense>
         </ErrorBoundary>
     </HashRouter >,

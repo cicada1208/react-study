@@ -36,10 +36,41 @@ export function FunComps() {
     )
 }
 
-// component 字首須大寫，小寫開頭的組件視為原始 DOM tag，
-// <div /> 視為 HTML div tag，
-// <FunComps /> 視為 component，且需在作用域中使用。
+// <div />: 字首小寫視為原始 DOM HTML div tag
+// <FunComps />: 字首大寫視為 component，且需在作用域中使用(import 'react' 及 component FunComps)
 // ReactDOM.render(
 //     <FunComps />,
 //     divReactEx
 // )
+
+
+function Type1st(props) {
+    return <>{props.content}</>
+}
+
+class Type2nd extends React.Component {
+    render() {
+        return <>{this.props.content}</>
+    }
+}
+
+const typecomponents = {
+    tp1st: Type1st,
+    tp2nd: Type2nd
+}
+
+function Type(props) {
+    // JSX 類型可以是大寫開頭的變數
+    const TypeComp = typecomponents[props.type]
+    return <TypeComp content={props.content} />
+}
+
+export function RuntimeComp() {
+    return (
+        <>
+            <Type type='tp2nd' content='Runtime Component 2nd.' />
+            <br />
+            <Type type='tp1st' content='Runtime Component 1st.' />
+        </>
+    )
+}

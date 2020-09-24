@@ -1,4 +1,4 @@
-import React, { useDebugValue } from 'react'
+import React from 'react'
 
 // React Component 撰寫的兩種方式之一:
 // Class Component: stateful component
