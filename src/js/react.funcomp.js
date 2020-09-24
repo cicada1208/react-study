@@ -54,23 +54,49 @@ class Type2nd extends React.Component {
     }
 }
 
+function Type3rd(props) {
+    return <button {...props} />
+}
+
+function Type4th(props) {
+    let items = []
+    for (let i = 1; i <= props.times; i++)
+        items.push(props.children(i))
+    return <>{items}</>
+}
+
 const typecomponents = {
     tp1st: Type1st,
-    tp2nd: Type2nd
+    tp2nd: Type2nd,
+    tp3rd: Type3rd,
+    tp4th: Type4th,
 }
 
 function Type(props) {
+    // 使用展開運算子來分開並挑選 component 所需的 props
+    const { type, ...other } = props
     // JSX 類型可以是大寫開頭的變數
-    const TypeComp = typecomponents[props.type]
-    return <TypeComp content={props.content} />
+    const TypeComp = typecomponents[type]
+    return <TypeComp {...other} />
 }
 
 export function RuntimeComp() {
+    const objProps = { type: 'tp2nd', content: 'Runtime Component 2nd.' }
     return (
         <>
-            <Type type='tp2nd' content='Runtime Component 2nd.' />
+            <Type type='tp1st' content='Runtime Component 1st.&lt;3' />
             <br />
-            <Type type='tp1st' content='Runtime Component 1st.' />
+            {/* {使用 ... 作為展開運算子來傳遞 objProps */}
+            <Type {...objProps} />
+            <br />
+            <Type type='tp3rd' onClick={() => alert("clicked!")} >
+                {/* props.children: string */}
+                Runtime Component 3rd.
+            </Type>
+            <Type type='tp4th' times={2} >
+                {/* props.children: callback function */}
+                {(idx) => <div key={idx}>{idx}. Runtime Component 4th.</div>}
+            </Type>
         </>
     )
 }

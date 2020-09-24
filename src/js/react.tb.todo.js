@@ -219,6 +219,7 @@ class TbTodo extends React.Component {
                             // 訊息 Warning: Each child in a list should have a unique "key" prop.
                             // key: 幫助 React 分辨哪些項目被改變、增加或刪除，給予每個 element 一個固定的身份，
                             // 僅提示 React，但不會被傳遞到 TrTodo component。
+                            // React component 也能是個陣列 element。
                             todos.map((todo) => (
                                 <TrTodo key={todo.id} id={todo.id} name={todo.name} desp={todo.desp} slt={todo.slt}
                                     completed={todo.completed} todoRemove={this.todoRemove} todoComplete={this.todoComplete} />
