@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, HashRouter, Route, Link } from "react-router-dom"
 import ReactElmt from './react.elmt.js'
-import { FunComp, FunComps, RuntimeComp } from './react.funcomp.js'
+import { FunComp, FunComps, RuntimeComp, WordAdder } from './react.funcomp.js'
 import ClassComp from './react.classcomp.js'
 import TbTodo from './react.tb.todo.js'
 import { Clocks } from './react.clock.js'
@@ -82,7 +82,7 @@ ReactDOM.render(
                 <Route path="/lazycomp" component={ClockLazyComp} />
                 <Route path="/reactcontext" component={ThemeToggler} />
                 <Route path="/errboundary" component={BuggyDisplay} />
-                <Route path="/runtimecomp" component={RuntimeComp} />
+                <Route path="/runtimecomp" component={WordAdder} />   {/* RuntimeComp */}
             </Suspense>
         </ErrorBoundary>
     </HashRouter >,

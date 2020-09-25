@@ -10,6 +10,7 @@ export const FunComp = (props) => {
     let x = 'test'
     return (
         <>
+            {/* null, undefined, false, 與 true 不會被 render */}
             {!props.nshow ? <div>Function Component {props.value}</div> : null}
             {props.render && props.render(x)}
             {props.children}
@@ -99,4 +100,42 @@ export function RuntimeComp() {
             </Type>
         </>
     )
+}
+
+
+
+class ListOfWords extends React.PureComponent {
+    render() {
+        // this.props.words.join(',')   this.props.words
+        return <div>{this.props.words.join(',')}</div>;
+    }
+}
+
+export class WordAdder extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            words: ['marklar']
+            // words: 'marklar'
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        // 这部分代码很糟，而且还有 bug
+        const words = this.state.words;
+        words.push('markla');
+        // let { words } = this.state
+        // words = 'aaa'
+        this.setState({ words: words });
+    }
+
+    render() {
+        return (
+            <div>
+                <button onClick={this.handleClick} />
+                <ListOfWords words={this.state.words} />
+            </div>
+        );
+    }
 }
