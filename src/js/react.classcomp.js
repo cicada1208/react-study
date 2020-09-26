@@ -48,7 +48,7 @@ export class CounterButton extends React.Component {
 
     // shouldComponentUpdate: re-render 前觸發
     shouldComponentUpdate(nextProps, nextState) {
-        // props.color 或 state.count 值變更才 re-render
+        // props、state 值變更才 re-render
         // if (this.props.color !== nextProps.color) {
         //     return true
         // }
@@ -75,9 +75,9 @@ export class CounterButton extends React.Component {
 }
 
 
-// React.PureComponent: 替代手動撰寫 shouldComponentUpdate，
+// React.PureComponent: 替代手動撰寫 shouldComponentUpdate
 // 並對 props、state 淺比較新舊值，不同則 re-render
-// 因為淺比較，資料結構複時不適用
+// 因為淺比較，資料結構複雜時不適用
 class WordList extends React.PureComponent {
     constructor(props) {
         super(props)
@@ -100,18 +100,24 @@ export class WordAdder extends React.Component {
     }
 
     handleClick() {
-        const words = this.state.words
-        words.push('b')
-        // WordAdder 的新舊 this.props.words 是同個參考 array(object)，故淺比較 return true，不會 re-render
+        // 新舊 this.props.words 是同個參考 array(object)，故淺比較 return false，不會 re-render
+        // const words = this.state.words
+        // words.push('b')
         // this.setState({ words })
-        // 可修改為 assign 新的 array(object)
-        this.setState({ words: [].concat(words) })
+
+        // 可修改為 assign 新的 array(object)，使之 re-render
+        // this.setState(state => ({
+        //     words: state.words.concat(['b'])
+        // }))
+        this.setState(state => ({
+            words: [...state.words, 'b'],
+        }))
     }
 
     render() {
         return (
             <>
-                <button onClick={this.handleClick} >add word</button>
+                <button onClick={this.handleClick} >Add Word</button>
                 <WordList words={this.state.words} />
                 <br />
                 <CounterButton />
