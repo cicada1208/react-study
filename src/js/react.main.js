@@ -68,8 +68,10 @@ class Home extends React.Component {
 
 // React DOM 負責更新 DOM 來符合 React Element or React Component
 ReactDOM.render(
-    <HashRouter>
-        <ErrorBoundary>
+    // React.StrictMode: 在開發模式下會予以額外的檢查與警告，生命週期函式可能會被多次調用
+    // <React.StrictMode>
+    <ErrorBoundary>
+        <HashRouter>
             <Suspense fallback={<div>Loading...</div>}>
                 <Route path="/" component={Home} />
                 <Route path="/reactelmt" render={() => (ReactElmt)} />
@@ -86,7 +88,8 @@ ReactDOM.render(
                 <Route path="/runtimecomp" component={RuntimeComp} />
                 <Route path="/purecomp" component={WordAdder} />
             </Suspense>
-        </ErrorBoundary>
-    </HashRouter >,
+        </HashRouter >
+    </ErrorBoundary>,
+    // </React.StrictMode>,
     divReactEx
 )

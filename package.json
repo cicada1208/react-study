@@ -1,9 +1,9 @@
 {
     "//type": "module",
-    "name": "test",
+    "name": "study",
     "version": "1.0.0",
-    "description": "test",
-    "main": "webpack.es6.ex.js",
+    "description": "study",
+    "main": "webpack.es6.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "webpack-dev-build": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress",
