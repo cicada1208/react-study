@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 // React Component 撰寫的兩種方式之一:
 // Class Component: stateful component
@@ -88,6 +89,20 @@ class WordList extends React.PureComponent {
     render() {
         return <>{this.props.words.join(',')}</>
     }
+}
+
+// propTypes: props 類型檢查，class component、function component 都可使用
+// 當傳入的 props 類型不正確，會於 browser console 顯示 Warning
+// propTypes 僅在開發模式下檢查
+WordList.propTypes = {
+    // PropTypes.array: 類型是否為 array
+    // PropTypes.array.isRequired: 若無傳入該 prop 顯示 Warning
+    words: PropTypes.array.isRequired
+}
+
+// 指定 props 的默認值，propTypes check 在 defaultProps 賦值後，故也會 check
+WordList.defaultProps = {
+    words: ['def']
 }
 
 export class WordAdder extends React.Component {
