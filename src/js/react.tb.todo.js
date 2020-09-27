@@ -5,7 +5,7 @@ import TrTodo from './react.tr.todo.js'
 class TbTodo extends React.Component {
     // constructor: 首先執行
     constructor(props) {
-        super(props)
+        super(props) // super: 呼叫父類別的 constructor
 
         // 為了讓 this 能在 callback 中被使用，這裡的綁定是必要的
         this.handleChange = this.handleChange.bind(this)
@@ -15,8 +15,9 @@ class TbTodo extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this) // 若未加入此段會出現 TypeError: Cannot read property 'refFile' of undefined
 
         // this.state: 元件的狀態，可想成是資料，之後可在 render 裡取出
-        // 只可在 constructor 初始
-        // 之後需透過 this.setState 更改 this.state，重新 render component
+        // 需透過 this.setState 更改 this.state，重新 render component
+        // this.state 只可在 constructor 初始
+        // this.setState 不可在 constructor 裡調用
         this.state = {
             name: '', desp: '', slt: '', completed: false,
             todos: [

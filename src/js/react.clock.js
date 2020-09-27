@@ -3,7 +3,8 @@ import React from 'react'
 class Clock extends React.Component {
     constructor(props) {
         super(props)
-        // 修改 this.state，不會異動 this.props (唯讀)
+        // 避免將 this.props 的值複製給 this.state！以下是常見的錯誤
+        // 且修改 this.state，不會異動 this.props (唯讀)
         this.state = {
             date: this.props.date,
             dates: this.props.dates
