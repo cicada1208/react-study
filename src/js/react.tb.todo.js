@@ -3,7 +3,7 @@ import { Route, Link } from "react-router-dom"
 import TrTodo from './react.tr.todo.js'
 
 class TbTodo extends React.Component {
-    // constructor: 首先執行
+    // constructor 只在 mounting 時執行一次，首先執行的函式
     constructor(props) {
         super(props) // super: 呼叫父類別的 constructor
 
@@ -218,7 +218,8 @@ class TbTodo extends React.Component {
                     <tbody>
                         {
                             // 訊息 Warning: Each child in a list should have a unique "key" prop.
-                            // key: 幫助 React 分辨哪些項目被改變、增加或刪除，給予每個 element 一個固定的身份，
+                            // key: 幫助 React 分辨哪些項目被改變、增加或刪除，給予每個 element 一個固定的身份，故需唯一，
+                            // 這樣在 re-render 時，可依據 key 做比對更新，而不用重建每一 element，以提高效率，
                             // 僅提示 React，但不會被傳遞到 TrTodo component。
                             // React component 也能是個陣列 element。
                             todos.map((todo) => (

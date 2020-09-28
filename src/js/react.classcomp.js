@@ -47,7 +47,7 @@ export class CounterButton extends React.Component {
         this.state = { count: 1 }
     }
 
-    // shouldComponentUpdate: re-render 前觸發
+    // shouldComponentUpdate: re-render 前觸發，第一次 mounting render 時不觸發
     shouldComponentUpdate(nextProps, nextState) {
         // props、state 值變更才 re-render
         // if (this.props.color !== nextProps.color) {
@@ -82,7 +82,6 @@ export class CounterButton extends React.Component {
 class WordList extends React.PureComponent {
     constructor(props) {
         super(props)
-        // component ListOfWords constructor 只在第一次 render 時執行
         console.log('ListOfWords constructor')
     }
 
