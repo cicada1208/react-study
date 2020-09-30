@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import memoize from 'memoize-one'
 
 // React Component 撰寫的兩種方式之一:
 // Class Component: stateful component
@@ -137,5 +138,40 @@ export class WordAdder extends React.Component {
                 <CounterButton />
             </>
         )
+    }
+}
+
+let aryList = [
+    { id: '1', text: 'a' },
+    { id: '2', text: 'aa' },
+    { id: '3', text: 'b' },
+    { id: '4', text: 'bc' },
+    { id: '5', text: 'c' },
+]
+
+class FilterList extends Component {
+    // state 只需要保存当前的 filter 值：
+    state = { filterText: "" };
+
+    // 在 list 或者 filter 变化时，重新运行 filter：
+    filter = memoize(
+        (list, filterText) => list.filter(item => item.text.includes(filterText))
+    );
+
+    handleChange = event => {
+        this.setState({ filterText: event.target.value });
+    };
+
+    render() {
+        // 计算最新的过滤后的 list。
+        // 如果和上次 render 参数一样，`memoize-one` 会重复使用上一次的值。
+        const filteredList = this.filter(this.props.list, this.state.filterText);
+
+        return (
+            <Fragment>
+                <input onChange={this.handleChange} value={this.state.filterText} />
+                <ul>{filteredList.map(item => <li key={item.id}>{item.text}</li>)}</ul>
+            </Fragment>
+        );
     }
 }
