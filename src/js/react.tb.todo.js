@@ -144,8 +144,10 @@ class TbTodo extends React.Component {
         }
     }
 
-    // render: 負責更新 DOM 來符合 React Component
-    // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變
+    // render: Class Component 唯一必須實現的方法，負責更新 DOM 來符合 React Component。
+    // 若使用 this.setState 改變 state，便會重新執行 render，只要資料改變，畫面就跟著改變。
+    // 如需與瀏覽器進行交互，請在 componentDidMount() 或其他生命週期方法中執行你的操作，
+    // 保持 render() 為純函式，可以使組件更容易思考。
     render() {
         if (this.state.error) {
             const ErrorCatch = React.lazy(() =>

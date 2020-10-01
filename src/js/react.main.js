@@ -21,7 +21,6 @@ document.body.appendChild(divReactEx)
 
 
 class Home extends React.Component {
-    // render 是 Class Component 唯一必須的方法
     render() {
         return (
             // React.Fragment: 能在不額外增加 html dom 情況下，重新組合多個 child component
