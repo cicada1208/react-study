@@ -76,7 +76,6 @@ export class CounterButton extends React.Component {
     }
 }
 
-
 // React.PureComponent: 替代手動撰寫 shouldComponentUpdate
 // 並對 props、state 各自淺比較新舊值，不同則 re-render
 // 因為淺比較，資料結構複雜時不適用
@@ -103,6 +102,42 @@ WordList.propTypes = {
 // 指定 props 的默認值，propTypes check 在 defaultProps 賦值後，故也會 check
 WordList.defaultProps = {
     words: ['def']
+}
+
+let aryList = [
+    { id: '1', text: 'a' },
+    { id: '2', text: 'aa' },
+    { id: '3', text: 'b' },
+    { id: '4', text: 'bc' },
+    { id: '5', text: 'c' },
+]
+
+class FilterList extends React.Component {
+    // state 保存當前 filter 值
+    state = { filterText: "" }
+
+    // list 或 filter 變化時，重新運行 filter
+    // 每個 component 內各自引入 memoized 方法，避免互相影響
+    // memoize-one 只緩存最後一次的參數和結果
+    filter = memoize(
+        (list, filterText) => list.filter(item => item.text.includes(filterText))
+    )
+
+    handleChange = event => {
+        this.setState({ filterText: event.target.value })
+    }
+
+    render() {
+        // 計算最新過濾後 list，如果和上次參數一樣，memoize-one 會複用上次的值
+        const filteredList = this.filter(this.props.list, this.state.filterText)
+
+        return (
+            <>
+                <input onChange={this.handleChange} value={this.state.filterText} />
+                <ul>{filteredList.map(item => <li key={item.id}>{item.text}</li>)}</ul>
+            </>
+        )
+    }
 }
 
 export class WordAdder extends React.Component {
@@ -136,42 +171,9 @@ export class WordAdder extends React.Component {
                 <WordList words={this.state.words} />
                 <br />
                 <CounterButton />
+                <br />
+                <FilterList list={aryList} />
             </>
         )
-    }
-}
-
-let aryList = [
-    { id: '1', text: 'a' },
-    { id: '2', text: 'aa' },
-    { id: '3', text: 'b' },
-    { id: '4', text: 'bc' },
-    { id: '5', text: 'c' },
-]
-
-class FilterList extends Component {
-    // state 只需要保存当前的 filter 值：
-    state = { filterText: "" };
-
-    // 在 list 或者 filter 变化时，重新运行 filter：
-    filter = memoize(
-        (list, filterText) => list.filter(item => item.text.includes(filterText))
-    );
-
-    handleChange = event => {
-        this.setState({ filterText: event.target.value });
-    };
-
-    render() {
-        // 计算最新的过滤后的 list。
-        // 如果和上次 render 参数一样，`memoize-one` 会重复使用上一次的值。
-        const filteredList = this.filter(this.props.list, this.state.filterText);
-
-        return (
-            <Fragment>
-                <input onChange={this.handleChange} value={this.state.filterText} />
-                <ul>{filteredList.map(item => <li key={item.id}>{item.text}</li>)}</ul>
-            </Fragment>
-        );
     }
 }

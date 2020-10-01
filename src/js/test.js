@@ -1,3 +1,32 @@
+let text = 'ABC'
+let filterText = 'A'
+console.log(text.includes(filterText, 0))
+
+
+// class Animal {
+//     constructor(name) {
+//         this.name = name;
+//     }
+
+//     speak() {
+//         console.log(this.name + ' makes a noise.');
+//     }
+// }
+
+// class Dog extends Animal {
+//     constructor(na) {
+//         super(na)
+//     }
+
+//     speak() {
+//         console.log(this.name + ' barks.');
+//     }
+// }
+
+// var d = new Dog('Mitzie');
+// d.speak(); // Mitzie barks.
+
+
 // let ary = [1, 2]
 // let ary1 = ary
 // console.log(Object.is(ary, ary1))
@@ -13,26 +42,3 @@
 // // console.log(Object.is(ary, ary2))
 // // console.log(Object.is(ary, ary3))
 // // console.log(ary3)
-
-class Animal {
-    constructor(name) {
-        this.name = name;
-    }
-
-    speak() {
-        console.log(this.name + ' makes a noise.');
-    }
-}
-
-class Dog extends Animal {
-    constructor(na) {
-        super(na)
-    }
-
-    speak() {
-        console.log(this.name + ' barks.');
-    }
-}
-
-var d = new Dog('Mitzie');
-d.speak(); // Mitzie barks.
