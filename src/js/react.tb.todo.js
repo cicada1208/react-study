@@ -70,7 +70,7 @@ class TbTodo extends React.Component {
             case 'desp':
             case 'slt':
             case 'completed':
-                // this.setState: 設定 state，會 merge 你提供的 object 到目前的 state
+                // this.setState: 設定 state，會淺層合併你提供的 object 到新的 state
                 this.setState({ [strName]: objVal })
                 break
             default:

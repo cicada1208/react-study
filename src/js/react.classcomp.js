@@ -124,9 +124,15 @@ class FilterList extends React.Component {
         (list, filterText) => list.filter(item => item.text.includes(filterText))
     )
 
+    // 使用 class fields 實驗性語法，確保 handleChange 內的 this 綁定
     handleChange = event => {
         this.setState({ filterText: event.target.value })
     }
+
+    // 不使用 class fields 語法，需在 callback 中使用 arrow function 做 this 綁定
+    // handleChange(event) {
+    //     this.setState({ filterText: event.target.value })
+    // }
 
     render() {
         // 計算最新過濾後 list，如果和上次參數一樣，memoize-one 會複用上次的值
@@ -134,6 +140,7 @@ class FilterList extends React.Component {
 
         return (
             <>
+                {/* 使用 arrow function 做 this 綁定: onChange={() => this.handleChange()} */}
                 <input onChange={this.handleChange} value={this.state.filterText} />
                 <ul>{filteredList.map(item => <li key={item.id}>{item.text}</li>)}</ul>
             </>
@@ -145,7 +152,8 @@ export class WordAdder extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            words: ['你是個']
+            words: ['你是個'],
+            count: 0
         }
         this.handleClick = this.handleClick.bind(this)
     }
@@ -160,9 +168,28 @@ export class WordAdder extends React.Component {
         // this.setState(state => ({
         //     words: state.words.concat(['b'])
         // }))
+
+        // no matter how many setState() calls in how many components you do
+        // inside a React event handler, they will produce only a single
+        // re-render at the end of the event.
         this.setState(state => ({
             words: [...state.words, 'b'],
         }))
+        this.setState(state => ({
+            words: [...state.words, 'c'],
+        }))
+
+        // The this.state object is updated when we re-render the UI at the end of the batch.
+        // So if you need to update state based on a previous state
+        // (such as incrementing a counter), you should use the functional setState(fn)
+        // version that gives you the previous state, instead of reading from this.state.
+        // 下面案例 reading from this.state 無法取得前面累加值，this.state.count = １
+        // this.setState({ count: this.state.count + 1 })
+        // this.setState({ count: this.state.count + 1 })
+        // this.setState 透過 updater 函式接收的參數 state 和 props 都保證為最新。
+        // 下面案例正確累加前面值，this.state.count = 2
+        this.setState(state => ({ count: state.count + 1 }))
+        this.setState(state => ({ count: state.count + 1 }))
     }
 
     render() {

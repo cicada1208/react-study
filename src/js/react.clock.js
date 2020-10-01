@@ -27,7 +27,6 @@ class Clock extends React.Component {
         //     ]
         // })
 
-        // 若 state 的更新是非同步，透過 callback 來設定值
         this.setState(state => ({
             dates: [
                 ...state.dates,
