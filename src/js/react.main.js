@@ -65,7 +65,9 @@ class Home extends React.Component {
 // 相當於將 component TbTodo 內容替換掉 <Route path="/todo" component={TbTodo} /> 這行，
 // 其他未匹配到的 Route 則刪去。
 
-// React DOM 負責更新 DOM 來符合 React Element or React Component
+// ReactDOM.render: 負責更新 DOM 來符合 React Element or React Component
+// 第一次渲染時，container 內的 DOM element 都會被替換，
+// 之後呼叫會使用 React DOM diffing 演算法進行高效率的更新。
 ReactDOM.render(
     // React.StrictMode: 在開發模式下會予以額外的檢查與警告，生命週期函式可能會被多次調用
     // <React.StrictMode>
@@ -92,3 +94,7 @@ ReactDOM.render(
     // </React.StrictMode>,
     divReactEx
 )
+
+// 從 DOM 中移除已經 mount 的 React component 並清除其 event handler 和 state。
+// return true if unmount success
+// let boolUnmount = ReactDOM.unmountComponentAtNode(divReactEx)

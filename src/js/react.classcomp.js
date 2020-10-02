@@ -124,12 +124,12 @@ class FilterList extends React.Component {
         (list, filterText) => list.filter(item => item.text.includes(filterText))
     )
 
-    // 使用 class fields 實驗性語法，確保 handleChange 內的 this 綁定
+    // this 綁定方法2: 使用 class fields 實驗性語法，確保 handleChange 內的 this 綁定
     handleChange = event => {
         this.setState({ filterText: event.target.value })
     }
 
-    // 不使用 class fields 語法，需在 callback 中使用 arrow function 做 this 綁定
+    // this 綁定方法3: 不使用 class fields 語法，需在 callback 中使用 arrow function 做 this 綁定
     // handleChange(event) {
     //     this.setState({ filterText: event.target.value })
     // }
@@ -140,7 +140,8 @@ class FilterList extends React.Component {
 
         return (
             <>
-                {/* 使用 arrow function 做 this 綁定: onChange={() => this.handleChange()} */}
+                {/* this 綁定方法2: onChange={this.handleChange} */}
+                {/* this 綁定方法3: onChange={(e) => this.handleChange(e)} */}
                 <input onChange={this.handleChange} value={this.state.filterText} />
                 <ul>{filteredList.map(item => <li key={item.id}>{item.text}</li>)}</ul>
             </>
@@ -155,6 +156,8 @@ export class WordAdder extends React.Component {
             words: ['你是個'],
             count: 0
         }
+
+        // this 綁定方法1: 為了讓 this 能在 callback 中被使用，這裡的綁定是必要的
         this.handleClick = this.handleClick.bind(this)
     }
 
