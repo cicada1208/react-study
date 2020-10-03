@@ -74,7 +74,7 @@ const typecomponents = {
 }
 
 function Type(props) {
-    // 使用展開運算子來分開並挑選 component 所需的 props
+    // 使用其餘運算子來分開並挑選 component 所需的 props
     const { type, ...other } = props
     // JSX 類型可以是大寫開頭的變數
     const TypeComp = typecomponents[type]

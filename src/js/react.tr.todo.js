@@ -12,7 +12,7 @@ export default class TrTodo extends Component {
     }
 
     todoRemove() {
-        // this.props 唯讀，故透過父元件的方法修改資料
+        // this.props: 唯讀，故透過父元件的方法修改資料
         this.props.todoRemove(this.props.id)
     }
 

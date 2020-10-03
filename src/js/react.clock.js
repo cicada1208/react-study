@@ -11,7 +11,7 @@ class Clock extends React.Component {
     }
 
     // 生命週期方法 componentDidMount: Clock component 被 render 到 DOM 後才執行。
-    // 適合添加訂閱至此函式
+    // 適合在此函式添加訂閱
     componentDidMount() {
         // this.timerID: 不需重新 render 的資料，可不用設定於 this.state
         this.timerID = setInterval(
@@ -42,7 +42,7 @@ class Clock extends React.Component {
     }
 
     // 生命週期方法 componentWillUnmount: Clock component 從 DOM 移除前執行。
-    // 適合移除訂閱至此函式，不能使用 this.setState
+    // 適合在此函式移除訂閱，不能使用 this.setState
     componentWillUnmount() {
         // timer 停止
         clearInterval(this.timerID)

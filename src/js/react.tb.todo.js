@@ -3,7 +3,10 @@ import { Route, Link } from "react-router-dom"
 import TrTodo from './react.tr.todo.js'
 
 class TbTodo extends React.Component {
-    // constructor 只在 mounting 時執行一次，首先執行的函式
+    // constructor: 只在 mounting 時執行一次，首先執行的函式。
+    // 避免在 constructor 中產生任何 side effect 或 subscription，
+    // 如需要請使用在 componentDidMount、componentDidUpdate、componentWillUnmount。
+    // side effect: fetch 資料、訂閱、手動改變 DOM。這些影響其他 component 且在 render 期間無法完成。
     constructor(props) {
         super(props) // super: 呼叫父類別的 constructor
 

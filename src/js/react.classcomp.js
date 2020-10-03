@@ -100,7 +100,7 @@ WordList.propTypes = {
     words: PropTypes.array.isRequired
 }
 
-// 指定 props 的默認值，propTypes check 在 defaultProps 賦值後，故也會 check
+// defaultProps: 指定 props 的默認值，propTypes check 在 defaultProps 賦值後，故也會 check
 WordList.defaultProps = {
     words: ['def']
 }

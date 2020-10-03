@@ -5,7 +5,10 @@
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react-hooks/recommended"
+    ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -13,6 +16,5 @@
     "parserOptions": {
         "ecmaVersion": 2018
     },
-    "rules": {
-    }
+    "rules": {}
 }

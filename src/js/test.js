@@ -1,6 +1,7 @@
-let text = 'ABC'
-let filterText = 'A'
-console.log(text.includes(filterText, 0))
+let obj = { self: '123' };
+obj.__proto__.prot = '456';
+const { self, prot } = obj;
+console.log(self, prot);
 
 
 // class Animal {
