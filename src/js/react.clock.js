@@ -10,6 +10,21 @@ class Clock extends React.Component {
         }
     }
 
+    render() {
+        return (
+            <div>
+                date: {this.state.date.toLocaleTimeString()}.
+                last date in dates: {this.state.dates[this.state.dates.length - 1].date.toLocaleTimeString()}.
+            </div>
+        )
+    }
+
+    tick() {
+        this.setState({
+            date: new Date()
+        })
+    }
+
     // 生命週期方法 componentDidMount: Clock component 被 render 到 DOM 後才執行。
     // 適合在此函式添加訂閱
     componentDidMount() {
@@ -46,21 +61,6 @@ class Clock extends React.Component {
     componentWillUnmount() {
         // timer 停止
         clearInterval(this.timerID)
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        })
-    }
-
-    render() {
-        return (
-            <div>
-                date: {this.state.date.toLocaleTimeString()}.
-                last date in dates: {this.state.dates[this.state.dates.length - 1].date.toLocaleTimeString()}.
-            </div>
-        )
     }
 }
 

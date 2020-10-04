@@ -16,5 +16,11 @@
     "parserOptions": {
         "ecmaVersion": 2018
     },
-    "rules": {}
+    "plugins": [
+        "react-hooks"
+    ],
+    "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
+    }
 }

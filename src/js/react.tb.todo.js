@@ -49,19 +49,6 @@ class TbTodo extends React.Component {
         // }
     }
 
-    componentDidMount() {
-        // current: 取得 HTML DOM element or class component instance
-        // React 在 component mount 時將 DOM element 賦值予 current 屬性，並在 unmount 時將它清空回 null。
-        // ref 的更新發生在生命週期 componentDidMount 或 componentDidUpdate 之前。
-        // focus: focus DOM element <input name="name" />
-        if (this.refName)
-            this.refName.current.focus()
-
-        // Callback Refs:
-        // if (this.refName)
-        //     this.refName.focus()
-    }
-
     handleChange(e) {
         // this.setState({
         //     name: e.target.value
@@ -236,6 +223,19 @@ class TbTodo extends React.Component {
                 </table>
             </>
         )
+    }
+
+    componentDidMount() {
+        // current: 取得 HTML DOM element or class component instance
+        // React 在 component mount 時將 DOM element 賦值予 current 屬性，並在 unmount 時將它清空回 null。
+        // ref 的更新發生在生命週期 componentDidMount 或 componentDidUpdate 之前。
+        // focus: focus DOM element <input name="name" />
+        if (this.refName)
+            this.refName.current.focus()
+
+        // Callback Refs:
+        // if (this.refName)
+        //     this.refName.focus()
     }
 }
 
