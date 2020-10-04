@@ -47,6 +47,12 @@ class TbTodo extends React.Component {
         // this.setRefName = element => {
         //     this.refName = element
         // }
+
+        this.listOption = [
+            { value: '', name: '請選擇' },
+            { value: 'aslt', name: 'aslt' },
+            { value: 'bslt', name: 'bslt' },
+        ]
     }
 
     handleChange(e) {
@@ -183,9 +189,7 @@ class TbTodo extends React.Component {
                     <br />
                     <label>選取:</label>
                     <select name="slt" value={slt} onChange={this.handleChange}>
-                        <option value="">請選擇</option>
-                        <option value="aslt">aslt</option>
-                        <option value="bslt">bslt</option>
+                        {this.listOption.map(op => (<option key={op.value} value={op.value}>{op.name}</option>))}
                     </select>
                     {' '} {/* 空白隔開 */}
                     <label>狀態:</label>
