@@ -1,7 +1,5 @@
-let obj = { self: '123' };
-obj.__proto__.prot = '456';
-const { self, prot } = obj;
-console.log(self, prot);
+let x = [...new Array(0).keys()]
+console.log(x);
 
 
 // class Animal {

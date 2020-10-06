@@ -13,9 +13,9 @@ export function HookEx() {
     // # 如果用同樣的 state 值更新，則會跳過 child component render 及 effect 的執行(React 使用 Object.is 比較演算法)。
     const [count, setCount] = useState(0)
 
-    // # side effect: fetch 資料、訂閱、手動改變 DOM。這些影響其他 component 且在 render 期間無法完成。
     // # Effect Hook: function component 中執行 side effect，預設每次 render 後執行。
     //   相似於 componentDidMount、componentDidUpdate、componentWillUnmount。
+    // # side effect: fetch 資料、訂閱、手動改變 DOM。這些影響其他 component 且在 render 期間無法完成。
     // # useEffect(didUpdate, array)
     //   didUpdate: effect function，在每次 render 時都會傳入不同。
     //   array(optional): 包含 component 內隨時間變化並被 effect 用到的值(props 或 state)，
@@ -29,6 +29,12 @@ export function HookEx() {
         // 此為無需清除的 Effect: 使用瀏覽器 API 更新標題。
         document.title = `You clicked ${count} times`
     }, [count]) // 僅在計數更改時才重新執行 effect。
+
+    const ListCounter = useMemo(
+        () => [...new Array(count + 1).keys()].map(item =>
+            (<ReducerCounter key={item} initialCount={item} />)
+        ), [count]
+    )
 
     return (
         <>
