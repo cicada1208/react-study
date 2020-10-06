@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 // Context: 提供 component 間共享值(全局)方式，
 // 讓我們無須明確地傳遍每一個組件，就能將值深入傳遞進組件樹。
@@ -27,20 +27,37 @@ const NameContext = React.createContext('Toggle Theme0')
 
 
 function ThemeTogglerButton() {
+    // Context Hook: 讀取 context 及訂閱其變更，相等於 class 中的 static contextType = ThemeContext 或 <ThemeContext.Consumer>。
+    // 當上層最近的 ThemeContext.Provider 更新時，該 hook 會觸發重新 render，
+    // 即便 ancestor 使用 React.memo 或 shouldComponentUpdate，
+    // 重新 render 仍然從使用 useContext 的 component 本身開始
+    // (呼叫 useContext 的 component 總在 context 值更新時重新 render)。
+    const ThemeContextValue = useContext(ThemeContext)
+
     return (
         // Context.Consumer: 讀取值，會往上找到組件樹中最近的 Context.Provider，並返回 React Element
-        <ThemeContext.Consumer>
-            {({ theme, toggleTheme }) => (
-                <NameContext.Consumer>
-                    {name => (
-                        <button onClick={toggleTheme}
-                            style={{ backgroundColor: theme.background }}>
-                            {name}
-                        </button>
-                    )}
-                </NameContext.Consumer>
+        // <ThemeContext.Consumer>
+        //     {({ theme, toggleTheme }) => (
+        //         <NameContext.Consumer>
+        //             {name => (
+        //                 <button onClick={toggleTheme}
+        //                     style={{ backgroundColor: theme.background }}>
+        //                     {name}
+        //                 </button>
+        //             )}
+        //         </NameContext.Consumer>
+        //     )}
+        // </ThemeContext.Consumer>
+
+        // Context Hook:
+        <NameContext.Consumer>
+            {name => (
+                <button onClick={ThemeContextValue.toggleTheme}
+                    style={{ backgroundColor: ThemeContextValue.theme.background }}>
+                    {name}
+                </button>
             )}
-        </ThemeContext.Consumer>
+        </NameContext.Consumer>
     )
 }
 
