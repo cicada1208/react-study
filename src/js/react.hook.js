@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useState, useEffect, useReducer, useMemo } from 'react'
 
 // Hook: 重複使用 stateful 邏輯
 export function HookEx() {
@@ -16,9 +16,9 @@ export function HookEx() {
     // # Effect Hook: function component 中執行 side effect，預設每次 render 後執行。
     //   相似於 componentDidMount、componentDidUpdate、componentWillUnmount。
     // # side effect: fetch 資料、訂閱、手動改變 DOM。這些影響其他 component 且在 render 期間無法完成。
-    // # useEffect(didUpdate, array)
+    // # useEffect(didUpdate, aryDeps)
     //   didUpdate: effect function，在每次 render 時都會傳入不同。
-    //   array(optional): 包含 component 內隨時間變化並被 effect 用到的值(props 或 state)，
+    //   aryDeps(optional): 依賴 array，包含 component 內隨時間變化並被 effect 用到的值(props 或 state)，
     //   若未完全包含 effect 用到的所有值，則未包含的部分會引用先前 render 的舊值。
     //   傳遞空 array([])，表示 effect 不依賴 props 或 state，因此不需重新執行，
     //   僅在 mount 執行一次 和 unmount 清除一次，effect 內部的 props 和 state 會一直為初始值。
@@ -30,6 +30,10 @@ export function HookEx() {
         document.title = `You clicked ${count} times`
     }, [count]) // 僅在計數更改時才重新執行 effect。
 
+    // # useMemo: 回傳 memoized 值，避免重複進行耗時計算，但若只是簡單的計算，useMemo 所花費的成本可能較高。
+    // # const expensiveResult = useMemo(funExpensive, aryDeps)
+    //   funExpensive: 耗時計算的函式，render 期間執行。
+    //   aryDeps: 依賴 array，依賴改變時才重新計算 memoized 值，所有在 funExpensive 的引用，都應出現在 aryDeps。
     const ListCounter = useMemo(
         () => [...new Array(count + 1).keys()].map(item =>
             (<ReducerCounter key={item} initialCount={item} />)
@@ -45,8 +49,7 @@ export function HookEx() {
             {/* 傳遞一個 function 到 setCount，接收先前的 state，並回傳更新值(基於先前的值來更新)。 */}
             <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
             <button onClick={() => setCount(prevCount => prevCount - 1)}>-</button>
-            <br />
-            <ReducerCounter initialCount={100} />
+            {ListCounter}
         </>
     )
 }

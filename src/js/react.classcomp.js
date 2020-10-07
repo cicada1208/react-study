@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import memoize from 'memoize-one'
+import memoizeOne from 'memoize-one'
+import { dequal } from 'dequal'
 
 // React Component 撰寫的兩種方式之一:
 // Class Component: stateful component
@@ -117,11 +118,19 @@ class FilterList extends React.Component {
     // state 保存當前 filter 值
     state = { filterText: "" }
 
-    // list 或 filter 變化時，重新運行 filter
-    // 每個 component 內各自引入 memoized 方法，避免互相影響
-    // memoize-one 只緩存最後一次的參數和結果
-    filter = memoize(
-        (list, filterText) => list.filter(item => item.text.includes(filterText))
+    // memoize-one: Unlike other memoization libraries, memoize-one only
+    // remembers the latest arguments and result.
+    // 只緩存最後一次的參數和結果，每個 component 各自引入 memoized 方法，避免互相影響。
+    // Default equality function: is a shallow equal check of all arguments
+    // (each argument is compared with ===).
+    // 若傳入的 array list 的內容相同，但卻是個 new reference 的話，預設淺比較會判斷 array 前後不同，而重新執行。
+    // memoizedFilter = memoizeOne(
+    //     (list, filterText) => list.filter(item => item.text.includes(filterText))
+    // )
+    // Custom equality function: a dequal deep equal equality check.
+    memoizedFilter = memoizeOne(
+        (list, filterText) => list.filter(item => item.text.includes(filterText)),
+        dequal
     )
 
     // this 綁定方法2: 使用 class fields 實驗性語法，確保 handleChange 內的 this 綁定
@@ -135,8 +144,9 @@ class FilterList extends React.Component {
     // }
 
     render() {
-        // 計算最新過濾後 list，如果和上次參數一樣，memoize-one 會複用上次的值
-        const filteredList = this.filter(this.props.list, this.state.filterText)
+        // list、filterText 變化 => 重新執行 memoizedFilter
+        // list、filterText 不變 => 複用上次計算值
+        const filteredList = this.memoizedFilter(this.props.list, this.state.filterText)
 
         return (
             <>
