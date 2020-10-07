@@ -121,13 +121,21 @@ class FilterList extends React.Component {
     // memoize-one: Unlike other memoization libraries, memoize-one only
     // remembers the latest arguments and result.
     // 只緩存最後一次的參數和結果，每個 component 各自引入 memoized 方法，避免互相影響。
+
     // Default equality function: is a shallow equal check of all arguments
     // (each argument is compared with ===).
-    // 若傳入的 array list 的內容相同，但卻是個 new reference 的話，預設淺比較會判斷 array 前後不同，而重新執行。
+    // 若傳入的 array list 內容雖相同，但卻是個 new reference 的話，
+    // 預設淺比較判斷 array 的 reference 新舊不同，而重新執行，此時可透過 dequal 比較。
     // memoizedFilter = memoizeOne(
     //     (list, filterText) => list.filter(item => item.text.includes(filterText))
     // )
+
     // Custom equality function: a dequal deep equal equality check.
+    // 若傳入的 array 內容雖透過 aryList.push 新增
+    // aryList.push({ id: `${ary.length + 1}`, text: 'pig' })，
+    // 但新舊都是參考同個 aryList，dequal 比較後相同，不重新執行。
+    // 可透過下列賦值使新舊 aryList 為不同參考
+    // aryList = [...aryList, { id: `${aryList.length + 1}`, text: 'pig' }]。
     memoizedFilter = memoizeOne(
         (list, filterText) => list.filter(item => item.text.includes(filterText)),
         dequal
