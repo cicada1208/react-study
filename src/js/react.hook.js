@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useMemo } from 'react'
+import React, { useState, useEffect, useReducer, useMemo, useCallback } from 'react'
 
 // Hook: 重複使用 stateful 邏輯
 export function HookEx() {
@@ -23,18 +23,37 @@ export function HookEx() {
     //   傳遞空 array([])，表示 effect 不依賴 props 或 state，因此不需重新執行，
     //   僅在 mount 執行一次 和 unmount 清除一次，effect 內部的 props 和 state 會一直為初始值。
     // # 可使用多個 useEffect() 故可區分相關邏輯在同一 effect function，並照指定順序執行。
-    useEffect(() => {
-        // useEffect 兩種模式:
-        // 需清除的 Effect: 會回傳清除用的 function，React 將在需要清除時執行，預設在下次執行 effect 前清除前個 render 的 effect。
-        // 此為無需清除的 Effect: 使用瀏覽器 API 更新標題。
-        document.title = `You clicked ${count} times`
-    }, [count]) // 僅在計數更改時才重新執行 effect。
+    // useEffect(() => {
+    //     // useEffect 兩種模式:
+    //     // 需清除的 Effect: 會回傳清除用的 function，React 將在需要清除時執行，預設在下次執行 effect 前清除前個 render 的 effect。
+    //     // 此為無需清除的 Effect: 使用瀏覽器 API 更新標題。
+    //     document.title = `You clicked ${count} times`
+    // }, [count]) // 僅在計數更改時才重新執行 effect。
 
-    // # useMemo: 回傳 memoized 值，避免重複進行耗時計算，但若只是簡單的計算，useMemo 所花費的成本可能較高。
+    // # useCallback: 避免在 component 內宣告的 function，因每次 render 不斷重新被宣告建立(得到不同的 instance function)，
+    //   這樣 function 如果當成 props 傳給 child component，會致使重新 render。
+    // # 但除非 child component 實作比對 props 做選擇性 render，不然就算傳遞 memoizedCallback，child component 仍會 render。
+    //   故大多時不用，當傳遞 memoizedCallback 至 PureComponent、shouldComponentUpdate 或是提供給多個 useEffect 時使用。
+    // # const memoizedCallback = useCallback(fn, aryDeps)
+    //   fn: 通常引用 props 或 state，若無引用也不需使用 useCallback，直接定義於 component 外。
+    //   memoizedCallback: 回傳 memoized callback。
+    //   aryDeps: 依賴 array，依賴改變時才更新，所有在 fn 的引用，都應出現在 aryDeps。
+    const memoizedCallback = useCallback(
+        () => {
+            document.title = `useState Count: ${count}`
+        }, [count]
+    )
+    // 只給單個 useEffect 使用，直接寫在 useEffect 裡即可，此處只是測試功能
+    useEffect(() => {
+        memoizedCallback()
+    }, [memoizedCallback])
+
+    // # useMemo: 避免重複進行耗時計算，但若只是簡單的計算，useMemo 所花費的成本可能較高。
     // # const expensiveResult = useMemo(funExpensive, aryDeps)
+    //   expensiveResult: 回傳 memoized 值。
     //   funExpensive: 耗時計算的函式，render 期間執行。
     //   aryDeps: 依賴 array，依賴改變時才重新計算 memoized 值，所有在 funExpensive 的引用，都應出現在 aryDeps。
-    const ListCounter = useMemo(
+    const MemoizedCounter = useMemo(
         () => [...new Array(count + 1).keys()].map(item =>
             (<ReducerCounter key={item} initialCount={item} />)
         ), [count]
@@ -49,7 +68,7 @@ export function HookEx() {
             {/* 傳遞一個 function 到 setCount，接收先前的 state，並回傳更新值(基於先前的值來更新)。 */}
             <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
             <button onClick={() => setCount(prevCount => prevCount - 1)}>-</button>
-            {ListCounter}
+            {MemoizedCounter}
         </>
     )
 }
