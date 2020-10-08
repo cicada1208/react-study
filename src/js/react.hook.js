@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useReducer, useMemo, useCallback, useRef } from 'react'
 
 // Hook: 重複使用 stateful 邏輯
 export function HookEx() {
@@ -30,7 +30,7 @@ export function HookEx() {
     //     document.title = `You clicked ${count} times`
     // }, [count]) // 僅在計數更改時才重新執行 effect。
 
-    // # useCallback: 避免在 component 內宣告的 function，因每次 render 不斷重新被宣告建立(得到不同的 instance function)，
+    // # useCallback: 避免在 component 內宣告的 function，因每次 render 不斷重新被宣告建立(得到不同的 function instance)，
     //   這樣 function 如果當成 props 傳給 child component，會致使重新 render。
     // # 但除非 child component 實作比對 props 做選擇性 render，不然就算傳遞 memoizedCallback，child component 仍會 render。
     //   故大多時不用，當傳遞 memoizedCallback 至 PureComponent、shouldComponentUpdate 或是提供給多個 useEffect 時使用。
@@ -43,7 +43,7 @@ export function HookEx() {
             document.title = `useState Count: ${count}`
         }, [count]
     )
-    // 只給單個 useEffect 使用，直接寫在 useEffect 裡即可，此處只是測試功能
+    // 只給單個 useEffect 使用，邏輯直接寫在 useEffect 裡即可，不需 useCallback，此處只是測試功能
     useEffect(() => {
         memoizedCallback()
     }, [memoizedCallback])
@@ -59,6 +59,23 @@ export function HookEx() {
         ), [count]
     )
 
+    // # useRef: ref DOM 或建立 JavaScript object 但每次 render 都會給同個 ref object。
+    // # const refContainer = useRef(initialValue)
+    //   refContainer: 回傳 mutable ref object。
+    //   initialValue: .current 屬性初始值。
+    const refInputSet = useRef(null)
+    const refObjSet = useRef(null) // 每次 render 保持 handleClick 中 assign 的值
+    let objSet = null // 每次 render 無法保持 handleClick 中 assign 的值
+    const handleClick = () => {
+        if (refInputSet) {
+            refObjSet.current = parseInt(refInputSet.current.value)
+            objSet = parseInt(refInputSet.current.value)
+            // `current` points to the mounted text input element
+            setCount(parseInt(refInputSet.current.value))
+            refInputSet.current.focus()
+        }
+    }
+
     return (
         <>
             <p>useState Count: {count}</p>
@@ -68,6 +85,8 @@ export function HookEx() {
             {/* 傳遞一個 function 到 setCount，接收先前的 state，並回傳更新值(基於先前的值來更新)。 */}
             <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
             <button onClick={() => setCount(prevCount => prevCount - 1)}>-</button>
+            <input type="text" ref={refInputSet} />
+            <button onClick={handleClick}>Set Count</button>
             {MemoizedCounter}
         </>
     )
