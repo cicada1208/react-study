@@ -33,7 +33,7 @@ export function HookEx() {
     // # useCallback: 避免在 component 內宣告的 function，因每次 render 不斷重新被宣告建立(得到不同的 function instance)，
     //   這樣 function 如果當成 props 傳給 child component，會致使重新 render。
     // # 但除非 child component 實作比對 props 做選擇性 render，不然就算傳遞 memoizedCallback，child component 仍會 render。
-    //   故大多時不用，當傳遞 memoizedCallback 至 PureComponent、shouldComponentUpdate 或是提供給多個 useEffect 時使用。
+    //   故使用時機為當傳遞 memoizedCallback 至實作 PureComponent、shouldComponentUpdate、React.memo 的 component 或是提供給多個 useEffect。
     // # const memoizedCallback = useCallback(fn, aryDeps)
     //   fn: 通常引用 props 或 state，若無引用也不需使用 useCallback，直接定義於 component 外。
     //   memoizedCallback: 回傳 memoized callback。
@@ -53,16 +53,27 @@ export function HookEx() {
     //   expensiveResult: 回傳 memoized 值。
     //   funExpensive: 耗時計算的函式，render 期間執行。
     //   aryDeps: 依賴 array，依賴改變時才重新計算 memoized 值，所有在 funExpensive 的引用，都應出現在 aryDeps。
+    // const MemoizedCounter = useMemo(
+    //     () => [...new Array(count + 1).keys()].map(item =>
+    //         (<ReducerCounter key={item} initialCount={item} />)
+    //     ), [count]
+    // )
     const MemoizedCounter = useMemo(
-        () => [...new Array(count + 1).keys()].map(item =>
-            (<ReducerCounter key={item} initialCount={item} />)
-        ), [count]
+        () => {
+            if (count >= -1)
+                return [...new Array(count + 1).keys()].map(item =>
+                    (<ReducerCounter key={item} initialCount={item} />)
+                )
+            else
+                return null
+        }, [count]
     )
 
     // # useRef: ref DOM 或建立 JavaScript object 但每次 render 都會給同個 ref object。
     // # const refContainer = useRef(initialValue)
     //   refContainer: 回傳 mutable ref object。
     //   initialValue: .current 屬性初始值。
+    //   refSetCountInput.current: points to the mounted text input element.
     const refSetCountInput = useRef(null)
     const refSetCountVal = useRef(null) // 每次 render 保持 handleSetCount 中 assign 的值
     let intSetCountVal = null // 每次 render 無法保持 handleSetCount 中 assign 的值
@@ -70,7 +81,6 @@ export function HookEx() {
         if (refSetCountInput) {
             intSetCountVal = parseInt(refSetCountInput.current.value)
             if (!isNaN(intSetCountVal)) {
-                // `current` points to the mounted text input element
                 refSetCountVal.current = intSetCountVal
                 setCount(intSetCountVal)
             }
@@ -90,10 +100,32 @@ export function HookEx() {
             <input type="text" ref={refSetCountInput} />
             <button onClick={handleSetCount}>Set Count</button>
 
+            <RenderTimes name="RenderTimes" />
+            <MemoRenderTimes name="MemoRenderTimes" />
+
             {MemoizedCounter}
         </>
     )
 }
+
+const RenderTimes = ({ name }) => {
+    const refCount = React.useRef(0)
+    refCount.current++
+
+    return (
+        <p>
+            Component {name} render times: {refCount.current}
+        </p>
+    )
+}
+
+// React.memo: 是個 higher order component，若 component MemoRenderTimes 的 props 未改變會複用上次 render 結果。
+// 只確認 props 的改變，若 component RenderTimes 內有使用 useState 或 useContext，
+// 雖被 wrap 在 React.memo，當 state 或 context 改變時，仍會重新 render。
+// 預設對 props 進行 shallow compare(Number、String: 比較數值，Object: 比較記憶體位置 reference)，
+// 可自定義比較方法 React.memo(component, areEqual)
+// function areEqual(prevProps, nextProps) { props 相等回傳 true(不 re-render)，不等回傳 false(re-render) }
+const MemoRenderTimes = React.memo(RenderTimes)
 
 function init(initialCount) {
     return { count: initialCount }
