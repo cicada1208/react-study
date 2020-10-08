@@ -63,16 +63,18 @@ export function HookEx() {
     // # const refContainer = useRef(initialValue)
     //   refContainer: 回傳 mutable ref object。
     //   initialValue: .current 屬性初始值。
-    const refInputSet = useRef(null)
-    const refObjSet = useRef(null) // 每次 render 保持 handleClick 中 assign 的值
-    let objSet = null // 每次 render 無法保持 handleClick 中 assign 的值
-    const handleClick = () => {
-        if (refInputSet) {
-            refObjSet.current = parseInt(refInputSet.current.value)
-            objSet = parseInt(refInputSet.current.value)
-            // `current` points to the mounted text input element
-            setCount(parseInt(refInputSet.current.value))
-            refInputSet.current.focus()
+    const refSetCountInput = useRef(null)
+    const refSetCountVal = useRef(null) // 每次 render 保持 handleSetCount 中 assign 的值
+    let intSetCountVal = null // 每次 render 無法保持 handleSetCount 中 assign 的值
+    const handleSetCount = () => {
+        if (refSetCountInput) {
+            intSetCountVal = parseInt(refSetCountInput.current.value)
+            if (!isNaN(intSetCountVal)) {
+                // `current` points to the mounted text input element
+                refSetCountVal.current = intSetCountVal
+                setCount(intSetCountVal)
+            }
+            refSetCountInput.current.focus()
         }
     }
 
@@ -85,8 +87,9 @@ export function HookEx() {
             {/* 傳遞一個 function 到 setCount，接收先前的 state，並回傳更新值(基於先前的值來更新)。 */}
             <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
             <button onClick={() => setCount(prevCount => prevCount - 1)}>-</button>
-            <input type="text" ref={refInputSet} />
-            <button onClick={handleClick}>Set Count</button>
+            <input type="text" ref={refSetCountInput} />
+            <button onClick={handleSetCount}>Set Count</button>
+
             {MemoizedCounter}
         </>
     )

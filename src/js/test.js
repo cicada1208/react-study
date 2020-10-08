@@ -1,5 +1,6 @@
-let x = [...new Array(0).keys()]
-console.log(x);
+let x = '456'
+console.log(isNaN(x));
+console.log(parseInt(x));
 
 
 // class Animal {
