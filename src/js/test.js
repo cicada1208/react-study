@@ -1,6 +1,6 @@
-let x = '456'
-console.log(isNaN(x));
-console.log(parseInt(x));
+let obj = { x: '456' }
+let obj2 = { x: '456' }
+console.log(obj2 === obj);
 
 
 // class Animal {

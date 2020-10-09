@@ -18,7 +18,7 @@ export function HookEx() {
     // # side effect: fetch 資料、訂閱、手動改變 DOM。這些影響其他 component 且在 render 期間無法完成。
     // # useEffect(didUpdate, aryDeps)
     //   didUpdate: effect function，在每次 render 時都會傳入不同。
-    //   aryDeps(optional): 依賴 array，包含 component 內隨時間變化並被 effect 用到的值(props 或 state)，
+    //   aryDeps(optional): dependencies array，包含 component 內隨時間變化並被 effect 用到的值(props 或 state)，
     //   若未完全包含 effect 用到的所有值，則未包含的部分會引用先前 render 的舊值。
     //   傳遞空 array([])，表示 effect 不依賴 props 或 state，因此不需重新執行，
     //   僅在 mount 執行一次 和 unmount 清除一次，effect 內部的 props 和 state 會一直為初始值。
@@ -37,7 +37,7 @@ export function HookEx() {
     // # const memoizedCallback = useCallback(fn, aryDeps)
     //   fn: 通常引用 props 或 state，若無引用也不需使用 useCallback，直接定義於 component 外。
     //   memoizedCallback: 回傳 memoized callback。
-    //   aryDeps: 依賴 array，依賴改變時才更新，所有在 fn 的引用，都應出現在 aryDeps。
+    //   aryDeps: dependencies array，依賴改變時才更新，所有在 fn 的引用，都應出現在 aryDeps。
     const memoizedCallback = useCallback(
         () => {
             document.title = `useState Count: ${count}`
@@ -48,11 +48,11 @@ export function HookEx() {
         memoizedCallback()
     }, [memoizedCallback])
 
-    // # useMemo: 避免重複進行耗時計算，但若只是簡單的計算，useMemo 所花費的成本可能較高。
-    // # const expensiveResult = useMemo(funExpensive, aryDeps)
+    // # useMemo: 避免重複進行耗時計算，記住 memoized 值，但若只是簡單的計算，useMemo 所花費的成本可能較高。
+    // # const expensiveResult = useMemo(fnExpensive, aryDeps)
     //   expensiveResult: 回傳 memoized 值。
-    //   funExpensive: 耗時計算的函式，render 期間執行。
-    //   aryDeps: 依賴 array，依賴改變時才重新計算 memoized 值，所有在 funExpensive 的引用，都應出現在 aryDeps。
+    //   fnExpensive: 耗時計算的函式，render 期間執行。
+    //   aryDeps: dependencies array，依賴改變時才重新計算 memoized 值，所有在 fnExpensive 的引用，都應出現在 aryDeps。
     // const MemoizedCounter = useMemo(
     //     () => [...new Array(count + 1).keys()].map(item =>
     //         (<ReducerCounter key={item} initialCount={item} />)
@@ -100,13 +100,16 @@ export function HookEx() {
             <input type="text" ref={refSetCountInput} />
             <button onClick={handleSetCount}>Set Count</button>
 
-            <RenderTimes name="RenderTimes" />
-            <MemoRenderTimes name="MemoRenderTimes" />
+            {/* RenderTimes is not React.memo: 即使 props 未改變仍重新 render */}
+            <RenderTimes name="RenderTimes" refSetCountVal={refSetCountVal.current} />
+            {/* MemoRenderTimes is React.memo: props 未改變會複用上次 render 結果 */}
+            <MemoRenderTimes name="MemoRenderTimes" refSetCountVal={refSetCountVal.current} />
 
             {MemoizedCounter}
         </>
     )
 }
+
 
 const RenderTimes = ({ name }) => {
     const refCount = React.useRef(0)
@@ -114,18 +117,19 @@ const RenderTimes = ({ name }) => {
 
     return (
         <p>
-            Component {name} render times: {refCount.current}
+            Component {name}: render times = {refCount.current}
         </p>
     )
 }
 
 // React.memo: 是個 higher order component，若 component MemoRenderTimes 的 props 未改變會複用上次 render 結果。
-// 只確認 props 的改變，若 component RenderTimes 內有使用 useState 或 useContext，
+// 只確認 props 是否改變，但若 component 內有使用 useState 或 useContext，
 // 雖被 wrap 在 React.memo，當 state 或 context 改變時，仍會重新 render。
 // 預設對 props 進行 shallow compare(Number、String: 比較數值，Object: 比較記憶體位置 reference)，
 // 可自定義比較方法 React.memo(component, areEqual)
 // function areEqual(prevProps, nextProps) { props 相等回傳 true(不 re-render)，不等回傳 false(re-render) }
 const MemoRenderTimes = React.memo(RenderTimes)
+
 
 function init(initialCount) {
     return { count: initialCount }
