@@ -48,10 +48,10 @@ export function HookEx() {
         memoizedCallback()
     }, [memoizedCallback])
 
-    // # useMemo: 避免重複進行耗時計算，記住 memoized 值，但若只是簡單的計算，useMemo 所花費的成本可能較高。
+    // # useMemo: 避免重複進行昂貴計算，記住 memoized 值，但若只是簡單的計算，useMemo 所花費的成本可能較高。
     // # const expensiveResult = useMemo(fnExpensive, aryDeps)
     //   expensiveResult: 回傳 memoized 值。
-    //   fnExpensive: 耗時計算的函式，render 期間執行。
+    //   fnExpensive: 昂貴計算的函式，render 期間執行。
     //   aryDeps: dependencies array，依賴改變時才重新計算 memoized 值，所有在 fnExpensive 的引用，都應出現在 aryDeps。
     // const MemoizedCounter = useMemo(
     //     () => [...new Array(count + 1).keys()].map(item =>
