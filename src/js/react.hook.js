@@ -10,7 +10,7 @@ export function HookEx() {
     //   hook 更新 state 變數會直接取代，除非利用 setState(prevState => {return {...prevState, ...updatedValues}})。
     // # useState() 首次 render 予 state 起始值，其後 render 回傳最後更新的 state。
     // # 可使用多個 useState() 宣告多個 state 變數。
-    // # 如果用同樣的 state 值更新，則會跳過 child component render 及 effect 的執行(React 使用 Object.is 比較演算法)。
+    // # 如果用同樣的 state 值更新，則會跳過 child component render 及 effect 的執行(React 使用 Object.is 比較)。
     const [count, setCount] = useState(0)
 
     // # Effect Hook: function component 中執行 side effect，預設每次 render 後執行。

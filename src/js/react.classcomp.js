@@ -80,7 +80,7 @@ export class CounterButton extends React.Component {
 
 // React.PureComponent: 替代手動撰寫 shouldComponentUpdate
 // 並對 props、state 各自淺比較新舊值，不同則 re-render
-// 因為淺比較，資料結構複雜時不適用
+// 因為淺比較，Object 只比較第一層，資料結構複雜時不適用
 class WordList extends React.PureComponent {
     constructor(props) {
         super(props)

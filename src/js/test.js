@@ -1,3 +1,6 @@
+let obj = null
+console.log(typeof obj)
+
 // class Animal {
 //     constructor(name) {
 //         this.name = name;
