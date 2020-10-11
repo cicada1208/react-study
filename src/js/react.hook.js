@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useReducer, useMemo, useCallback, useRef } from 'react'
+import axios from 'axios'
 
 // Hook: 重複使用 stateful 邏輯
+// 生命週期方法對應Hook: render 即 function component body 本身
 export function HookEx() {
     // # State Hook: 使 function component 能使用 React state。
     // # const [state, setState] = useState(initialState)
@@ -12,23 +14,23 @@ export function HookEx() {
     // # 可使用多個 useState() 宣告多個 state 變數。
     // # 如果用同樣的 state 值更新，則會跳過 child component render 及 effect 的執行(React 使用 Object.is 比較)。
     const [count, setCount] = useState(0)
+    const time = useTime()
 
     // # Effect Hook: function component 中執行 side effect，預設每次 render 後執行。
-    //   相似於 componentDidMount、componentDidUpdate、componentWillUnmount。
+    // # 生命週期方法對應Hook: componentDidMount、componentDidUpdate、componentWillUnmount 相似於 useEffect。
     // # side effect: fetch 資料、訂閱、手動改變 DOM。這些影響其他 component 且在 render 期間無法完成。
     // # useEffect(didUpdate, aryDeps)
     //   didUpdate: effect function，在每次 render 時都會傳入不同。
     //   aryDeps(optional): dependencies array，包含 component 內隨時間變化並被 effect 用到的值(props 或 state)，
     //   若未完全包含 effect 用到的所有值，則未包含的部分會引用先前 render 的舊值。
+    //   依據 aryDeps 改變，重新執行 effect。
     //   傳遞空 array([])，表示 effect 不依賴 props 或 state，因此不需重新執行，
     //   僅在 mount 執行一次 和 unmount 清除一次，effect 內部的 props 和 state 會一直為初始值。
     // # 可使用多個 useEffect() 故可區分相關邏輯在同一 effect function，並照指定順序執行。
     // useEffect(() => {
-    //     // useEffect 兩種模式:
-    //     // 需清除的 Effect: 會回傳清除用的 function，React 將在需要清除時執行，預設在下次執行 effect 前清除前個 render 的 effect。
-    //     // 此為無需清除的 Effect: 使用瀏覽器 API 更新標題。
+    //     // useEffect 兩種模式之一: 無需清除的 Effect。
     //     document.title = `You clicked ${count} times`
-    // }, [count]) // 僅在計數更改時才重新執行 effect。
+    // }, [count]) // 僅在計數改變時才重新執行 effect。
 
     // # useCallback: 避免在 component 內宣告的 function，因每次 render 不斷重新被宣告建立(得到不同的 function instance)，
     //   這樣 function 如果當成 props 傳給 child component，會致使重新 render。
@@ -90,6 +92,7 @@ export function HookEx() {
 
     return (
         <>
+            date: {time.toLocaleTimeString()}
             <p>useState Count: {count}</p>
             {/* <button onClick={() => setCount(count + 1)}>+</button>
             <button onClick={() => setCount(count - 1)}>-</button> */}
@@ -108,6 +111,26 @@ export function HookEx() {
             {MemoizedCounter}
         </>
     )
+}
+
+
+// custom Hook
+function useTime() {
+    const [time, setTime] = useState(new Date())
+
+    useEffect(() => {
+        // useEffect 兩種模式之一: 需清除的 Effect。
+        // 會回傳清除用的 function，React 將在需要清除時執行，
+        // 預設在下次執行 effect 前清除前個 render 的 effect。
+        let timerID
+        timerID = setInterval(
+            () => setTime(new Date()),
+            1000
+        )
+        return () => clearInterval(timerID)
+    }, [])
+
+    return time
 }
 
 
@@ -171,6 +194,41 @@ function ReducerCounter({ initialCount }) {
             </button>
             <button onClick={() => dispatch({ type: 'increment' })}>+</button>
             <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+        </>
+    )
+}
+
+
+export function HookFetch() {
+    const [data, setData] = useState({ hits: [] })
+    const [query, setQuery] = useState('react')
+
+    useEffect(() => {
+        let ignore = false
+
+        async function fetchData() {
+            const result = await axios('https://hn.algolia.com/api/v1/search?query=' + query)
+            if (!ignore) setData(result.data) // re-render affter setData
+        }
+
+        fetchData()
+        return () => { ignore = true }
+    }, [query]) // query 改變才重新執行 effect
+
+    return (
+        <>
+            <input value={query} onChange={e => setQuery(e.target.value)} />
+            <ul>
+                {data.hits.map(item => (
+                    <li key={item.objectID}>
+                        <a href={item.url}>{item.title}</a>
+                        {' '}
+                        <button type="button" onClick={() => { alert(item.objectID) }}>
+                            Show Id
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </>
     )
 }
