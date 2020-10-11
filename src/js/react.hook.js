@@ -57,14 +57,14 @@ export function HookEx() {
     //   aryDeps: dependencies array，依賴改變時才重新計算 memoized 值，所有在 fnExpensive 的引用，都應出現在 aryDeps。
     // const MemoizedCounter = useMemo(
     //     () => [...new Array(count + 1).keys()].map(item =>
-    //         (<ReducerCounter key={item} initialCount={item} />)
+    //         (<ReducerCounterEx key={item} initialCount={item} />)
     //     ), [count]
     // )
     const MemoizedCounter = useMemo(
         () => {
             if (count >= -1)
                 return [...new Array(count + 1).keys()].map(item =>
-                    (<ReducerCounter key={item} initialCount={item} />)
+                    (<ReducerCounterEx key={item} initialCount={item} />)
                 )
             else
                 return null
@@ -158,7 +158,7 @@ function init(initialCount) {
     return { count: initialCount }
 }
 
-function reducer(state, action) {
+function reducerCounter(state, action) {
     switch (action.type) {
         case 'increment':
             return { count: state.count + 1 }
@@ -171,7 +171,7 @@ function reducer(state, action) {
     }
 }
 
-function ReducerCounter({ initialCount }) {
+function ReducerCounterEx({ initialCount }) {
     // # useReducer: useState 替代方案，適用於複雜的 state 邏輯。
     // # const [state, dispatch] = useReducer(reducer, initialArg, init)
     // # 初始 state 方法1:
@@ -183,7 +183,7 @@ function ReducerCounter({ initialCount }) {
     //   init(optional): Lazy initialization. The initial state will be set to init(initialArg).
     //   state(return): 現在的 state
     //   dispatch(return): 配套的 dispatch
-    const [state, dispatch] = useReducer(reducer, initialCount, init)
+    const [state, dispatch] = useReducer(reducerCounter, initialCount, init)
 
     return (
         <>
@@ -199,6 +199,8 @@ function ReducerCounter({ initialCount }) {
 }
 
 
+const url = 'http://hn.algolia.com/api/v1/search?query='
+
 export function HookFetch() {
     const [data, setData] = useState({ hits: [] })
     const [query, setQuery] = useState('react')
@@ -207,13 +209,13 @@ export function HookFetch() {
         let ignore = false
 
         async function fetchData() {
-            const result = await axios('https://hn.algolia.com/api/v1/search?query=' + query)
+            const result = await axios(url + query)
             if (!ignore) setData(result.data) // re-render affter setData
         }
 
         fetchData()
         return () => { ignore = true }
-    }, [query]) // query 改變才重新執行 effect
+    }, [query])
 
     return (
         <>
@@ -232,3 +234,112 @@ export function HookFetch() {
         </>
     )
 }
+
+
+const reducerFetch = (state, action) => {
+    switch (action.type) {
+        case 'FETCH_INIT':
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+            }
+        case 'FETCH_SUCCESS':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                data: action.payload,
+            }
+        case 'FETCH_FAILURE':
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        default:
+            throw new Error()
+    }
+}
+
+const useFetch = (initialUrl, initialData) => {
+    const [url, setUrl] = useState(initialUrl)
+
+    const [state, dispatch] = useReducer(reducerFetch, {
+        isLoading: false,
+        isError: false,
+        data: initialData,
+    })
+
+    useEffect(() => {
+        let didCancel = false
+
+        const fetchData = async () => {
+            // re-render affter dispatch
+            dispatch({ type: 'FETCH_INIT' })
+
+            try {
+                const result = await axios(url)
+
+                if (!didCancel) {
+                    dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
+                }
+            } catch (error) {
+                if (!didCancel) {
+                    dispatch({ type: 'FETCH_FAILURE' })
+                }
+            }
+        }
+
+        fetchData()
+
+        return () => {
+            didCancel = true // 因為非同步 await
+        }
+    }, [url]) // url 改變才重新執行 effect
+
+    return [state, setUrl]
+}
+
+export function ReducerFetchEx() {
+    const [query, setQuery] = useState('redux')
+    const [{ data, isLoading, isError }, setUrl] = useFetch(
+        url + query,
+        { hits: [] },
+    )
+
+    return (
+        <>
+            <form
+                onSubmit={event => {
+                    setUrl(url + query)
+                    event.preventDefault()
+                }}
+            >
+                <input
+                    type="text"
+                    value={query}
+                    onChange={event => setQuery(event.target.value)}
+                />
+                <button type="submit">Search</button>
+            </form>
+
+            {isError && <div>Something went wrong ...</div>}
+
+            {isLoading ? (<div>Loading ...</div>) : (
+                <ul>
+                    {data.hits.map(item => (
+                        <li key={item.objectID}>
+                            <a href={item.url}>{item.title}</a>
+                            {' '}
+                            <button type="button" onClick={() => { alert(item.objectID) }}>
+                                Show Id
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </>
+    )
+}
+

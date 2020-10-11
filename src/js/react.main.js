@@ -12,7 +12,7 @@ import ClickLink from './react.clicklink.js'
 import { ClockLazyComp, ClockSuspComp } from './react.dynamic.import.js'
 import ThemeToggler from './react.context.js'
 import { ErrorBoundary, BuggyDisplay } from './react.err.boundary.js'
-import { HookEx, HookFetch } from './react.hook.js'
+import { HookEx, ReducerFetchEx } from './react.hook.js'
 import jpgPig from '../img/pig.jpg'
 
 
@@ -92,7 +92,7 @@ ReactDOM.render(
                 <Route path="/runtimecomp" component={RuntimeComp} />
                 <Route path="/purecomp" component={WordAdder} />
                 <Route path="/hook" component={HookEx} />
-                <Route path="/hookfetch" component={HookFetch} />
+                <Route path="/hookfetch" component={ReducerFetchEx} />
             </Suspense>
         </HashRouter >
     </ErrorBoundary>,
