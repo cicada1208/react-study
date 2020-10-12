@@ -12,6 +12,7 @@ import ClickLink from './react.clicklink.js'
 import { ClockLazyComp, ClockSuspComp } from './react.dynamic.import.js'
 import ThemeToggler from './react.context.js'
 import { ErrorBoundary, BuggyDisplay } from './react.err.boundary.js'
+import { HocFetchEx } from './react.hoc.js'
 import { HookEx, ReducerFetchEx } from './react.hook.js'
 import jpgPig from '../img/pig.jpg'
 
@@ -45,6 +46,7 @@ class Home extends React.Component {
                     <li><Link to="/errboundary">errboundary</Link ></li>
                     <li><Link to="/runtimecomp">runtimecomp</Link ></li>
                     <li><Link to="/purecomp">purecomp</Link ></li>
+                    <li><Link to="/hoc">hoc</Link ></li>
                     <li><Link to="/hook">hook</Link ></li>
                     <li><Link to="/hookfetch">hookfetch</Link ></li>
                 </ul>
@@ -91,6 +93,7 @@ ReactDOM.render(
                 <Route path="/errboundary" component={BuggyDisplay} />
                 <Route path="/runtimecomp" component={RuntimeComp} />
                 <Route path="/purecomp" component={WordAdder} />
+                <Route path="/hoc" component={HocFetchEx} />
                 <Route path="/hook" component={HookEx} />
                 <Route path="/hookfetch" component={ReducerFetchEx} />
             </Suspense>
