@@ -43,6 +43,7 @@ function getAlbum() {
         // and an XMLHttpRequest instance in the browser
         console.log(response.request);
     }).catch(error => {
+        // 與 fetch 不同，axios 所有的 error 都由 catch 接收
         if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
