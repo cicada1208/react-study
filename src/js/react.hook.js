@@ -75,12 +75,13 @@ export function HookEx() {
     // # const refContainer = useRef(initialValue)
     //   refContainer: 回傳 mutable ref object。
     //   initialValue: .current 屬性初始值。
-    //   refSetCountInput.current: points to the mounted text input element.
+    // # 避免在 render 時設定 ref，可能造成非預期行為。通常是在 event handler 和 effect 中修改 ref。
     const refSetCountInput = useRef(null)
     const refSetCountVal = useRef(null) // 每次 render 保持 handleSetCount 中 assign 的值
     let intSetCountVal = null // 每次 render 無法保持 handleSetCount 中 assign 的值
     const handleSetCount = () => {
         if (refSetCountInput) {
+            // refSetCountInput.current: points to the mounted text input element.
             intSetCountVal = parseInt(refSetCountInput.current.value)
             if (!isNaN(intSetCountVal)) {
                 refSetCountVal.current = intSetCountVal
@@ -92,10 +93,11 @@ export function HookEx() {
 
     return (
         <>
-            date: {time.toLocaleTimeString()}
+            <p>date: {time.toLocaleTimeString()}</p>
             <p>useState Count: {count}</p>
+
             {/* <button onClick={() => setCount(count + 1)}>+</button>
-            <button onClick={() => setCount(count - 1)}>-</button> */}
+                <button onClick={() => setCount(count - 1)}>-</button> */}
 
             {/* 傳遞一個 function 到 setCount，接收先前的 state，並回傳更新值(基於先前的值來更新)。 */}
             <button onClick={() => setCount(prevCount => prevCount + 1)}>+</button>
@@ -341,5 +343,26 @@ export function ReducerFetchEx() {
             )}
         </>
     )
+}
+
+
+// 藉由 ref 取得先前的 prop 或 state 值
+export function PreviousCounter() {
+    const [count, setCount] = useState(0)
+    const prevCount = usePrevious(count)
+    return (
+        <p>
+            <button onClick={() => setCount(prev => prev + 1)}>Click</button>
+            Now: {count}, before: {prevCount}
+        </p>
+    )
+}
+
+function usePrevious(value) {
+    const ref = useRef()
+    useEffect(() => {
+        ref.current = value
+    })
+    return ref.current
 }
 

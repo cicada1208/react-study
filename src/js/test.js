@@ -1,5 +1,5 @@
-let obj = null
-console.log(typeof obj)
+let obj = { x: '1' }
+console.log({ x: '2', ...obj, y: 'q' })
 
 // class Animal {
 //     constructor(name) {
