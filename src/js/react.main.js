@@ -13,7 +13,7 @@ import { ClockLazyComp, ClockSuspComp } from './react.dynamic.import.js'
 import ThemeToggler from './react.context.js'
 import { ErrorBoundary, BuggyDisplay } from './react.err.boundary.js'
 import { HocFetchEx } from './react.hoc.js'
-import { HookEx, ReducerFetchEx, PreviousCounter } from './react.hook.js'
+import { HookEx, ReducerFetchEx, PreviousCounter, PreviousCounterAryDeps } from './react.hook.js'
 import jpgPig from '../img/pig.jpg'
 
 

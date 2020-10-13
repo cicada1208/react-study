@@ -22,7 +22,6 @@ export function HookEx() {
     // # useEffect(didUpdate, aryDeps)
     //   didUpdate: effect function，在每次 render 時都會傳入不同。
     //   aryDeps(optional): dependencies array，包含 component 內隨時間變化並被 effect 用到的值(props 或 state)，
-    //   若未完全包含 effect 用到的所有值，則未包含的部分會引用先前 render 的舊值。
     //   依據 aryDeps 改變，重新執行 effect。
     //   傳遞空 array([])，表示 effect 不依賴 props 或 state，因此不需重新執行，
     //   僅在 mount 執行一次 和 unmount 清除一次，effect 內部的 props 和 state 會一直為初始值。
@@ -350,6 +349,7 @@ export function ReducerFetchEx() {
 export function PreviousCounter() {
     const [count, setCount] = useState(0)
     const prevCount = usePrevious(count)
+
     return (
         <p>
             <button onClick={() => setCount(prev => prev + 1)}>Click</button>
@@ -362,7 +362,30 @@ function usePrevious(value) {
     const ref = useRef()
     useEffect(() => {
         ref.current = value
-    })
+    }) // aryDeps: 有無傳入 [value] 結果相同，應該是自動補入 [value]
     return ref.current
+}
+
+
+export function PreviousCounterAryDeps() {
+    const [count, setCount] = useState(0)
+    const [count2, setCount2] = useState(0)
+
+    const ref = useRef() // 記錄先前的值
+    useEffect(() => {
+        ref.current = `${count}-${count2}`
+    }, [count]) // aryDeps: 缺少 count2，故 count2 改變時 effect 不會重新執行
+
+    return (
+        <p>
+            <button onClick={() => {
+                setCount(prev => prev + 1)
+            }}>Click</button>
+            <button onClick={() => {
+                setCount2(prev => prev + 1)
+            }}>Click2</button>
+            Now: count={count} count2={count2}, before: {ref.current}
+        </p>
+    )
 }
 
