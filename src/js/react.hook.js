@@ -15,6 +15,7 @@ export function HookEx() {
     // # 如果用同樣的 state 值更新，則會跳過 child component render 及 effect 的執行(React 使用 Object.is 比較)。
     const [count, setCount] = useState(0)
     const time = useTime()
+    const [clientRect, refClientRect] = useClientRect()
 
     // # Effect Hook: function component 中執行 side effect，預設每次 render 後執行。
     // # 生命週期方法對應Hook: componentDidMount、componentDidUpdate、componentWillUnmount 相似於 useEffect。
@@ -93,6 +94,7 @@ export function HookEx() {
     return (
         <>
             <p>date: {time.toLocaleTimeString()}</p>
+            {clientRect !== null && <p>name={clientRect.name}, width={clientRect.width}, height={clientRect.height}</p>}
             <p>useState Count: {count}</p>
 
             {/* <button onClick={() => setCount(count + 1)}>+</button>
@@ -107,7 +109,8 @@ export function HookEx() {
             {/* RenderTimes is not React.memo: 即使 props 未改變仍重新 render */}
             <RenderTimes name="RenderTimes" refSetCountVal={refSetCountVal.current} />
             {/* MemoRenderTimes is React.memo: props 未改變會複用上次 render 結果 */}
-            <MemoRenderTimes name="MemoRenderTimes" refSetCountVal={refSetCountVal.current} />
+            {/* refClientRect attach 到 node，會於 render 完後呼叫 callback */}
+            <MemoRenderTimes name="MemoRenderTimes" refSetCountVal={refSetCountVal.current} refClientRect={refClientRect} />
 
             {MemoizedCounter}
         </>
@@ -135,12 +138,29 @@ function useTime() {
 }
 
 
-const RenderTimes = ({ name }) => {
+function useClientRect() {
+    const [rect, setRect] = useState(null)
+
+    // ref callback
+    const ref = useCallback(node => {
+        if (node !== null) {
+            // 測量 DOM node 的位置大小
+            let objRect = JSON.parse(JSON.stringify(node.getBoundingClientRect()))
+            let name = node.localName
+            setRect({ ...objRect, name })
+        }
+    }, []) // callback 只在 component mount 及 unmount 時呼叫
+
+    return [rect, ref]
+}
+
+
+const RenderTimes = ({ name, refClientRect }) => {
     const refCount = React.useRef(0)
     refCount.current++
 
     return (
-        <p>
+        <p ref={refClientRect}>
             Component {name}: render times = {refCount.current}
         </p>
     )
