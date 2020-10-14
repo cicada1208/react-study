@@ -6,7 +6,8 @@ import axios from 'axios'
 export function HookEx() {
     // # State Hook: 使 function component 能使用 React state。
     // # const [state, setState] = useState(initialState)
-    //   initialState: state 起始值(可為 function 經複雜邏輯計算後回傳起始值)。
+    //   initialState: state 起始值，可為 function 經複雜邏輯計算後回傳起始值，
+    //   () => { createRows(props.count) }，此 function 寫法可讓 createRows() 只在第一次 render 時被呼叫一次。
     //   state(return): 現在的 state，可為 number、string、object 等。
     //   setState(return): 更新 state 的 function，不像 class this.setState 會合併原本的 state object，
     //   hook 更新 state 變數會直接取代，除非利用 setState(prevState => {return {...prevState, ...updatedValues}})。
@@ -51,6 +52,7 @@ export function HookEx() {
     }, [memoizedCallback])
 
     // # useMemo: 避免重複進行昂貴計算，記住 memoized 值，但若只是簡單的計算，useMemo 所花費的成本可能較高。
+    // # 你可以依賴 useMemo 作為效能的最佳化，而不是依賴語意的保證。
     // # const expensiveResult = useMemo(fnExpensive, aryDeps)
     //   expensiveResult: 回傳 memoized 值。
     //   fnExpensive: 昂貴計算的函式，render 期間執行。
