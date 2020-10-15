@@ -10,7 +10,7 @@ class TbTodo extends React.Component {
     constructor(props) {
         super(props) // super: 呼叫父類別的 constructor
 
-        // 為了讓 this 能在 callback 中被使用，這裡的綁定是必要的
+        // 為了讓 this 能在 callback 中被使用，這裡的綁定是必要的(綁定傳遞給其他 component 的方法)
         this.handleChange = this.handleChange.bind(this)
         this.todoAdd = this.todoAdd.bind(this)
         this.todoRemove = this.todoRemove.bind(this)

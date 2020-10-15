@@ -1,5 +1,6 @@
-let obj = { x: '1' }
-console.log({ x: '2', ...obj, y: 'q' })
+const A = 65 // ASCII character code
+let obj = Array.from({ length: 26 }, (_, i) => String.fromCharCode(A + i))
+console.log(obj)
 
 // class Animal {
 //     constructor(name) {
