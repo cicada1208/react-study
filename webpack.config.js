@@ -235,7 +235,7 @@ module.exports = {
                             name: boolModeDev ? '[name].[ext]' : '[name].[contenthash].[ext]', // '[folder][name].[ext]'
                             // outputPath: Specify a filesystem path where the target file(s) will be placed.
                             outputPath: './img',
-                            publicPath: '../img/'
+                            publicPath: './img/'
                         }
                     },
                     // {
