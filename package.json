@@ -5,23 +5,23 @@
     "description": "study",
     "main": "webpack.es6.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "webpack-dev-run": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --progress",
+        "webpack-prd-build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress",
         "webpack-dev-build": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress",
-        "webpack-prod-build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress",
-        "webpack-dev-server-run": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --progress",
-        "http-server-run": "http-server dist"
+        "http-server-run": "http-server dist",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/cicada1208/test.git"
+        "url": "git+https://github.com/cicada1208/study.git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/cicada1208/test/issues"
+        "url": "https://github.com/cicada1208/study/issues"
     },
-    "homepage": "https://github.com/cicada1208/test#readme",
+    "homepage": "https://github.com/cicada1208/study#readme",
     "dependencies": {
         "axios": "^0.19.2",
         "dequal": "^2.0.2",

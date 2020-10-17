@@ -134,7 +134,7 @@ module.exports = {
         // promise: './src/js/promise.js',
         // generator: './src/js/generator.js',
         // async_await: './src/js/async.await.js',
-        // webpack_es6: './src/js/webpack.es6.js',
+        webpack_es6: './src/js/webpack.es6.js',
         // webpack_cjs: './src/js/webpack.cjs.js',
         react_main: './src/js/react.main.js',
     },
@@ -235,7 +235,7 @@ module.exports = {
                             name: boolModeDev ? '[name].[ext]' : '[name].[contenthash].[ext]', // '[folder][name].[ext]'
                             // outputPath: Specify a filesystem path where the target file(s) will be placed.
                             outputPath: './img',
-                            publicPath: './img/'
+                            publicPath: '/img/' //'./img/'
                         }
                     },
                     // {

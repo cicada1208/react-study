@@ -7,6 +7,8 @@ import utils, { utils_x, utils_y, utils_z } from './webpack.es6.utils.js' // ES6
 // run in browser
 const divWebpackES6 = document.createElement('div')
 divWebpackES6.id = 'divWebpackES6'
+// import style from '../css/style.scss'
+// divWebpackES6.id = style.divWebpackES6
 divWebpackES6.innerText = `${utils.name} ${utils.prt()} ${utils_x} ${utils_y()} ${utils_z}`
 document.body.appendChild(divWebpackES6)
 
