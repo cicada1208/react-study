@@ -27,8 +27,8 @@
 
 // 執行方法1:
 // 1. running by webpack-dev-server:
-// npm run webpack-dev-server-run by package.json
-// scripts: {"webpack-dev-server-run": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --progress"}
+// npm run webpack-dev-run by package.json
+// scripts: {"webpack-dev-run": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --progress"}
 // 2. webpack-dev-server doesn't write any output files after compiling.
 // Instead, it keeps bundle files in memory
 // and serves them as if they were real files mounted at the server's root path.
@@ -38,9 +38,9 @@
 
 // 執行方法2:
 // 1. build:
-// npx cross-env NODE_ENV=production webpack --config webpack.config.js --progress
-// or npm run webpack-prod-build by package.json
-// scripts: {"webpack-prod-build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress"}
+// npx cross-env NODE_ENV=development webpack --config webpack.config.js --progress
+// or npm run webpack-dev-build by package.json
+// scripts: {"webpack-dev-build": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress"}
 // after building it will create webpack_bundle.js, index.html.
 // 2. running by http-server:
 // npm install --save-dev http-server
@@ -49,6 +49,8 @@
 
 console.log("process.env.NODE_ENV(webpack.config): " + process.env.NODE_ENV);
 const boolModeDev = process.env.NODE_ENV !== 'production';
+// 定義 IIS Server Web root，development: 使用 webpack-dev-server，production: 發佈至 IIS
+const iis_web_root = boolModeDev ? '/' : '/study/'
 const path = require('path');
 
 // clean-webpack-plugin: A webpack plugin to remove/clean your build folder(s).
@@ -96,7 +98,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // all options are optional
-    filename: boolModeDev ? 'assets/css/[name].css' : 'assets/css/[name].[contenthash].css',
+    filename: boolModeDev ? 'assets/css/[name].module.css' : 'assets/css/[name].[contenthash].module.css',
     // chunkFilename: boolModeDev ? '[id].css' : '[id].[contenthash].css',
     // ignoreOrder: false, // Enable to remove warnings about conflicting order
 })
@@ -120,8 +122,6 @@ let aryBabelPluginsDev = [
     '@babel/plugin-transform-react-jsx-source',
 ]
 
-const iis_folder_name = boolModeDev ? '' : '/study'
-
 module.exports = {
     // 'development': 開發模式
     // 'production': 產品模式，自動壓縮及優化
@@ -132,16 +132,17 @@ module.exports = {
     // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
     devtool: 'source-map',
     entry: { // bundle 起點，可多個檔案
-        // api_query: './src/js/api.query.js',
-        // promise: './src/js/promise.js',
-        // generator: './src/js/generator.js',
-        // async_await: './src/js/async.await.js',
-        webpack_es6: './src/js/webpack.es6.js',
-        // webpack_cjs: './src/js/webpack.cjs.js',
-        react_main: './src/js/react.main.js',
+        // 'api.query': './src/js/api.query.js',
+        // 'promise': './src/js/promise.js',
+        // 'generator': './src/js/generator.js',
+        // 'async.await': './src/js/async.await.js',
+        'webpack.es6': './src/js/webpack.es6.js',
+        // 'webpack.cjs': './src/js/webpack.cjs.js',
+        'react.main': './src/js/react.main.js',
     },
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
+        // filename: assets/js/ 指定 bundle 的 js 置於此資料夾，index.html 置於 path
         filename: boolModeDev ? 'assets/js/[name].js' : 'assets/js/[name].[contenthash].js',
         // chunkFilename: provides a template for naming code-split bundles (optional)
         chunkFilename: boolModeDev ? 'assets/js/[name].js' : 'assets/js/[name].[contenthash].js',
@@ -149,16 +150,26 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
         // A relative URL is resolved relative to the HTML page.
-        publicPath: iis_folder_name + '/',
+        // assets 與 index.html 由 server 載入 browser 時前綴位置
+        // publicPath: 'https://cdn.example.com/assets/', // CDN (always HTTPS)
+        // publicPath: '//cdn.example.com/assets/', // CDN (same protocol)
+        // publicPath: '/assets/', // server-relative
+        // publicPath: 'assets/', // relative to HTML page
+        // publicPath: '../assets/', // relative to HTML page
+        // publicPath: '', // relative to HTML page (same directory)
+        publicPath: iis_web_root,
     },
     optimization: {
         // runtimeChunk: split runtime code into a separate chunk.
-        runtimeChunk: 'single',
+        // runtimeChunk: 'single',
+        runtimeChunk: {
+            name: entrypoint => `runtime~${entrypoint.name}`,
+        },
         // moduleIds: Tells webpack which algorithm to use when choosing module ids.
         moduleIds: 'hashed',
         // SplitChunksPlugin: 將各個 entry 重複引用的模組，獨立出一個 chunk，避免重複 bundle
         splitChunks: {
-            // chunks: 'all',
+            chunks: 'all',
             cacheGroups: {
                 // vendor: {
                 //     // This might result in a large chunk containing all external packages.
@@ -204,22 +215,19 @@ module.exports = {
                 use: [
                     // // style-loader: Creates `style` nodes from JS strings.
                     // // Inject CSS into the DOM.
-                    // 'style-loader',
-                    {
+                    boolModeDev && 'style-loader',
+                    !boolModeDev && {
                         // mini-css-extract-plugin should be used only on production builds
                         // without style-loader in the loaders chain, especially if you 
                         // want to have HMR in development.
                         loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: boolModeDev,
-                        },
                     },
                     // css-loader: Translates CSS into CommonJS.
                     // interprets @import and url() like import/require() and will resolve them.
                     'css-loader',
                     // sass-loader: Compiles Sass to CSS
                     'sass-loader',
-                ]
+                ].filter(Boolean)
             },
             {
                 test: /\.(png|svg|jpe?g|gif)$/i,
@@ -236,7 +244,7 @@ module.exports = {
                             name: boolModeDev ? '[name].[ext]' : '[name].[contenthash].[ext]', // '[folder][name].[ext]'
                             // outputPath: Specify a filesystem path where the target file(s) will be placed.
                             outputPath: 'assets/img',
-                            publicPath: iis_folder_name + '/assets/img'
+                            publicPath: iis_web_root + 'assets/img'
                         }
                     },
                     // {
@@ -271,8 +279,8 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         HtmlWebpackPluginConfig,
-        MiniCssExtractPluginConfig
-    ],
+        !boolModeDev && MiniCssExtractPluginConfig
+    ].filter(Boolean),
     devServer: { // webpack-dev-server setting // for development
         // contentBase: Tell the server where to serve content from.
         // This is only necessary if you want to serve static files.
