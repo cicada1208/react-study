@@ -148,7 +148,7 @@ module.exports = {
         // path: The output directory as an absolute path.
         path: path.resolve(__dirname, 'dist'),
         // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
-        // A relative URL is resolved relative to the HTML page
+        // A relative URL is resolved relative to the HTML page.
         publicPath: iis_folder_name + '/',
     },
     optimization: {
