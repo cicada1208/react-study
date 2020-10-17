@@ -96,7 +96,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // all options are optional
-    filename: boolModeDev ? './css/[name].css' : './css/[name].[contenthash].css',
+    filename: boolModeDev ? 'assets/css/[name].css' : 'assets/css/[name].[contenthash].css',
     // chunkFilename: boolModeDev ? '[id].css' : '[id].[contenthash].css',
     // ignoreOrder: false, // Enable to remove warnings about conflicting order
 })
@@ -120,6 +120,8 @@ let aryBabelPluginsDev = [
     '@babel/plugin-transform-react-jsx-source',
 ]
 
+const iis_folder_name = boolModeDev ? '' : '/study'
+
 module.exports = {
     // 'development': 開發模式
     // 'production': 產品模式，自動壓縮及優化
@@ -140,15 +142,14 @@ module.exports = {
     },
     output: { // 匯出 bundle 檔案
         // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
-        filename: boolModeDev ? './js/[name].js' : './js/[name].[contenthash].js',
+        filename: boolModeDev ? 'assets/js/[name].js' : 'assets/js/[name].[contenthash].js',
         // chunkFilename: provides a template for naming code-split bundles (optional)
-        chunkFilename: boolModeDev ? './js/[name].js' : './js/[name].[contenthash].js',
+        chunkFilename: boolModeDev ? 'assets/js/[name].js' : 'assets/js/[name].[contenthash].js',
         // path: The output directory as an absolute path.
         path: path.resolve(__dirname, 'dist'),
-        // path: path.resolve(__dirname, 'dist/assets'),
-        // // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
-        // // A relative URL is resolved relative to the HTML page
-        // publicPath: '/assets/',
+        // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
+        // A relative URL is resolved relative to the HTML page
+        publicPath: iis_folder_name + '/',
     },
     optimization: {
         // runtimeChunk: split runtime code into a separate chunk.
@@ -234,8 +235,8 @@ module.exports = {
                             // the required resource.
                             name: boolModeDev ? '[name].[ext]' : '[name].[contenthash].[ext]', // '[folder][name].[ext]'
                             // outputPath: Specify a filesystem path where the target file(s) will be placed.
-                            outputPath: './img',
-                            publicPath: '/img/' //'./img/'
+                            outputPath: 'assets/img',
+                            publicPath: iis_folder_name + '/assets/img'
                         }
                     },
                     // {
@@ -278,6 +279,7 @@ module.exports = {
         // It is recommended to use an absolute path.
         // devServer.publicPath will be used to determine where
         // the bundles should be served from, and takes precedence.
+        publicPath: '/',
         contentBase: path.resolve(__dirname, 'src'),
         // port: Specify a port number to listen for requests on
         port: 8008,
