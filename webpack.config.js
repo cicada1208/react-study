@@ -22,8 +22,10 @@
 // import csv: npm install --save-dev csv-loader
 // import xml: npm install --save-dev xml-loader
 
-// This ESLint plugin enforces the Rules of Hooks.
-// npm install --save-dev eslint-plugin-react-hooks
+// ESLint plugin:
+// npm install --save-dev eslint
+// npm install --save-dev eslint-plugin-react
+// npm install --save-dev eslint-plugin-react-hooks // enforces the Rules of Hooks
 
 // 執行方法1:
 // 1. running by webpack-dev-server:
