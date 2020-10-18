@@ -1,32 +1,32 @@
 {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true,
-        "node": true
-    },
-    "extends": [
-        // "eslint:recommended",
-        "plugin:react-hooks/recommended"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaVersion": 11,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "plugins": [
-        "react-hooks"
-    ],
-    "rules": {
-        // 檢查 Hook 的規則
-        "react-hooks/rules-of-hooks": "error",
-        // 檢查 effect 的相依性
-        "react-hooks/exhaustive-deps": "warn"
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    // "eslint:recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    // 檢查 Hook 的規則
+    "react-hooks/rules-of-hooks": "error",
+    // 檢查 effect 的相依性
+    "react-hooks/exhaustive-deps": "warn"
+  }
 }

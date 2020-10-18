@@ -13,7 +13,7 @@
 
 console.log('teat1:')
 function hello(a, b) {
-    console.log(this, a, b)
+  console.log(this, a, b)
 }
 
 hello(1, 2) // undefined 1 2
@@ -27,14 +27,14 @@ myHello() // self.define.this 1 2
 
 console.log('teat2:')
 class square {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
-    }
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
 
-    print() {
-        console.log(this)
-    }
+  print() {
+    console.log(this)
+  }
 }
 
 const square1 = new square(1, 2)
@@ -44,10 +44,10 @@ square1.print.call('self.define.this') // self.define.this
 
 console.log('teat3:')
 const obj3 = {
-    value: 1,
-    hello: function () {
-        console.log(this.value)
-    }
+  value: 1,
+  hello: function () {
+    console.log(this.value)
+  }
 }
 
 obj3.hello() // 1
@@ -57,16 +57,16 @@ obj3.hello() // 1
 
 console.log('teat4:')
 const obj4 = {
-    value: 1,
+  value: 1,
+  hello: function () {
+    console.log(this.value)
+  },
+  inner: {
+    value: 2,
     hello: function () {
-        console.log(this.value)
-    },
-    inner: {
-        value: 2,
-        hello: function () {
-            console.log(this.value)
-        }
+      console.log(this.value)
     }
+  }
 }
 
 obj4.inner.hello() // obj4.inner.hello.call(obj4.inner) => 2
@@ -78,7 +78,7 @@ obj4a.hello() // obj4a.hello.call(obj4a) => 2
 
 console.log('teat5:')
 function hello5() {
-    console.log(this)
+  console.log(this)
 }
 
 var a = { value: 1, hello5 }
@@ -92,28 +92,28 @@ b.hello5.apply(a) // a
 console.log('teat6:')
 var x = 10
 var obj = {
-    x: 20,
-    fn: function () {
-        var test = function () {
-            console.log(this.x)
-        }
-        test()
+  x: 20,
+  fn: function () {
+    var test = function () {
+      console.log(this.x)
     }
+    test()
+  }
 }
 // obj.fn() // Cannot read property 'x' of undefined
 
 
 console.log('teat7:')
 const obj7 = {
-    x: 20,
-    fn: function () {
-        // 這邊印出來的 this 是什麼，test 的 this 就是什麼
-        // obj7.fn()呼叫時，宣告 Arrow functions 的地方，this 是什麼，test 的 this 就是什麼
-        const test = () => {
-            console.log(this.x)
-        }
-        test()
+  x: 20,
+  fn: function () {
+    // 這邊印出來的 this 是什麼，test 的 this 就是什麼
+    // obj7.fn()呼叫時，宣告 Arrow functions 的地方，this 是什麼，test 的 this 就是什麼
+    const test = () => {
+      console.log(this.x)
     }
+    test()
+  }
 }
 obj7.fn() // 20
 // const fn7 = obj7.fn

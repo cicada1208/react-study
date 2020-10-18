@@ -6,7 +6,7 @@
 // objExp = false、0、''、null、undefined 判斷式印出 print
 let objExp = 0
 if (!objExp)
-    console.log('print')
+  console.log('print')
 
 console.log('null == undefined:', null == undefined) // true
 console.log('null === undefined:', null === undefined) // false

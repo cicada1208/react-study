@@ -1,5 +1,5 @@
 // Array.filter(Boolean): 移除所有 false 類型元素 (null, undefined, NaN, 0, false, '')
-// Array.filter(Boolean) 相等於 Array.filter(function (x) { return Boolean(x); })
+// Array.filter(Boolean) 相等於 Array.filter(function(elt) { return Boolean(elt); })
 
 var arySrc = [1, 2, "b", {}, null, undefined, NaN, 0, false, '']
 var aryFilter = arySrc.filter(Boolean)

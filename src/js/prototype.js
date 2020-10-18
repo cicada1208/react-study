@@ -2,11 +2,11 @@
 
 console.log('test1:')
 function Person(name, age) {
-    this.name = name;
-    this.age = age;
-    this.log = function () {
-        console.log(this.name + ', age:' + this.age);
-    }
+  this.name = name;
+  this.age = age;
+  this.log = function () {
+    console.log(this.name + ', age:' + this.age);
+  }
 }
 
 var nick = new Person('nick', 18);
@@ -20,12 +20,12 @@ peter.log(); // peter, age:20
 
 console.log('test2:')
 function Person2(name, age) {
-    this.name = name;
-    this.age = age;
+  this.name = name;
+  this.age = age;
 }
 
 Person2.prototype.log = function () {
-    console.log(this.name + ', age:' + this.age);
+  console.log(this.name + ', age:' + this.age);
 }
 
 var nick2 = new Person2('nick', 18);
@@ -43,19 +43,19 @@ console.log(nick2.hasOwnProperty('log')); // false
 console.log(nick2.__proto__.hasOwnProperty('log')); // true
 
 function call(obj, methodName) {
-    var realMethodOwner = obj;
+  var realMethodOwner = obj;
 
-    // 不斷往上找，直到 null 或者是找到真的擁有這個 method 的人為止
-    while (realMethodOwner && !realMethodOwner.hasOwnProperty(methodName)) {
-        realMethodOwner = realMethodOwner.__proto__;
-    }
+  // 不斷往上找，直到 null 或者是找到真的擁有這個 method 的人為止
+  while (realMethodOwner && !realMethodOwner.hasOwnProperty(methodName)) {
+    realMethodOwner = realMethodOwner.__proto__;
+  }
 
-    // 找不到就丟一個 error，否則執行這個 method
-    if (!realMethodOwner) {
-        console.log('method not found.');
-    } else {
-        realMethodOwner[methodName].apply(obj);
-    }
+  // 找不到就丟一個 error，否則執行這個 method
+  if (!realMethodOwner) {
+    console.log('method not found.');
+  } else {
+    realMethodOwner[methodName].apply(obj);
+  }
 }
 
 call(nick2, 'log'); // nick, age:18

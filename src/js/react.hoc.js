@@ -2,58 +2,58 @@ import React from 'react'
 import axios from 'axios'
 
 const withFetching = (url) => (Component) =>
-    class WithFetching extends React.Component {
-        constructor(props) {
-            super(props)
+  class WithFetching extends React.Component {
+    constructor(props) {
+      super(props)
 
-            this.state = {
-                isLoading: false,
-                data: null,
-                error: null,
-            }
-        }
-
-        componentDidMount() {
-            this.setState({ isLoading: true })
-
-            axios.get(url)
-                .then(result => this.setState({
-                    isLoading: false,
-                    data: result.data
-                }))
-                .catch(error => this.setState({
-                    isLoading: false,
-                    error
-                }))
-        }
-
-        render() {
-            return <Component {...this.props} {...this.state} />
-        }
+      this.state = {
+        isLoading: false,
+        data: null,
+        error: null,
+      }
     }
+
+    componentDidMount() {
+      this.setState({ isLoading: true })
+
+      axios.get(url)
+        .then(result => this.setState({
+          isLoading: false,
+          data: result.data
+        }))
+        .catch(error => this.setState({
+          isLoading: false,
+          error
+        }))
+    }
+
+    render() {
+      return <Component {...this.props} {...this.state} />
+    }
+  }
 
 const HocEx = ({ isLoading, data, error }) => {
-    if (!data) {
-        return <p>No data yet ...</p>
-    }
+  if (!data) {
+    return <p>No data yet ...</p>
+  }
 
-    if (error) {
-        return <p>{error.message}</p>
-    }
+  if (error) {
+    return <p>{error.message}</p>
+  }
 
-    if (isLoading) {
-        return <p>Loading ...</p>
-    }
+  if (isLoading) {
+    return <p>Loading ...</p>
+  }
 
-    return (
-        <ul>
-            {data.hits.map(hit =>
-                <li key={hit.objectID}>
-                    <a href={hit.url}>{hit.title}</a>
-                </li>
-            )}
-        </ul>
-    )
+  return (
+    <ul>
+      {data.hits.map(hit =>
+        <li key={hit.objectID}>
+          <a href={hit.url}>{hit.title}</a>
+        </li>
+      )}
+    </ul>
+  )
 }
 
 const url = 'http://hn.algolia.com/api/v1/search?query='

@@ -15,7 +15,7 @@
 console.log('webpack.es6.utils run.')
 
 function prnt() {
-    return 'print'
+  return 'print'
 }
 
 export const utils_x = 'x'
@@ -26,6 +26,6 @@ export { utils_z }
 
 // export default expression
 export default {
-    name: 'webpack.es6',
-    prt: prnt
+  name: 'webpack.es6',
+  prt: prnt
 }

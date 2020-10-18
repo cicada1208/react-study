@@ -23,7 +23,7 @@ require('./webpack.cjs.utils').x = '10'
 console.log('x:', require('./webpack.cjs.utils').x) // x: 10
 // 清除所有 module 緩存
 Object.keys(require.cache).forEach(function (key) {
-    delete require.cache[key];
+  delete require.cache[key];
 })
 // 清除 module 緩存後重新加載
 console.log('x:', require('./webpack.cjs.utils').x) // x: 5

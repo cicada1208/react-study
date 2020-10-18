@@ -5,16 +5,16 @@ const time = new Date().toLocaleDateString()
 const boolShow = true
 // export const ReactElmt = <div>React Element {time}</div>
 const ReactElmt = (
-    <div>
-        {/* {} 內為 JavaScript expression */}
-        {
-            // JavaScript:
-            // true && expression 回傳 expression
-            // false && expression 回傳 false
-            boolShow && <div>{time}</div>
-        }
+  <div>
+    {/* {} 內為 JavaScript expression */}
+    {
+      // JavaScript:
+      // true && expression 回傳 expression
+      // false && expression 回傳 false
+      boolShow && <div>{time}</div>
+    }
         React Element test
-    </div>
+  </div>
 )
 
 export default ReactElmt

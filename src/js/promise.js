@@ -11,51 +11,51 @@ const url = 'https://itunes.apple.com/search?term=twice&limit=2'
 // test1:
 // new Promise 時，即執行非同步作業
 let promise = new Promise((resolve, reject) => {
-    // 非同步作業 ...
-    var boolSuccess = true; // false
-    if (boolSuccess) {
-        // if success -> resolve data
-        // 代表操作成功，並將括號內的值回傳回去
-        resolve("ok_data");
-    }
-    else {
-        // if error -> reject error
-        // 代表操作失敗，並結束操作，並將括號內的值回傳回去
-        reject("err_msg");
-    }
+  // 非同步作業 ...
+  var boolSuccess = true; // false
+  if (boolSuccess) {
+    // if success -> resolve data
+    // 代表操作成功，並將括號內的值回傳回去
+    resolve("ok_data");
+  }
+  else {
+    // if error -> reject error
+    // 代表操作失敗，並結束操作，並將括號內的值回傳回去
+    reject("err_msg");
+  }
 });
 
 // Promise.then() and Promise.catch()
 // 都回傳 Promise 物件且括號內都是 callback funciton
 promise.then(
-    // 當 Promise 狀態為 fulfill 時，可用 Promise.then() 來操作 resolve() 接收的資料
-    // output: "ok_data"
-    data => console.log("test1:", data)
+  // 當 Promise 狀態為 fulfill 時，可用 Promise.then() 來操作 resolve() 接收的資料
+  // output: "ok_data"
+  data => console.log("test1:", data)
 ).catch(
-    // 當 Promise 狀態為 reject 時，可用 Promise.catch() 來操作 reject() 接收的錯誤訊息
-    // output: "err_msg"
-    err => console.error("test1:", err)
+  // 當 Promise 狀態為 reject 時，可用 Promise.catch() 來操作 reject() 接收的錯誤訊息
+  // output: "err_msg"
+  err => console.error("test1:", err)
 );
 
 
 // test2:
 promise = new Promise(function (resolve, reject) {
-    resolve(1);
+  resolve(1);
 });
 
 // then() isn't the end of the story, you can chain thens together 
 // to transform values or run additional async actions one after another.
 // You can transform values simply by returning the new value.
 promise.then(function (val) {
-    console.log('test2:', val); // test2: 1
-    return val + 2; // return 後下個 then 便能接受此值
+  console.log('test2:', val); // test2: 1
+  return val + 2; // return 後下個 then 便能接受此值
 }).then(function (val) {
-    console.log('test2:', val); // test2: 3
-    throw Error('raise error')
+  console.log('test2:', val); // test2: 3
+  throw Error('raise error')
 }).catch(function (err) {
-    console.error('test2:', err); // test2: Error: raise error
+  console.error('test2:', err); // test2: Error: raise error
 }).then(function () {
-    console.log('test2:', "all done");  // test2: all done
+  console.log('test2:', "all done");  // test2: all done
 })
 
 
@@ -63,24 +63,24 @@ promise.then(function (val) {
 var p1 = Promise.resolve(1);
 var p2 = 2;
 var p3 = new Promise((resolve, reject) => {
-    setTimeout(resolve, 1000, 'three');
+  setTimeout(resolve, 1000, 'three');
 });
 var p4 = new Promise((resolve, reject) => {
-    reject(Error('fail'));
+  reject(Error('fail'));
 });
 
 // 括號內所有的 Promise 其狀態都是 fulfilled 後才執行下一步
 // 抑或其一 Promise rejected 後回傳錯誤訊息
 Promise.all([p1, p2, p3]).then(
-    data => console.log('test3:', data) // test3: [ 1, 2, 'three' ]
+  data => console.log('test3:', data) // test3: [ 1, 2, 'three' ]
 ).catch(
-    err => console.error('test3:', err)
+  err => console.error('test3:', err)
 );
 
 Promise.all([p1, p2, p3, p4]).then(
-    data => console.log('test3.2:', data)
+  data => console.log('test3.2:', data)
 ).catch(
-    err => console.error('test3.2:', err) // test3: Error: fail
+  err => console.error('test3.2:', err) // test3: Error: fail
 );
 
 
@@ -88,177 +88,177 @@ Promise.all([p1, p2, p3, p4]).then(
 // XMLHttpRequest run in browser
 // Promisifying XMLHttpRequest
 function get_test4(url) {
-    // Return a new promise.
-    return new Promise(function (resolve, reject) {
-        // Do the usual XHR stuff
-        var req = new XMLHttpRequest();
-        req.open('GET', url);
+  // Return a new promise.
+  return new Promise(function (resolve, reject) {
+    // Do the usual XHR stuff
+    var req = new XMLHttpRequest();
+    req.open('GET', url);
 
-        req.onload = function () {
-            // This is called even on 404 etc
-            // so check the status
-            if (req.status == 200) {
-                // Resolve the promise with the response text
-                resolve(JSON.parse(req.response));
-            }
-            else {
-                // Otherwise reject with the status text
-                // which will hopefully be a meaningful error
-                reject(Error(req.statusText));
-            }
-        };
+    req.onload = function () {
+      // This is called even on 404 etc
+      // so check the status
+      if (req.status == 200) {
+        // Resolve the promise with the response text
+        resolve(JSON.parse(req.response));
+      }
+      else {
+        // Otherwise reject with the status text
+        // which will hopefully be a meaningful error
+        reject(Error(req.statusText));
+      }
+    };
 
-        // Handle network errors
-        req.onerror = function () {
-            reject(Error("Network Error"));
-        };
+    // Handle network errors
+    req.onerror = function () {
+      reject(Error("Network Error"));
+    };
 
-        // Make the request
-        req.send();
-    });
+    // Make the request
+    req.send();
+  });
 }
 
 get_test4(url).then(function (response) {
-    console.log("test4:", response);
+  console.log("test4:", response);
 }, function (error) {
-    console.error("test4:", error);
+  console.error("test4:", error);
 })
 
 
 // test5:
 // run in browser
 function get_test5(url) {
-    return new Promise((resolve, reject) => {
-        var request = $.ajax({
-            url,
-            method: 'get'
-        }).done((data, textStatus, jqXHR) => {
-            resolve(data)
-        }).fail((jqXHR, textStatus, errorThrown) => {
-            reject(Error(textStatus))
-        });
+  return new Promise((resolve, reject) => {
+    var request = $.ajax({
+      url,
+      method: 'get'
+    }).done((data, textStatus, jqXHR) => {
+      resolve(data)
+    }).fail((jqXHR, textStatus, errorThrown) => {
+      reject(Error(textStatus))
     });
+  });
 }
 
 get_test5(url).then(
-    // 簡化2
-    JSON.parse
+  // 簡化2
+  JSON.parse
 
-    // 簡化1: 單行即表示以該行值return
-    // response => JSON.parse(response)
+  // 簡化1: 單行即表示以該行值return
+  // response => JSON.parse(response)
 
-    // 原式
-    // // response => {
-    // //     return JSON.parse(response);
-    // // }
+  // 原式
+  // // response => {
+  // //     return JSON.parse(response);
+  // // }
 ).then(
-    json => console.log("test5:", json)
+  json => console.log("test5:", json)
 ).catch(
-    error => console.error("test5:", error)
+  error => console.error("test5:", error)
 )
 
 
 // test6:
 promise = new Promise(function (resolve, reject) {
-    // JSON.parse throws an error if you feed it some
-    // invalid JSON, so this implicitly rejects:
-    var json = JSON.parse("This ain't JSON")
-    resolve(json);
+  // JSON.parse throws an error if you feed it some
+  // invalid JSON, so this implicitly rejects:
+  var json = JSON.parse("This ain't JSON")
+  resolve(json);
 });
 
 promise.then(function (data) {
-    // This never happens:
-    console.log("test6:", data);
+  // This never happens:
+  console.log("test6:", data);
 }).catch(function (err) {
-    // Instead, this happens:
-    console.error("test6:", err); // test6: SyntaxError: Unexpected token T in JSON at position 0
+  // Instead, this happens:
+  console.error("test6:", err); // test6: SyntaxError: Unexpected token T in JSON at position 0
 })
 
 
 // test7:
 function getPromise(data, time) {
-    return new Promise((resolve, reject) =>
-        setTimeout(resolve, time, data)
-    ).then(data =>
-        console.log('test7:', data)
-    ).catch(err =>
-        console.log('test7:', err)
-    )
+  return new Promise((resolve, reject) =>
+    setTimeout(resolve, time, data)
+  ).then(data =>
+    console.log('test7:', data)
+  ).catch(err =>
+    console.log('test7:', err)
+  )
 }
 
 let aryTime = [3000, 2000, 1000]
 let aryData = [1, 2, 3]
 aryData.forEach((data, idx) => {
-    getPromise(data, aryTime[idx])
-    // 每個 Promise 執行時間不同，故不會照順序印出
-    // output:
-    // 3
-    // 2
-    // 1
+  getPromise(data, aryTime[idx])
+  // 每個 Promise 執行時間不同，故不會照順序印出
+  // output:
+  // 3
+  // 2
+  // 1
 })
 
 aryData = ['a', 'b', 'c']
 var sequence = Promise.resolve();
 aryData.forEach((data, idx) =>
-    sequence = sequence.then(() =>
-        getPromise(data, aryTime[idx])
-    )
-    // 以 then 串接，便會按順序執行
-    // output:
-    // a
-    // b
-    // c
+  sequence = sequence.then(() =>
+    getPromise(data, aryTime[idx])
+  )
+  // 以 then 串接，便會按順序執行
+  // output:
+  // a
+  // b
+  // c
 )
 
 // arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue])
 aryData = ['x', 'y', 'z']
 aryData.reduce((sequence, currentData, idx) =>
-    sequence.then(() =>
-        getPromise(currentData, aryTime[idx])
-        // 以 then 串接，按順序執行
-        // output:
-        // x
-        // y
-        // z
-    )
-    , Promise.resolve() // initialValue
+  sequence.then(() =>
+    getPromise(currentData, aryTime[idx])
+    // 以 then 串接，按順序執行
+    // output:
+    // x
+    // y
+    // z
+  )
+  , Promise.resolve() // initialValue
 )
 
 function getPromise2(data, time) {
-    return new Promise((resolve, reject) =>
-        setTimeout(resolve, time, data)
-    )
+  return new Promise((resolve, reject) =>
+    setTimeout(resolve, time, data)
+  )
 }
 
 aryData = ['e', 'f', 'g']
 // Promise.all 各個 promise 各自執行(異步)，按順序儲值於 aryResult
 // 所有 promise 執行完後，aryResult 再按順序印出，此方法比以 then 串接較為快速
 Promise.all(
-    aryData.map((data, idx) => getPromise2(data, aryTime[idx]))
+  aryData.map((data, idx) => getPromise2(data, aryTime[idx]))
 ).then(aryResult =>
-    aryResult.forEach(rst => console.log('test7:', rst))
-    // output:
-    // e
-    // f
-    // g
+  aryResult.forEach(rst => console.log('test7:', rst))
+  // output:
+  // e
+  // f
+  // g
 ).catch(err =>
-    console.log('test7:', err)
+  console.log('test7:', err)
 )
 
 aryData = ['h', 'i', 'j']
 aryData.map((data, idx) => getPromise2(data, aryTime[idx]))
-    .reduce((sequence, currentPromise) =>
-        sequence.then(() =>
-            currentPromise
-        ).then(rst =>
-            console.log('test7:', rst)
-            // output:
-            // h
-            // i
-            // j
-        )
-        , Promise.resolve()
+  .reduce((sequence, currentPromise) =>
+    sequence.then(() =>
+      currentPromise
+    ).then(rst =>
+      console.log('test7:', rst)
+      // output:
+      // h
+      // i
+      // j
     )
+    , Promise.resolve()
+  )
 
 
 console.log('promise test end.')

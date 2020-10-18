@@ -56,9 +56,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // npm install --save-dev html-webpack-plugin
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: './src/index.html', // 以此為樣本
-    filename: 'index.html', // 產出該檔並包含 bundle 的 <script>
-    inject: 'body', // 將 bundle 的 <script> 插入至 body
+  template: './src/index.html', // 以此為樣本
+  filename: 'index.html', // 產出該檔並包含 bundle 的 <script>
+  inject: 'body', // 將 bundle 的 <script> 插入至 body
 });
 
 // // terser-webpack-plugin: minify your JavaScript.
@@ -75,11 +75,11 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 // npm install --save-dev mini-css-extract-plugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
-    // Options similar to the same options in webpackOptions.output
-    // all options are optional
-    filename: boolModeDev ? '[name].css' : '[name].[contenthash].css',
-    // chunkFilename: boolModeDev ? '[id].css' : '[id].[contenthash].css',
-    // ignoreOrder: false, // Enable to remove warnings about conflicting order
+  // Options similar to the same options in webpackOptions.output
+  // all options are optional
+  filename: boolModeDev ? '[name].css' : '[name].[contenthash].css',
+  // chunkFilename: boolModeDev ? '[id].css' : '[id].[contenthash].css',
+  // ignoreOrder: false, // Enable to remove warnings about conflicting order
 })
 
 // // optimize-css-assets-webpack-plugin: A Webpack plugin to optimize \ minimize CSS assets.
@@ -87,150 +87,150 @@ const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
 // const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
-    // // 'development': 開發模式
-    // // 'production': 產品模式，自動壓縮及優化
-    // mode: 'development',
-    // // devtool: track down errors, map compiled code back to original source code
-    // // 'source-map': most detailed at the expense of build speed.(ideal for production)
-    // // "eval": has the best performance, but doesn't assist you for transpiled code.(ideal for development)
-    // // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
-    // devtool: 'source-map',
-    entry: { // bundle 起點，可多個檔案
-        main: './src/js/main.js',
-        api_query: './src/js/api_query.js'
-    },
-    output: { // 匯出 bundle 檔案
-        // path: The output directory as an absolute path.
-        path: Path.resolve(__dirname, 'dist'),
-        // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
-        filename: '[name].[contenthash].js', // '[name].bundle.js'
-        // // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
-        // // A relative URL is resolved relative to the HTML page
-        // publicPath: '/assets/',
-        // path: Path.resolve(__dirname, 'dist/assets')
-    },
-    // devServer: { // webpack-dev-server setting // for development
-    //     // contentBase: Tell the server where to serve content from.
-    //     // This is only necessary if you want to serve static files.
-    //     // devServer.publicPath will be used to determine where
-    //     // the bundles should be served from, and takes precedence.
-    //     // It is recommended to use an absolute path.
-    //     contentBase: Path.resolve(__dirname, 'dist'),
-    //     // port: Specify a port number to listen for requests on
-    //     port: 8008,
-    //     // inline: A script will be inserted in your bundle to take care of live reloading,
-    //     // and build messages will appear in the browser console.
-    //     inline: true,
-    //     // open: Tells dev-server to open the browser after server had been started.
-    //     // set true to default browser, or specify 'Google Chrome'
-    //     // (The browser application name is platform dependent.)
-    //     open: true,
-    //     // // headers: Adds headers to all responses
-    //     // headers: {
-    //     //     'X-Custom-Foo': 'bar'
-    //     // }
-    // },
-    optimization: {
-        // runtimeChunk: split runtime code into a separate chunk.
-        runtimeChunk: 'single',
-        // moduleIds: Tells webpack which algorithm to use when choosing module ids.
-        moduleIds: 'hashed',
-        // SplitChunksPlugin: 將各個 entry 重複引用的模組，獨立出一個 chunk，避免重複 bundle
-        splitChunks: {
-            // chunks: 'all',
-            cacheGroups: {
-                // vendor: {
-                //     // This might result in a large chunk containing all external packages.
-                //     // It is recommended to only include your core frameworks and utilities
-                //     // and dynamically load the rest of the dependencies.
-                //     test: /[\\/]node_modules[\\/]/,
-                //     name: 'vendors',
-                //     chunks: 'all',
-                // },
-                styles: {
-                    // the CSS can be extracted in one CSS file
-                    test: /\.(sa|sc|c)ss$/i, // /\.css$/i
-                    name: 'styles',
-                    chunks: 'all',
-                    enforce: true,
-                },
-            }
+  // // 'development': 開發模式
+  // // 'production': 產品模式，自動壓縮及優化
+  // mode: 'development',
+  // // devtool: track down errors, map compiled code back to original source code
+  // // 'source-map': most detailed at the expense of build speed.(ideal for production)
+  // // "eval": has the best performance, but doesn't assist you for transpiled code.(ideal for development)
+  // // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
+  // devtool: 'source-map',
+  entry: { // bundle 起點，可多個檔案
+    main: './src/js/main.js',
+    api_query: './src/js/api_query.js'
+  },
+  output: { // 匯出 bundle 檔案
+    // path: The output directory as an absolute path.
+    path: Path.resolve(__dirname, 'dist'),
+    // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
+    filename: '[name].[contenthash].js', // '[name].bundle.js'
+    // // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
+    // // A relative URL is resolved relative to the HTML page
+    // publicPath: '/assets/',
+    // path: Path.resolve(__dirname, 'dist/assets')
+  },
+  // devServer: { // webpack-dev-server setting // for development
+  //     // contentBase: Tell the server where to serve content from.
+  //     // This is only necessary if you want to serve static files.
+  //     // devServer.publicPath will be used to determine where
+  //     // the bundles should be served from, and takes precedence.
+  //     // It is recommended to use an absolute path.
+  //     contentBase: Path.resolve(__dirname, 'dist'),
+  //     // port: Specify a port number to listen for requests on
+  //     port: 8008,
+  //     // inline: A script will be inserted in your bundle to take care of live reloading,
+  //     // and build messages will appear in the browser console.
+  //     inline: true,
+  //     // open: Tells dev-server to open the browser after server had been started.
+  //     // set true to default browser, or specify 'Google Chrome'
+  //     // (The browser application name is platform dependent.)
+  //     open: true,
+  //     // // headers: Adds headers to all responses
+  //     // headers: {
+  //     //     'X-Custom-Foo': 'bar'
+  //     // }
+  // },
+  optimization: {
+    // runtimeChunk: split runtime code into a separate chunk.
+    runtimeChunk: 'single',
+    // moduleIds: Tells webpack which algorithm to use when choosing module ids.
+    moduleIds: 'hashed',
+    // SplitChunksPlugin: 將各個 entry 重複引用的模組，獨立出一個 chunk，避免重複 bundle
+    splitChunks: {
+      // chunks: 'all',
+      cacheGroups: {
+        // vendor: {
+        //     // This might result in a large chunk containing all external packages.
+        //     // It is recommended to only include your core frameworks and utilities
+        //     // and dynamically load the rest of the dependencies.
+        //     test: /[\\/]node_modules[\\/]/,
+        //     name: 'vendors',
+        //     chunks: 'all',
+        // },
+        styles: {
+          // the CSS can be extracted in one CSS file
+          test: /\.(sa|sc|c)ss$/i, // /\.css$/i
+          name: 'styles',
+          chunks: 'all',
+          enforce: true,
         },
-        // // for production
-        // minimize: true,
-        // minimizer: [TerserWebpackPluginConfig, new OptimizeCSSAssetsWebpackPlugin({})]
+      }
     },
-    module: {
-        rules: [
-            {
-                // 篩選條件: test, include, exclude
-                test: /\.m?js$/, // 指定轉換的檔案，這裡指所有.js or .mjs
-                // exclude: takes preferrence over test and include
-                exclude: /(node_modules|bower_components)/,
-                // use: 使用 loader
-                use: {
-                    // Loads ES2015+ code(ES6, JSX...) and transpiles to ES5 using Babel
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
-                    }
-                }
+    // // for production
+    // minimize: true,
+    // minimizer: [TerserWebpackPluginConfig, new OptimizeCSSAssetsWebpackPlugin({})]
+  },
+  module: {
+    rules: [
+      {
+        // 篩選條件: test, include, exclude
+        test: /\.m?js$/, // 指定轉換的檔案，這裡指所有.js or .mjs
+        // exclude: takes preferrence over test and include
+        exclude: /(node_modules|bower_components)/,
+        // use: 使用 loader
+        use: {
+          // Loads ES2015+ code(ES6, JSX...) and transpiles to ES5 using Babel
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
+      },
+      {
+        test: /\.(sa|sc|c)ss$/i, // /\.css$/i
+        use: [
+          // // style-loader: Creates `style` nodes from JS strings.
+          // // Inject CSS into the DOM.
+          // 'style-loader',
+          {
+            // mini-css-extract-plugin should be used only on production builds
+            // without style-loader in the loaders chain, especially if you 
+            // want to have HMR in development.
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: boolModeDev,
             },
-            {
-                test: /\.(sa|sc|c)ss$/i, // /\.css$/i
-                use: [
-                    // // style-loader: Creates `style` nodes from JS strings.
-                    // // Inject CSS into the DOM.
-                    // 'style-loader',
-                    {
-                        // mini-css-extract-plugin should be used only on production builds
-                        // without style-loader in the loaders chain, especially if you 
-                        // want to have HMR in development.
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: boolModeDev,
-                        },
-                    },
-                    // css-loader: Translates CSS into CommonJS.
-                    // interprets @import and url() like import/require() and will resolve them.
-                    'css-loader',
-                    // sass-loader: Compiles Sass to CSS
-                    'sass-loader',
-                ]
-            },
-            {
-                test: /\.(png|svg|jpe?g|gif)$/i,
-                // The file-loader resolves import/require() on a file into a url 
-                // and emits the file into the output directory.
-                loader: 'file-loader',
-                options: {
-                    // name: default is [contenthash].[ext]
-                    // By default the filename of the resulting file
-                    // is the hash of the file's contents with the original extension of
-                    // the required resource.
-                    name: '[name].[ext]', // '[folder][name].[ext]'
-                    // outputPath: Specify a filesystem path where the target file(s) will be placed.
-                    // outputPath: 'img'
-                }
-            },
-            {
-                test: /\.(csv|tsv)$/,
-                use: [
-                    'csv-loader',
-                ]
-            },
-            {
-                test: /\.xml$/,
-                use: [
-                    'xml-loader',
-                ]
-            }
+          },
+          // css-loader: Translates CSS into CommonJS.
+          // interprets @import and url() like import/require() and will resolve them.
+          'css-loader',
+          // sass-loader: Compiles Sass to CSS
+          'sass-loader',
         ]
-    },
-    // plugins: 放置使用的外掛
-    plugins: [
-        new CleanWebpackPlugin(),
-        HtmlWebpackPluginConfig,
-        MiniCssExtractPluginConfig
+      },
+      {
+        test: /\.(png|svg|jpe?g|gif)$/i,
+        // The file-loader resolves import/require() on a file into a url 
+        // and emits the file into the output directory.
+        loader: 'file-loader',
+        options: {
+          // name: default is [contenthash].[ext]
+          // By default the filename of the resulting file
+          // is the hash of the file's contents with the original extension of
+          // the required resource.
+          name: '[name].[ext]', // '[folder][name].[ext]'
+          // outputPath: Specify a filesystem path where the target file(s) will be placed.
+          // outputPath: 'img'
+        }
+      },
+      {
+        test: /\.(csv|tsv)$/,
+        use: [
+          'csv-loader',
+        ]
+      },
+      {
+        test: /\.xml$/,
+        use: [
+          'xml-loader',
+        ]
+      }
     ]
+  },
+  // plugins: 放置使用的外掛
+  plugins: [
+    new CleanWebpackPlugin(),
+    HtmlWebpackPluginConfig,
+    MiniCssExtractPluginConfig
+  ]
 };

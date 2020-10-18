@@ -7,18 +7,18 @@ console.log('in webpack.cjs.utils:', 'require.main is module.parent', require.ma
 
 var counter = 1;
 function prnt() {
-    return ' print counter and then ++:' + counter++;
+  return ' print counter and then ++:' + counter++;
 }
 
 module.exports = {
-    name: 'webpack.cjs',
-    counter: counter,
-    prt: prnt
+  name: 'webpack.cjs',
+  counter: counter,
+  prt: prnt
 }
 
 var x = 5
 var addX = function (value) {
-    return value + x
+  return value + x
 }
 
 module.exports.x = x
