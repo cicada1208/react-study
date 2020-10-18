@@ -213,18 +213,41 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/i, // /\.css$/i
         // loader 需按順序擺放，由後往前讀取
         use: [
-          // // style-loader: Creates `style` nodes from JS strings.
-          // // Inject CSS into the DOM.
+          // style-loader: Creates `style` nodes from JS strings.
+          // Inject CSS into the DOM.
           boolModeDev && 'style-loader',
           !boolModeDev && {
             // mini-css-extract-plugin should be used only on production builds
             // without style-loader in the loaders chain, especially if you
             // want to have HMR in development.
+            // it's recommended to extract the CSS from your bundle being able to
+            // use parallel loading of CSS/ JS resources later on.
             loader: MiniCssExtractPlugin.loader,
           },
           // css-loader: Translates CSS into CommonJS.
           // interprets @import and url() like import/require() and will resolve them.
-          'css-loader',
+          // 'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              // CSS Modules: modular and reusable CSS.
+              // # No more conflicts.
+              // # Explicit dependencies.
+              // # No global scope.
+              // Example:
+              // import style from '../css/style.scss'
+              // const divWebpackES6 = document.createElement('div')
+              // divWebpackES6.id = style.divWebpackES6
+              // modules: Enables/Disables CSS Modules
+              modules: {
+                // auto: Allows auto enable CSS modules based on filename.
+                auto: /\.module\.\w+$/i,
+                // localIdentName: Allows to configure the generated local ident name.
+                // '[path][name]__[local]--[hash:base64:5]'
+                localIdentName: '[name]__[local]_[hash:base64:5]',
+              },
+            },
+          },
           // sass-loader: Compiles Sass to CSS
           'sass-loader',
         ].filter(Boolean)
