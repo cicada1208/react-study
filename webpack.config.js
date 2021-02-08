@@ -49,7 +49,7 @@
 // 3. debug:
 // browser chrome devtool -> Sources page
 
-console.log("process.env.NODE_ENV(webpack.config): " + process.env.NODE_ENV);
+console.log('process.env.NODE_ENV(webpack.config): ' + process.env.NODE_ENV);
 const boolModeDev = process.env.NODE_ENV !== 'production';
 // 定義 IIS Server Web root，development: 使用 webpack-dev-server 運行，production: 發佈至 IIS 運行
 const iis_web_root = boolModeDev ? '/' : '/study/';
@@ -89,10 +89,10 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const TerserWebpackPluginConfig = new TerserWebpackPlugin({
   test: /\.m?js(\?.*)?$/i,
-  exclude: /(node_modules|bower_components)/
+  exclude: /(node_modules|bower_components)/,
 });
 
-// mini-css-extract-plugin: This plugin extracts CSS into separate files. 
+// mini-css-extract-plugin: This plugin extracts CSS into separate files.
 // It creates a CSS file per JS file which contains CSS.
 // It supports On-Demand-Loading of CSS and SourceMaps.
 // npm install --save-dev mini-css-extract-plugin
@@ -100,7 +100,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const MiniCssExtractPluginConfig = new MiniCssExtractPlugin({
   // Options similar to the same options in webpackOptions.output
   // all options are optional
-  filename: boolModeDev ? 'assets/css/[name].module.css' : 'assets/css/[name].[contenthash].module.css',
+  filename: boolModeDev
+    ? 'assets/css/[name].module.css'
+    : 'assets/css/[name].[contenthash].module.css',
   // chunkFilename: boolModeDev ? '[id].css' : '[id].[contenthash].css',
   // ignoreOrder: false, // Enable to remove warnings about conflicting order
 });
@@ -133,21 +135,27 @@ module.exports = {
   // "eval": has the best performance, but doesn't assist you for transpiled code.(ideal for development)
   // Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
   devtool: 'source-map',
-  entry: { // bundle 起點，可多個檔案
-    'api.query': './src/js/api.query.js',
+  // bundle 起點，可多個檔案
+  entry: {
+    //'api.query': './src/js/api.query.js',
     // 'promise': './src/js/promise.js',
     // 'generator': './src/js/generator.js',
     // 'async.await': './src/js/async.await.js',
     // 'webpack.es6': './src/js/webpack.es6.js',
     // 'webpack.cjs': './src/js/webpack.cjs.js',
-    // 'react.main': './src/js/react.main.js',
+    'react.main': './src/js/react.main.js',
   },
-  output: { // 匯出 bundle 檔案
+  // 匯出 bundle 檔案
+  output: {
     // [contenthash]: 如果內容改變檔名亦隨之變動，可在 browsers caching 機制下重載檔案
     // filename: assets/js/ 指定 bundle 的 js 置於此資料夾，index.html 置於 path
-    filename: boolModeDev ? 'assets/js/[name].js' : 'assets/js/[name].[contenthash].js',
+    filename: boolModeDev
+      ? 'assets/js/[name].js'
+      : 'assets/js/[name].[contenthash].js',
     // chunkFilename: provides a template for naming code-split bundles (optional)
-    chunkFilename: boolModeDev ? 'assets/js/[name].js' : 'assets/js/[name].[contenthash].js',
+    chunkFilename: boolModeDev
+      ? 'assets/js/[name].js'
+      : 'assets/js/[name].[contenthash].js',
     // path: The output directory as an absolute path.
     path: path.resolve(__dirname, 'dist'),
     // publicPath: This option specifies the public URL of the output directory when referenced in a browser.
@@ -165,7 +173,7 @@ module.exports = {
     // runtimeChunk: split runtime code into a separate chunk.
     // runtimeChunk: 'single',
     runtimeChunk: {
-      name: entrypoint => `runtime~${entrypoint.name}`,
+      name: (entrypoint) => `runtime~${entrypoint.name}`,
     },
     // moduleIds: Tells webpack which algorithm to use when choosing module ids.
     moduleIds: 'hashed',
@@ -188,11 +196,14 @@ module.exports = {
         //     chunks: 'all',
         //     enforce: true,
         // },
-      }
+      },
     },
     // minimize and minimizer for production
     minimize: boolModeDev ? false : true,
-    minimizer: [TerserWebpackPluginConfig, new OptimizeCSSAssetsWebpackPlugin({})]
+    minimizer: [
+      TerserWebpackPluginConfig,
+      new OptimizeCSSAssetsWebpackPlugin({}),
+    ],
   },
   module: {
     rules: [
@@ -205,11 +216,12 @@ module.exports = {
         use: {
           // Loads ES6+, JSX and transpiles to ES5 using Babel
           loader: 'babel-loader',
-          options: { // '@babel/preset-react': 支援JSX
+          options: {
+            // '@babel/preset-react': 支援JSX
             presets: ['@babel/preset-env', '@babel/preset-react'],
             plugins: boolModeDev ? aryBabelPluginsDev : aryBabelPluginsPrd,
-          }
-        }
+          },
+        },
       },
       {
         test: /\.(sa|sc|c)ss$/i, // /\.css$/i
@@ -252,13 +264,13 @@ module.exports = {
           },
           // sass-loader: Compiles Sass to CSS
           'sass-loader',
-        ].filter(Boolean)
+        ].filter(Boolean),
       },
       {
         test: /\.(png|svg|jpe?g|gif)$/i,
         use: [
           {
-            // The file-loader resolves import/require() on a file into a url 
+            // The file-loader resolves import/require() on a file into a url
             // and emits the file into the output directory.
             loader: 'file-loader',
             options: {
@@ -269,8 +281,8 @@ module.exports = {
               name: boolModeDev ? '[name].[ext]' : '[name].[contenthash].[ext]', // '[folder][name].[ext]'
               // outputPath: Specify a filesystem path where the target file(s) will be placed.
               outputPath: 'assets/img',
-              publicPath: iis_web_root + 'assets/img'
-            }
+              publicPath: iis_web_root + 'assets/img',
+            },
           },
           // {
           //     // A loader for webpack which transforms files into base64 URIs.
@@ -284,29 +296,26 @@ module.exports = {
           //         name: '[name].[ext]'
           //     }
           // }
-        ]
+        ],
       },
       {
         test: /\.(csv|tsv)$/,
-        use: [
-          'csv-loader',
-        ]
+        use: ['csv-loader'],
       },
       {
         test: /\.xml$/,
-        use: [
-          'xml-loader',
-        ]
-      }
-    ]
+        use: ['xml-loader'],
+      },
+    ],
   },
   // plugins: 放置使用的外掛
   plugins: [
     new CleanWebpackPlugin(),
     HtmlWebpackPluginConfig,
-    !boolModeDev && MiniCssExtractPluginConfig
+    !boolModeDev && MiniCssExtractPluginConfig,
   ].filter(Boolean),
-  devServer: { // webpack-dev-server setting // for development
+  // webpack-dev-server setting // for development
+  devServer: {
     // contentBase: Tell the server where to serve content from.
     // This is only necessary if you want to serve static files.
     // It is recommended to use an absolute path.
@@ -327,5 +336,5 @@ module.exports = {
     // headers: {
     //     'X-Custom-Foo': 'bar'
     // }
-  }
+  },
 };
