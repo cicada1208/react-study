@@ -23,10 +23,10 @@ ary2.push(6);
 console.log(ary2, ary); // [ 1, 2, 3, 4, 'five', 6 ] [ 1, 2, 3, 4, 'five' ]
 
 // not copy
-ary2 = ary;
-console.log(ary2 === ary); // true
-ary2.push(7);
-console.log(ary2, ary); // [ 1, 2, 3, 4, 'five', 7 ] [ 1, 2, 3, 4, 'five', 7 ]
+let ary3 = ary;
+console.log(ary3 === ary); // true
+ary3.push(7);
+console.log(ary3, ary); // [ 1, 2, 3, 4, 'five', 7 ] [ 1, 2, 3, 4, 'five', 7 ]
 
 // for object literals:
 const obj1 = { a: '1', b: '2' };
@@ -35,3 +35,9 @@ let obj = { ...obj1, ...obj2 };
 console.log(obj); // { a: '3', b: '2', c: '4' }
 obj = { ...obj1, a: '5', c: '6' };
 console.log(obj); // { a: '5', b: '2', c: '6' }
+
+// copy an object
+let obj3 = { ...obj1 };
+console.log(obj3 === obj1); // false
+obj3.z = 9;
+console.log(obj3, obj1); // { a: '1', b: '2', z: 9 } { a: '1', b: '2' }
