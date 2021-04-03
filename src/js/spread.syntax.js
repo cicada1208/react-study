@@ -35,8 +35,10 @@ let obj = { ...obj1, ...obj2 };
 console.log(obj); // { a: '3', b: '2', c: '4' }
 obj = { ...obj1, a: '5', c: '6' };
 console.log(obj); // { a: '5', b: '2', c: '6' }
+obj = { ...obj1, ...{ a: '7', c: '8' } };
+console.log(obj); // { a: '7', b: '2', c: '8' }
 
-// copy an object
+// copy an object(shallow clone (excluding prototype))
 let obj3 = { ...obj1 };
 console.log(obj3 === obj1); // false
 obj3.z = 9;

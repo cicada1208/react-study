@@ -23,7 +23,7 @@ const ary = [1, 2];
 [ary[1], ary[0]] = [ary[0], ary[1]];
 console.log('ary:', ary); // [2,1]
 
-// ignoring some returned values
+// ignoring some function returned values
 const fun = () => [1, 2, 3];
 const [h, , i] = fun();
 console.log('h:', h); // 1
@@ -37,6 +37,7 @@ console.log('y:', y); // 20
 console.log('objRest:', objRest); // {z: 30, a: 40}
 
 // assigning to new variables and default values
+// 重命名 j 為 jj
 const { j: jj = 1, k = 2 } = { j: 3 };
 console.log('jj:', jj); // 3
 console.log('k:', k); // 2
@@ -54,22 +55,22 @@ const user = {
 };
 
 function whois({
-  displayName = 'jdoe.def',
-  fullName: { firstName: name },
-  body = { height: 180, weight: 65 },
+  displayName = 'jdoe.def', // set default value
+  fullName: { firstName: name }, // 重命名 firstName 為 name
+  body = { height: 180, weight: 65 }, // set default value
 }) {
   return `${displayName} is ${name}, height=${body.height}, weight=${body.weight}.`;
 }
 console.log(whois(user)); // jdoe is John, height=180, weight=65.
 
 function whois2({
-  displayName = 'jdoe.def',
+  displayName: aliasName = 'jdoe.def', // 重命名 displayName 為 aliasName 且 set default value
   fullName = { firstName: 'John.def' },
   body = { height: 180, weight: 65 },
 } = {}) {
-  return `${displayName} is ${fullName.firstName}, height=${body.height}, weight=${body.weight}.`;
+  return `${aliasName} is ${fullName.firstName}, height=${body.height}, weight=${body.weight}.`;
 }
-// whois2 之所以可不傳參數，是因 = {}
+// whois2 之所以可不用傳參數，是因 = {}
 console.log(whois2()); // jdoe.def is John.def, height=180, weight=65.
 
 // nested object and array destructuring:
@@ -92,8 +93,22 @@ let {
   ],
 } = metadata;
 
-console.log(engTitle); // test
-console.log(chsTitle); // 測試
+console.log('engTitle:', engTitle); // test
+console.log('chsTitle:', chsTitle); // 測試
+
+// computed object property names and destructuring:
+let key = 'z';
+let { [key]: foo } = { z: 'bar' };
+console.log('foo:', foo); // bar
+
+// combined array and object destructuring:
+const props = [
+  { id: 1, name: 'A' },
+  { id: 2, name: 'B' },
+  { id: 3, name: 'C' },
+];
+const [, , { name }] = props;
+console.log('name:', name); // C
 
 // for of iteration and destructuring:
 const people = [
@@ -105,7 +120,7 @@ const people = [
     age: 35,
   },
   {
-    name: 'Tom Jones',
+    // name: 'Tom Jones',
     family: {
       sister: 'Howard Jones',
     },
@@ -114,8 +129,19 @@ const people = [
 ];
 
 for (const {
-  name: n,
+  name: n = 'test',
   family: { sister: s },
 } of people) {
   console.log('name: ' + n + ', sister: ' + s);
 }
+// name: Mike Smith, sister: Samantha Smith
+// name: test, sister: Howard Jones
+
+// the prototype chain is looked up when the object is deconstructed
+let obj = { self: '123' };
+obj.__proto__.prot = '456';
+const { self, prot } = obj;
+console.log('self:', self); // 123
+console.log('prot:', prot); // 456
+const { ...rest } = obj; // object rest destructuring is shallow clone (excluding prototype)
+console.log('rest:', rest); // rest: { self: '123' }
