@@ -12,20 +12,24 @@
 // module 中只能有一個 default export
 // export default 後面不能接 var, let , const
 
-console.log('webpack.es6.utils run.')
+console.log('webpack.es6.utils run.');
 
 function prnt() {
-  return 'print'
+  return 'print';
 }
 
-export const utils_x = 'x'
-export function utils_y() { return 'y' }
-const utils_z = 'z'
-export { utils_z }
+// utils_x 即使宣告為 let，仍只能在此 es6.utils.js 修改值；
+// 若 es6.js import utils_x，不能在 es6.js 修改值。
+export const utils_x = 'x';
+export function utils_y() {
+  return 'y';
+}
+const utils_z = 'z';
+export { utils_z };
 // export { name1 as default, … }
 
 // export default expression
 export default {
   name: 'webpack.es6',
-  prt: prnt
-}
+  prt: prnt,
+};
