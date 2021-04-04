@@ -1,5 +1,6 @@
 // The Object.assign() method copies all enumerable own properties
 // from one or more source objects to a target object.
+// Properties on the prototype chain and non-enumerable properties cannot be copied.
 // It returns the target object.
 // Syntax: Object.assign(target, ...sources)
 
