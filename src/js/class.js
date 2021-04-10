@@ -27,7 +27,7 @@ Animal.owner(); // this: [(Function: Animal)]
 // 類別宣告:
 class Dog extends Animal {
   constructor(na) {
-    super(na); // 呼叫父類別建構子
+    super(na); // 呼叫父類別建構子，需放在建構式第一行
   }
 
   speak() {

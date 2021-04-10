@@ -6,6 +6,7 @@
 // exprot 與 import name 需相同
 // 但可重命名 import { name as na } from 'module'
 // module 中可以有多個 named exports
+// 也可不一一指定 import * as module from 'module'; 再以此叫用 module.name
 
 // 2. export default name:
 // 對應 import defaultExportName from 'module'
