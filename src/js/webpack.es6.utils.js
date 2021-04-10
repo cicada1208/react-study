@@ -4,6 +4,7 @@
 // 1. export name:
 // 對應 import { name } from 'module'
 // exprot 與 import name 需相同
+// 但可重命名 import { name as na } from 'module'
 // module 中可以有多個 named exports
 
 // 2. export default name:
