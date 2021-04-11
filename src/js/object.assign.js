@@ -18,6 +18,7 @@ const copy = Object.assign({}, obj);
 console.log(copy); // { a: 1 }
 console.log(obj === copy); // false
 
+// Object.assign is not deep clone.
 // For deep cloning, we need to use alternatives,
 // because Object.assign() copies property values.
 // If the source value is a reference to an object,
