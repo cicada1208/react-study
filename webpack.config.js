@@ -249,9 +249,9 @@ module.exports = {
               // # Explicit dependencies.
               // # No global scope.
               // Example:
-              // import style from '../css/style.scss'
+              // import style2 from '../css/style2.module.scss'
               // const divWebpackES6 = document.createElement('div')
-              // divWebpackES6.id = style.divWebpackES6
+              // divWebpackES6.id = style2.divWebpackES6
               // modules: Enables/Disables CSS Modules
               modules: {
                 // auto: Allows auto enable CSS modules based on filename.
