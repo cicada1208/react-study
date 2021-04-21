@@ -137,13 +137,13 @@ module.exports = {
   devtool: 'source-map',
   // bundle 起點，可多個檔案
   entry: {
-    //'api.query': './src/js/api.query.js',
+    'api.query': './src/js/api.query.js',
     // 'promise': './src/js/promise.js',
     // 'generator': './src/js/generator.js',
     // 'async.await': './src/js/async.await.js',
-    // 'webpack.es6': './src/js/webpack.es6.js',
+    'webpack.es6': './src/js/webpack.es6.js',
     // 'webpack.cjs': './src/js/webpack.cjs.js',
-    'react.main': './src/js/react.main.js',
+    // 'react.main': './src/js/react.main.js',
   },
   // 匯出 bundle 檔案
   output: {
