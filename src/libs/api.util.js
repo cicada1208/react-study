@@ -1,10 +1,18 @@
 import axios from 'axios';
 
-function axiosPs({ url, method = 'POST', data, headers, ...restOption }) {
+function axiosPs({
+  url,
+  params,
+  data,
+  method = 'POST',
+  headers,
+  ...restOption
+}) {
   return axios({
     url,
-    method,
+    params,
     data,
+    method,
     headers: headers || {
       'content-type': 'application/json',
     },
@@ -18,11 +26,20 @@ function axiosPs({ url, method = 'POST', data, headers, ...restOption }) {
     });
 }
 
-function axiosCb({ cb, url, method = 'POST', data, headers, ...restOption }) {
+function axiosCb({
+  cb,
+  url,
+  params,
+  data,
+  method = 'POST',
+  headers,
+  ...restOption
+}) {
   axios({
     url,
-    method,
+    params,
     data,
+    method,
     headers: headers || {
       'content-type': 'application/json',
     },
