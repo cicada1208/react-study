@@ -2,8 +2,8 @@ import axios from 'axios';
 
 function axiosPs({
   url,
-  params,
-  data,
+  params, // URL parameters
+  data, // request body
   method = 'POST',
   headers,
   ...restOption
