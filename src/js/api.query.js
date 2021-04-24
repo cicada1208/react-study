@@ -4,25 +4,12 @@ import apiUtil from '../libs/api.util.js';
 
 const url = 'https://itunes.apple.com/search?term=twice&limit=13';
 
-function printData(objJson) {
-  var divApiQuery = $("<div id='divApiQuery'></div>");
-  $('body').append(divApiQuery);
-  objJson.results.forEach((el) => {
-    const { artistName, collectionName, collectionViewUrl, artworkUrl100 } = el;
-    $('#divApiQuery').append(`
-        <div id="divApiQueryAlbum">
-            <img class="divApiQueryImg" src="${artworkUrl100}" onclick="window.open('${collectionViewUrl}')"/>
-            <div>
-                <p>${artistName}</p>
-                <p>${collectionName}</p>
-            </div>
-        </div>
-        `);
-  });
-}
+$(() => {
+  getAlbum();
+});
 
 async function getAlbum() {
-  const data = await apiUtil.axiosPs({ url: url, method: 'get' });
+  const data = await apiUtil.axiosPs({ url, method: 'get' });
   printData(data);
 
   // // method 3:
@@ -105,6 +92,20 @@ async function getAlbum() {
   // });
 }
 
-$(() => {
-  getAlbum();
-});
+function printData(objJson) {
+  var divApiQuery = $("<div id='divApiQuery'></div>");
+  $('body').append(divApiQuery);
+  objJson.results.forEach((el) => {
+    const { artistName, collectionName, collectionViewUrl, artworkUrl100 } = el;
+    $('#divApiQuery').append(`
+        <div id="divApiQueryAlbum">
+            <img class="divApiQueryImg" src="${artworkUrl100}"
+            onclick="window.open('${collectionViewUrl}')"/>
+            <div>
+                <p>${artistName}</p>
+                <p>${collectionName}</p>
+            </div>
+        </div>
+        `);
+  });
+}
