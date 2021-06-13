@@ -1,8 +1,8 @@
 {
   "//type": "module",
-  "name": "study",
+  "name": "react-study",
   "version": "1.0.0",
-  "description": "study",
+  "description": "react-study",
   "main": "webpack.es6.js",
   "scripts": {
     "webpack-dev-run": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --progress",
