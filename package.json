@@ -30,6 +30,7 @@
     "jquery": "^3.5.1",
     "memoize-one": "^5.1.1",
     "moment": "^2.29.1",
+    "moment-taiwan": "0.0.4",
     "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
