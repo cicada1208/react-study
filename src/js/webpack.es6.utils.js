@@ -33,7 +33,12 @@ export function utils_y() {
 
 const utils_z = 'z';
 export { utils_z };
-// export { name1 as default, … }
+
+// const num = 123;
+// export default num; 等價於 export { num as default };
+
+// 較為推薦最後再一起 export
+// export { name1 as default, utils_x, utils_y, utils_z }
 
 // export default expression
 export default {
