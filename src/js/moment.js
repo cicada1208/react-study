@@ -5,6 +5,10 @@ const moment = require('moment-taiwan');
 // moment.locale('zh-tw');
 console.log('區域:', moment.locale());
 console.log('now:', moment().format('YYYY/MM/DD HH:mm:ss'));
+console.log(
+  'now:',
+  new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
+); // 2021-08-07T15:38:50.474Z
 console.log('yesterday:', moment().subtract(1, 'days').format('YYYY/MM/DD'));
 console.log('tomorrow:', moment().add(1, 'days').format('YYYY/MM/DD'));
 console.log('parse:', moment('19861208', 'YYYYMMDD').format('YYYY/MM/DD'));
