@@ -18,3 +18,4 @@ console.log(str.slice(1, 10)); // 23456
 console.log(str.slice(1, -2)); // 234
 console.log(str.slice(1, -10)); // ""
 console.log(str.slice(3, 2)); // ""
+console.log(str.slice(0, -1)); // 12345
