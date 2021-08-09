@@ -61,6 +61,7 @@ function call(obj, methodName) {
 call(nick2, 'log'); // nick, age:18
 call(nick2, 'not_exist'); // method not found.
 
+console.log('test4:');
 // A instanceof B 判斷 A 是不是 B 的 instance
 console.log(nick2 instanceof Person2); // true
 console.log(nick2 instanceof Object); // true
