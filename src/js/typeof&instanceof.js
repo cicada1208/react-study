@@ -4,11 +4,13 @@
 console.log('typeof 3.14:', typeof 3.14); // number
 console.log('typeof Infinity:', typeof Infinity); // number
 console.log('typeof NaN:', typeof NaN); // number
+console.log('typeof undefined:', typeof undefined); // undefined
 console.log('typeof null:', typeof null); // object
 console.log('typeof new Number(1):', typeof new Number(1)); // object
 console.log("typeof new String('abc'):", typeof new String('abc')); // object
 console.log('typeof new Boolean(true):', typeof new Boolean(true)); // object
 console.log('typeof new Date():', typeof new Date()); // object
+console.log('typeof []:', typeof []); // object
 console.log('typeof function() {}:', typeof function () {}); // function
 console.log('typeof class C {}:', typeof class C {}); // function
 
@@ -30,10 +32,11 @@ console.log('obj instanceof Object:', obj instanceof Object); // true
 console.log(obj.__proto__.__proto__ === Object.prototype); // true
 
 // 以此方式可取得所有類型:
-// 格式為[object xxx]，xxx包含了String、Number、Boolean、Undefined、Null、Function、Date、Array、RegExp、Error、HTMLDocument 等
-console.log(Object.prototype.toString.call('')); // [object String]
+// 格式為 [object xxx]，xxx 包含 String、Number、Boolean、Undefined、Null、Function、Date、Array、RegExp、Error、HTMLDocument 等
 console.log(Object.prototype.toString.call(1)); // [object Number]
+console.log(Object.prototype.toString.call('')); // [object String]
 console.log(Object.prototype.toString.call(new Date())); // [object Date]
+console.log(Object.prototype.toString.call([])); // [object Array]
 console.log(Object.prototype.toString.call(undefined)); // [object Undefined]
 console.log(Object.prototype.toString.call(null)); // [object Null]
 console.log(Object.prototype.toString.call(new Function())); // [object Function]
