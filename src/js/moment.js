@@ -2,9 +2,11 @@
 const moment = require('moment-taiwan');
 
 // 設定區域:
-// moment.locale('zh-tw');
+moment.locale('zh-tw');
 console.log('區域:', moment.locale());
+
 console.log('now:', moment().format('YYYY/MM/DD HH:mm:ss'));
+console.log('now:', moment().format('YYYY 年 MM 月 DD 日 dddd HH:mm:ss'));
 console.log(
   'now:',
   new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
