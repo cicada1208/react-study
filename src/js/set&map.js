@@ -24,20 +24,24 @@ console.log('intersection:', intersection); // Set { 'hello' }
 let difference = new Set([...set].filter(x => !set2.has(x)));
 console.log('difference:', difference); // Set { 'goodbye' }
 
-// Map:
+// Map: 可按照插入的順序迭代元素，鍵值唯一，鍵/值可為任何型別
 let map = new Map();
 map.set('hello', 1);
+map.set('hello', 3);
 map.set(set, 2);
-console.log('map.get:', map.get('hello')); // 1
+console.log('map.get:', map.get('hello')); // 3
 console.log('map.get:', map.get(set)); // 2
 console.log('map.get:', map.get('')); // undefined
 console.log('map.size:', map.size); // 2
 console.log('map.has:', map.has(set)); // true
+
 console.log('map iteration:');
 // for (let [key, val] of map) {
 //   console.log('key:', key, 'val:', val);
 // }
 map.forEach((val, key) => console.log('key:', key, ', val:', val));
+
+console.log('map.keys array:', [...map.keys()]);
 
 // WeakSet:
 let ws = new WeakSet();
