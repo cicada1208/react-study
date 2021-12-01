@@ -11,9 +11,14 @@ console.log(
   'now:',
   new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString()
 ); // 2021-08-07T15:38:50.474Z
+
 console.log('yesterday:', moment().subtract(1, 'days').format('YYYY/MM/DD'));
 console.log('tomorrow:', moment().add(1, 'days').format('YYYY/MM/DD'));
 console.log('parse:', moment('19861208', 'YYYYMMDD').format('YYYY/MM/DD'));
+
+let t1 = moment('2021-12-01 00:00:00');
+let t2 = moment('2021-12-01 00:01:02');
+console.log('diff:', t2.diff(t1, 'm', true), 'minutes');
 
 // moment().valueOf() === new Date().getTime()
 console.log(
@@ -32,9 +37,9 @@ console.log('isSame:', moment('2010-10-01').isSame('2010-10-02', 'month')); // t
 let ary = [
   { name: 'A', date: '11.12.1996' },
   { name: 'B', date: '12.12.1989' },
-  { name: 'C', date: '5.01.1993' },
+  { name: 'C', date: '5.01.1993' }
 ];
-var aryMoment = ary.map((item) => moment(item.date, 'DD.MM.YYYY'));
+var aryMoment = ary.map(item => moment(item.date, 'DD.MM.YYYY'));
 console.log('max date:', moment.max(aryMoment).format('YYYY/MM/DD')); // 1996/12/11
 
 // 閏年 2012/02/29 轉民國年
