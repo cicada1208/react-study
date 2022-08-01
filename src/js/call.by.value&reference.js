@@ -20,14 +20,14 @@ function add2(obj) {
   // 所以外面的 o2 依舊是原來的值
   obj = {
     // eslint-disable-next-line no-unused-vars
-    number: obj.number + 1,
+    number: obj.number + 1
   };
 }
 var o2 = { number: 10 };
 add2(o2);
 console.log(o2.number); // 10
 
-console.log('call by reference:');
+console.log('ex3:');
 function run(a) {
   arguments[0] = { name: 'run' }; // 同 a = { name: 'run' }
   console.log('a:', a); // a: { name: 'run' }
@@ -37,7 +37,7 @@ var obj = { name: 'obj' };
 run(obj);
 console.log('obj:', obj); // obj: { name: 'obj' }
 
-console.log('call by reference:');
+console.log('ex4:');
 var ref1 = [1];
 var ref2 = ref1;
 ref1.push(2);
