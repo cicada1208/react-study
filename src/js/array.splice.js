@@ -1,4 +1,4 @@
-// 可任意加入或移除陣列中的元素
+// Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
 // rel = ary.splice(start, deleteCount, el,..);
 // rel: 回傳被取代的元素
 // start: 起始index
