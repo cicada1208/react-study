@@ -29,3 +29,8 @@ console.log(num.toPrecision(2)); // 0.0017
 console.log(num.toPrecision(3)); // 0.00166
 console.log(num.toPrecision(10)); // 0.001658853000
 console.log((1234).toPrecision(2)); // 1.2e+3
+
+// 運算式計算函數
+let expp = '(1 + 2) * 3';
+
+console.log(eval(expp)); // 9, type is number
