@@ -32,5 +32,4 @@ console.log((1234).toPrecision(2)); // 1.2e+3
 
 // 運算式計算函數
 let expp = '(1 + 2) * 3';
-
 console.log(eval(expp)); // 9, type is number

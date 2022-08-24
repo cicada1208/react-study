@@ -11,6 +11,7 @@
 
 const str = '123456';
 console.log(str.slice(0, 2)); // 12
+console.log(str.substring(0, 2)); // 12
 console.log(str.slice(-2)); // 56
 console.log(str.slice(-7)); // 123456
 console.log(str.slice(6)); // ""
