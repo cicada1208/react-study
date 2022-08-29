@@ -2,6 +2,14 @@ let str = 'a,b,c,d';
 console.log('split:', str.split(',', 2)); // [ 'a', 'b' ]
 console.log('concat:', str.concat(',', 'z')); // a,b,c,d,z
 
+console.log('replace:');
+let str5 = 'abc,123,ABC';
+let str5r = str5.replace(/abc/gi, 'qaq'); // g: replace all  i: ignore case sensitive
+console.log('str5:', str5, 'str5r:', str5r); // str5: abc,123,ABC str5r: qaq,123,qaq
+
+let str6 = 'abc,123,ABC';
+console.log('includes:', str6.includes('abc', 1)); // false
+
 console.log('search:');
 let str2 = 'ab98cd';
 // search: if find return index else -1
