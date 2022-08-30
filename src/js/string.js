@@ -21,8 +21,9 @@ console.log(str2.match(/\d/)); // [ '9', index: 2, input: 'ab98cd', groups: unde
 // use global search: 回傳所有匹配的字串
 console.log(str2.match(/\d/g)); // [ '9', '8' ]
 
+// Regex.test: return false if not found, and true if found
 console.log('Regex.test not use global search:');
-// Regex.test、Regex.exec not use global search:
+// Regex.test not use global search:
 let str3 = 'abcdef';
 const reg3 = /c/;
 console.log(reg3.test(str3)); // true
@@ -31,8 +32,8 @@ console.log(reg3.test(str3)); // true
 console.log(reg3.lastIndex); // 0
 
 console.log('Regex.test use global search:');
-// Regex.test、Regex.exec use global search:
-// 會從 lastIndex 開始匹配，所以 test、exec 不使用 global search 較好
+// Regex.test use global search:
+// 會從 lastIndex 開始匹配，所以 test 不使用 global search 較好
 let str4 = 'abcdef';
 let str4b = 'cabdef';
 const reg4 = /c/g;
@@ -44,3 +45,17 @@ console.log(reg4.test(str4)); // true
 console.log(reg4.lastIndex); // 3
 console.log(reg4.test(str4b)); // false, 換另一字串仍是從 lastIndex 開始匹配
 console.log(reg4.lastIndex); // 0
+
+// Regex.exec: return the matched text if a match is found, and null if not
+console.log('Regex.exe not use global search');
+let str7 = 'abc123xyz987';
+const reg5 = /\d/;
+console.log(reg5.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
+console.log(reg5.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
+
+console.log('Regex.exe use global search');
+const reg6 = /\d/g;
+console.log(reg6.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
+console.log(reg6.lastIndex); // 4
+console.log(reg6.exec(str7)); // [ '2', index: 4, input: 'abc123xyz987', groups: undefined ]
+console.log(reg6.lastIndex); // 5
