@@ -33,7 +33,7 @@ console.log(reg3.lastIndex); // 0
 
 console.log('Regex.test use global search:');
 // Regex.test use global search:
-// 會從 lastIndex 開始匹配，所以 test 不使用 global search 較好
+// 會從 lastIndex 開始匹配，所以 test 在此案不使用 global search 較適合
 let str4 = 'abcdef';
 let str4b = 'cabdef';
 const reg4 = /c/g;
