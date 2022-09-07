@@ -24,6 +24,7 @@
   "homepage": "https://github.com/cicada1208/study#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "dayjs": "^1.11.5",
     "dequal": "^2.0.2",
     "formidable": "^1.2.2",
     "formik": "^2.1.5",
