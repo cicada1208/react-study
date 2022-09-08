@@ -1,5 +1,5 @@
-// const moment = require('moment');
-const moment = require('moment-taiwan');
+const moment = require('moment');
+const momentTw = require('moment-taiwan');
 
 // 設定區域:
 moment.locale('zh-tw');
@@ -45,5 +45,5 @@ console.log('max date:', moment.max(aryMoment).format('YYYY/MM/DD')); // 1996/12
 // 閏年 2012/02/29 轉民國年
 console.log(
   '轉民國年:',
-  moment('2012/02/29', 'YYYY/MM/DD').format('YYYY/MM/DD [is] tYY/MM/DD')
+  momentTw('2012/02/29', 'YYYY/MM/DD').format('YYYY/MM/DD [is] tYY/MM/DD')
 );
