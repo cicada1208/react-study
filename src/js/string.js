@@ -2,28 +2,28 @@ let str = 'a,b,c,d';
 console.log('split:', str.split(',', 2)); // [ 'a', 'b' ]
 console.log('concat:', str.concat(',', 'z')); // a,b,c,d,z
 
-console.log('replace:');
+// replace:
 let str5 = 'abc,123,ABC';
-let str5r = str5.replace(/abc/gi, 'qaq'); // g: replace all  i: ignore case sensitive
-console.log('str5:', str5, 'str5r:', str5r); // str5: abc,123,ABC str5r: qaq,123,qaq
+let str5r = str5.replace(/abc/gi, 'qaq');
+// g: replace all
+// i: ignore case sensitive
+console.log('replace:', 'str5 =', str5, 'str5r =', str5r); // str5 = abc,123,ABC str5r = qaq,123,qaq
 
 let str6 = 'abc,123,ABC';
 console.log('includes:', str6.includes('abc', 1)); // false
 
-console.log('search:');
-let str2 = 'ab98cd';
 // search: if find return index else -1
-console.log('index:', str2.search(/\d/)); // index: 2
+let str2 = 'ab98cd';
+console.log('search:', 'index =', str2.search(/\d/)); // index = 2
 
-console.log('match:');
-// not use global search: 回傳第一個匹配的字串
+// match:
+console.log('match not use global search:'); // return first match
 console.log(str2.match(/\d/)); // [ '9', index: 2, input: 'ab98cd', groups: undefined ]
-// use global search: 回傳所有匹配的字串
+console.log('match use global search:'); // return all match
 console.log(str2.match(/\d/g)); // [ '9', '8' ]
 
 // Regex.test: return false if not found, and true if found
 console.log('Regex.test not use global search:');
-// Regex.test not use global search:
 let str3 = 'abcdef';
 const reg3 = /c/;
 console.log(reg3.test(str3)); // true
@@ -32,7 +32,6 @@ console.log(reg3.test(str3)); // true
 console.log(reg3.lastIndex); // 0
 
 console.log('Regex.test use global search:');
-// Regex.test use global search:
 // 會從 lastIndex 開始匹配，所以 test 在此案不使用 global search 較適合
 let str4 = 'abcdef';
 let str4b = 'cabdef';
@@ -47,13 +46,13 @@ console.log(reg4.test(str4b)); // false, 換另一字串仍是從 lastIndex 開�
 console.log(reg4.lastIndex); // 0
 
 // Regex.exec: return the matched text if a match is found, and null if not
-console.log('Regex.exe not use global search');
+console.log('Regex.exec not use global search:');
 let str7 = 'abc123xyz987';
 const reg5 = /\d/;
 console.log(reg5.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
 console.log(reg5.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
 
-console.log('Regex.exe use global search');
+console.log('Regex.exec use global search:');
 const reg6 = /\d/g;
 console.log(reg6.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
 console.log(reg6.lastIndex); // 4
