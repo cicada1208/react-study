@@ -39,7 +39,9 @@ console.log('map iteration:');
 // }
 map.forEach((val, key) => console.log('key:', key, ', val:', val));
 
-console.log('map.keys array:', [...map.keys()]);
+console.log('map.keys array:', [...map.keys()]); // [ 'hello', Set(2) { 'hello', 'goodbye' } ]
+console.log('map.values array:', [...map.values()]); // [ 3, 2 ]
+console.log('map.entries array:', [...map.entries()]); // [ [ 'hello', 3 ], [ Set(2) { 'hello', 'goodbye' }, 2 ] ]
 
 const obj = {
   one: 1,
@@ -50,7 +52,7 @@ console.log('object to map:', mapObj);
 let objMap = Object.fromEntries(mapObj);
 console.log('map to object:', objMap);
 
-// WeakSet:
+// WeakSet: 只能儲存 Object，不可遍歷
 let ws = new WeakSet();
 ws.add({ data: 4 });
 // Because the added object has no other references, it will not be held in the set
