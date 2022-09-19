@@ -34,6 +34,20 @@ for (let m of str2.matchAll(/\d/g)) console.log(m);
 // [ '9', index: 2, input: 'ab98cd', groups: undefined ]
 // [ '8', index: 3, input: 'ab98cd', groups: undefined ]
 
+const imageDescription = 'This image has a resolution of 1440×900 pixels.';
+const regexpSize = /([0-9]+)×([0-9]+)/;
+const matchSize = imageDescription.match(regexpSize);
+console.log(matchSize);
+// [
+//   '1440×900', // 整個匹配
+//   '1440', // 匹配第1個()
+//   '900', // 匹配第2個()
+//   index: 31,
+//   input: 'This image has a resolution of 1440×900 pixels.',
+//   groups: undefined
+// ]
+console.log(`Width: ${matchSize[1]} / Height: ${matchSize[2]}.`); // Width: 1440 / Height: 900.
+
 // Regex.test: return false if not found, and true if found
 console.log('Regex.test not use global search:');
 let str3 = 'abcdef';
@@ -60,16 +74,16 @@ console.log(reg4.lastIndex); // 0
 // Regex.exec: return the matched text if a match is found, and null if not
 console.log('Regex.exec not use global search:');
 let str7 = 'abc123xyz987';
-const reg5 = /\d/;
-console.log(reg5.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
-console.log(reg5.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
+const reg7ng = /\d/;
+console.log(reg7ng.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
+console.log(reg7ng.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
 
 console.log('Regex.exec use global search:');
-const reg6 = /\d/g;
-console.log(reg6.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
-console.log(reg6.lastIndex); // 4
-console.log(reg6.exec(str7)); // [ '2', index: 4, input: 'abc123xyz987', groups: undefined ]
-console.log(reg6.lastIndex); // 5
+const reg7g = /\d/g;
+console.log(reg7g.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups: undefined ]
+console.log(reg7g.lastIndex); // 4
+console.log(reg7g.exec(str7)); // [ '2', index: 4, input: 'abc123xyz987', groups: undefined ]
+console.log(reg7g.lastIndex); // 5
 
 // Word boundary: Get a match at the beginning or end of a word in the string
 // new RegExp(/\bregexp/) or /regexp\b/
@@ -79,10 +93,3 @@ console.log('Word boundary:', strWB.match(regexpWithoutE)); // [ 'and', 'at' ]
 
 // Non-word boundary: Get a match when it is not at the beginning or end of a word in the string
 // new RegExp(/\Bregexp/) or /\Bregexp/
-
-const imageDescription = 'This image has a resolution of 1440×900 pixels.';
-const regexpSize = /([0-9]+)×([0-9]+)/;
-const match = imageDescription.match(regexpSize);
-console.log(match);
-console.log(`Width: ${match[1]} / Height: ${match[2]}.`);
-// expected output: "Width: 1440 / Height: 900."
