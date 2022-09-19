@@ -1,3 +1,14 @@
+// Regex:
+// g: global search
+// i: ignore case sensitive
+// m: multiline matches
+// ?: Finds zero or one occurrence of the regular expression
+// *: Finds zero or more occurrences of the regular expression
+// +: Finds one or more occurrences of the regular expression
+// {x}: Finds the exact (x) number of the regular expression grouped together
+// {x,}: Finds the exact (x) or more number of the regular expression grouped together
+// {x,y}: Finds between x and y number of the regular expression grouped together
+
 let str = 'a,b,c,d';
 console.log('split:', str.split(',', 2)); // [ 'a', 'b' ]
 console.log('concat:', str.concat(',', 'z')); // a,b,c,d,z
@@ -5,8 +16,6 @@ console.log('concat:', str.concat(',', 'z')); // a,b,c,d,z
 // replace:
 let str5 = 'abc,123,ABC';
 let str5r = str5.replace(/abc/gi, 'qaq');
-// g: replace all
-// i: ignore case sensitive
 console.log('replace:', 'str5 =', str5, 'str5r =', str5r); // str5 = abc,123,ABC str5r = qaq,123,qaq
 
 let str6 = 'abc,123,ABC';
@@ -58,3 +67,19 @@ console.log(reg6.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups:
 console.log(reg6.lastIndex); // 4
 console.log(reg6.exec(str7)); // [ '2', index: 4, input: 'abc123xyz987', groups: undefined ]
 console.log(reg6.lastIndex); // 5
+
+// Word boundary: Get a match at the beginning or end of a word in the string
+// new RegExp(/\bregexp/) or /regexp\b/
+const strWB = 'The Caterpillar and Alice looked at each other';
+const regexpWithoutE = /\b[a-df-z]+\b/gi;
+console.log('Word boundary:', strWB.match(regexpWithoutE)); // [ 'and', 'at' ]
+
+// Non-word boundary: Get a match when it is not at the beginning or end of a word in the string
+// new RegExp(/\Bregexp/) or /\Bregexp/
+
+const imageDescription = 'This image has a resolution of 1440×900 pixels.';
+const regexpSize = /([0-9]+)×([0-9]+)/;
+const match = imageDescription.match(regexpSize);
+console.log(match);
+console.log(`Width: ${match[1]} / Height: ${match[2]}.`);
+// expected output: "Width: 1440 / Height: 900."
