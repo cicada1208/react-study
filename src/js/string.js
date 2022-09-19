@@ -30,6 +30,9 @@ console.log('match not use global search:'); // return first match
 console.log(str2.match(/\d/)); // [ '9', index: 2, input: 'ab98cd', groups: undefined ]
 console.log('match use global search:'); // return all match
 console.log(str2.match(/\d/g)); // [ '9', '8' ]
+for (let m of str2.matchAll(/\d/g)) console.log(m);
+// [ '9', index: 2, input: 'ab98cd', groups: undefined ]
+// [ '8', index: 3, input: 'ab98cd', groups: undefined ]
 
 // Regex.test: return false if not found, and true if found
 console.log('Regex.test not use global search:');
