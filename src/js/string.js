@@ -35,7 +35,7 @@ for (let m of str2.matchAll(/\d/g)) console.log(m);
 // [ '8', index: 3, input: 'ab98cd', groups: undefined ]
 
 const imageDescription = 'This image has a resolution of 1440×900 pixels.';
-const regexpSize = /([0-9]+)×([0-9]+)/;
+const regexpSize = /([0-9]+)×([0-9]+)/; // .match() 若使用 global search 無法使用捕獲組()獲得匹配
 const matchSize = imageDescription.match(regexpSize);
 console.log(matchSize);
 // [
@@ -84,6 +84,17 @@ console.log(reg7g.exec(str7)); // [ '1', index: 3, input: 'abc123xyz987', groups
 console.log(reg7g.lastIndex); // 4
 console.log(reg7g.exec(str7)); // [ '2', index: 4, input: 'abc123xyz987', groups: undefined ]
 console.log(reg7g.lastIndex); // 5
+
+// 具名捕獲組: (?<Name>x)
+let users = `姓氏：李，名字：雷
+姓氏：韩，名字：梅梅`;
+let regexpNames = /姓氏：(?<first>.+)，名字：(?<last>.+)/gm;
+let match = regexpNames.exec(users);
+do {
+  console.log(`Hello ${match.groups.first} ${match.groups.last}`);
+} while ((match = regexpNames.exec(users)) !== null);
+// Hellow 李 雷
+// Hellow 韩 梅梅
 
 // Word boundary: Get a match at the beginning or end of a word in the string
 // new RegExp(/\bregexp/) or /regexp\b/
