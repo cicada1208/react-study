@@ -49,15 +49,15 @@ const user = {
   displayName: 'jdoe',
   fullName: {
     firstName: 'John',
-    lastName: 'Doe',
-  },
+    lastName: 'Doe'
+  }
   // body: { height: 170, weight: 56 },
 };
 
 function whois({
   displayName = 'jdoe.def', // set default value
   fullName: { firstName: name }, // 重命名 firstName 為 name
-  body = { height: 180, weight: 65 }, // set default value
+  body = { height: 180, weight: 65 } // set default value
 }) {
   return `${displayName} is ${name}, height=${body.height}, weight=${body.weight}.`;
 }
@@ -66,7 +66,7 @@ console.log(whois(user)); // jdoe is John, height=180, weight=65.
 function whois2({
   displayName: aliasName = 'jdoe.def', // 重命名 displayName 為 aliasName 且 set default value
   fullName = { firstName: 'John.def' },
-  body = { height: 180, weight: 65 },
+  body = { height: 180, weight: 65 }
 } = {}) {
   return `${aliasName} is ${fullName.firstName}, height=${body.height}, weight=${body.weight}.`;
 }
@@ -79,18 +79,18 @@ const metadata = {
   translations: [
     {
       title: '測試',
-      last_edit: '2014-04-14T08:43:37',
-    },
-  ],
+      last_edit: '2014-04-14T08:43:37'
+    }
+  ]
 };
 
 let {
   title: engTitle, // rename
   translations: [
     {
-      title: chsTitle, // rename
-    },
-  ],
+      title: chsTitle // rename
+    }
+  ]
 } = metadata;
 
 console.log('engTitle:', engTitle); // test
@@ -105,7 +105,7 @@ console.log('foo:', foo); // bar
 const props = [
   { id: 1, name: 'A' },
   { id: 2, name: 'B' },
-  { id: 3, name: 'C' },
+  { id: 3, name: 'C' }
 ];
 const [, , { name }] = props;
 console.log('name:', name); // C
@@ -115,22 +115,22 @@ const people = [
   {
     name: 'Mike Smith',
     family: {
-      sister: 'Samantha Smith',
+      sister: 'Samantha Smith'
     },
-    age: 35,
+    age: 35
   },
   {
     // name: 'Tom Jones',
     family: {
-      sister: 'Howard Jones',
+      sister: 'Howard Jones'
     },
-    age: 25,
-  },
+    age: 25
+  }
 ];
 
 for (const {
   name: n = 'test',
-  family: { sister: s },
+  family: { sister: s }
 } of people) {
   console.log('name: ' + n + ', sister: ' + s);
 }
@@ -143,5 +143,3 @@ obj.__proto__.prot = '456';
 const { self, prot } = obj;
 console.log('self:', self); // 123
 console.log('prot:', prot); // 456
-const { ...rest } = obj; // object rest destructuring is shallow clone (excluding prototype)
-console.log('rest:', rest); // rest: { self: '123' }
