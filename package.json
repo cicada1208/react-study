@@ -29,6 +29,7 @@
     "formidable": "^1.2.2",
     "formik": "^2.1.5",
     "jquery": "^3.5.1",
+    "lodash": "^4.17.21",
     "memoize-one": "^5.1.1",
     "moment": "^2.29.1",
     "moment-taiwan": "0.0.4",
