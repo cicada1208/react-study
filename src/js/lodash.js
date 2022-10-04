@@ -20,3 +20,36 @@ console.log(
     'x'
   )
 ); // [ { x: 2, y: 0 } ]
+
+console.log('union:', _.union([2], [1, 2])); // [ 2, 1 ]
+
+console.log('unionBy:', _.unionBy([2.1], [1.2, 2.3], Math.floor)); // [ 2.1, 1.2 ]
+
+console.log(
+  'unionBy:',
+  _.unionBy(
+    [{ x: 1, y: 0 }],
+    [
+      { x: 2, y: 1 },
+      { x: 1, y: 2 }
+    ],
+    'x'
+  )
+); // [ { x: 1, y: 0 }, { x: 2, y: 1 } ]
+
+console.log(
+  'unionWith:',
+  _.unionWith(
+    [
+      { x: 1, y: 2 },
+      { x: 2, y: 1 }
+    ],
+    [
+      { x: 1, y: 1 },
+      { x: 1, y: 2 }
+    ],
+    _.isEqual
+  )
+); // [ { x: 1, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 1 } ]
+
+console.log('uniq:', _.uniq([2, 1, 2])); // [ 2, 1 ]
