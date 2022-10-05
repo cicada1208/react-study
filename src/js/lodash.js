@@ -53,3 +53,14 @@ console.log(
 ); // [ { x: 1, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 1 } ]
 
 console.log('uniq:', _.uniq([2, 1, 2])); // [ 2, 1 ]
+
+// forEach: As with other "Collections" methods, objects with a "length" property are iterated like arrays. To avoid this behavior use _.forIn or _.forOwn for object iteration.
+console.log('forEach:');
+_.forEach({ a: 1, b: 2 }, (value, key) => console.log(`${key} = ${value}`)); // object iteration order is not guaranteed
+
+console.log('countBy:', _.countBy([6.1, 4.2, 6.3], Math.floor)); // { '4': 1, '6': 2 }
+console.log('countBy:', _.countBy(['three', 'one', 'two'], 'length')); // { '3': 2, '5': 1 }
+
+console.log('groupBy:', _.groupBy([6.1, 4.2, 6.3], Math.floor)); // { '4': [4.2], '6': [6.1, 6.3] }
+
+console.log('groupBy:', _.groupBy(['one', 'two', 'three'], 'length')); // { '3': ['one', 'two'], '5': ['three'] }
