@@ -141,3 +141,27 @@ console.log(
 //     { user: 'pebbles', age: 1, active: false }
 //   ]
 // ];
+
+console.log(
+  'reduce:',
+  _.reduce(
+    { a: 1, b: 2, c: 1 },
+    function (result, value, key) {
+      (result[value] || (result[value] = [])).push(key);
+      return result;
+    },
+    {}
+  )
+); // { '1': [ 'a', 'c' ], '2': [ 'b' ] }
+
+console.log(
+  _.reduceRight(
+    [
+      [0, 1],
+      [2, 3],
+      [4, 5]
+    ],
+    (flattened, other) => flattened.concat(other),
+    []
+  )
+); // [4, 5, 2, 3, 0, 1]
