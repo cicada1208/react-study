@@ -102,3 +102,42 @@ console.log(
 ); // [16, 64] (iteration order is not guaranteed)
 
 console.log('map:', _.map([{ user: 'barney' }, { user: 'fred' }], 'user')); // ['barney', 'fred']
+
+console.log(
+  'orderBy:',
+  _.orderBy(
+    [
+      { user: 'fred', age: 48 },
+      { user: 'barney', age: 34 },
+      { user: 'fred', age: 40 },
+      { user: 'barney', age: 36 }
+    ],
+    ['user', 'age'],
+    ['asc', 'desc']
+  )
+);
+// [
+//   { user: 'barney', age: 36 },
+//   { user: 'barney', age: 34 },
+//   { user: 'fred', age: 48 },
+//   { user: 'fred', age: 40 }
+// ];
+
+console.log(
+  'partition:',
+  _.partition(
+    [
+      { user: 'barney', age: 36, active: false },
+      { user: 'fred', age: 40, active: true },
+      { user: 'pebbles', age: 1, active: false }
+    ],
+    user => user.active // 'active'
+  )
+);
+// [
+//   [{ user: 'fred', age: 40, active: true }],
+//   [
+//     { user: 'barney', age: 36, active: false },
+//     { user: 'pebbles', age: 1, active: false }
+//   ]
+// ];
