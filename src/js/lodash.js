@@ -165,3 +165,8 @@ console.log(
     []
   )
 ); // [4, 5, 2, 3, 0, 1]
+
+// 延遲一秒執行，若多次執行會以最後一次延遲一秒才執行
+var delay1s = _.debounce(p => console.log('debounce:', p), 1000);
+delay1s('test');
+delay1s('test');
