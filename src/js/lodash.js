@@ -171,3 +171,4 @@ console.log(
 var delay1s = _.debounce(p => console.log('debounce:', p), 1000);
 delay1s('test');
 delay1s('test'); // debounce: test
+// delay1s.cancel(); // 取消就不會執行印出東西
