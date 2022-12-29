@@ -169,6 +169,20 @@ console.log(
 // 延遲一秒執行，若於 delay 時間內多次執行 delay1s，
 // 會以最後一次延遲一秒才執行
 var delay1s = _.debounce(p => console.log('debounce:', p), 1000);
-delay1s('test');
-delay1s('test'); // debounce: test
+delay1s('debounce.test');
+delay1s('debounce.test'); // print once debounce: debounce.test
 // delay1s.cancel(); // 取消就不會執行印出東西
+
+// Creates a throttled function that only invokes func at most once per every wait milliseconds.
+var throttle1 = _.throttle(p => console.log('throttle1:', p), 100);
+throttle1('throttle1.test');
+throttle1('throttle1.test');
+throttle1('throttle1.test');
+throttle1('throttle1.test'); // print twice throttle1: throttle1.test
+
+// Invoking on the leading edge of the timeout, but not more than once every 1 sec.
+var throttle2 = _.throttle(p => console.log('throttle2:', p), 1000, {
+  trailing: false
+});
+throttle2('throttle2.test');
+throttle2('throttle2.test'); // print once throttle2: throttle2.test
