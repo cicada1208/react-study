@@ -175,14 +175,17 @@ delay1s('debounce.test'); // print once debounce: debounce.test
 
 // Creates a throttled function that only invokes func at most once per every wait milliseconds.
 var throttle1 = _.throttle(p => console.log('throttle1:', p), 100);
-throttle1('throttle1.test');
-throttle1('throttle1.test');
-throttle1('throttle1.test');
-throttle1('throttle1.test'); // print twice throttle1: throttle1.test
+// print throttle1: throttle1.test.a
+// print throttle1: throttle1.test.d
+throttle1('throttle1.test.a');
+throttle1('throttle1.test.b');
+throttle1('throttle1.test.c');
+throttle1('throttle1.test.d');
 
 // Invoking on the leading edge of the timeout, but not more than once every 1 sec.
 var throttle2 = _.throttle(p => console.log('throttle2:', p), 1000, {
   trailing: false
 });
-throttle2('throttle2.test');
-throttle2('throttle2.test'); // print once throttle2: throttle2.test
+// print throttle2: throttle2.test.a
+throttle2('throttle2.test.a');
+throttle2('throttle2.test.b');
