@@ -189,3 +189,22 @@ var throttle2 = _.throttle(p => console.log('throttle2:', p), 1000, {
 // print throttle2: throttle2.test.a
 throttle2('throttle2.test.a');
 throttle2('throttle2.test.b');
+
+// Performs a deep comparison between two values to determine if they are equivalent.
+var object = { a: 1 };
+var other = { a: 1 };
+console.log('isEqual:', _.isEqual(object, other)); // true
+console.log('===:', object === other); // false
+
+function isGreeting(value) {
+  return /^h(?:i|ello)$/.test(value);
+}
+function customizer(objValue, othValue) {
+  if (isGreeting(objValue) && isGreeting(othValue)) {
+    return true;
+  }
+}
+
+var array2 = ['hello', 'goodbye'];
+var other2 = ['hi', 'goodbye'];
+console.log('isEqualWith', _.isEqualWith(array2, other2, customizer)); // true
