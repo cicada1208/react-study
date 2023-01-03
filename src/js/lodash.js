@@ -191,10 +191,10 @@ throttle2('throttle2.test.a');
 throttle2('throttle2.test.b');
 
 // Performs a deep comparison between two values to determine if they are equivalent.
-var object = { a: 1 };
-var other = { a: 1 };
-console.log('isEqual:', _.isEqual(object, other)); // true
-console.log('===:', object === other); // false
+var objIsEqual = { a: 1 };
+var otherIsEqual = { a: 1 };
+console.log('isEqual:', _.isEqual(objIsEqual, otherIsEqual)); // true
+console.log('===:', objIsEqual === otherIsEqual); // false
 
 function isGreeting(value) {
   return /^h(?:i|ello)$/.test(value);
@@ -204,7 +204,13 @@ function customizer(objValue, othValue) {
     return true;
   }
 }
+var aryIsEqualWith = ['hello', 'goodbye'];
+var otherIsEqualWith = ['hi', 'goodbye'];
+console.log(
+  'isEqualWith',
+  _.isEqualWith(aryIsEqualWith, otherIsEqualWith, customizer)
+); // true
 
-var array2 = ['hello', 'goodbye'];
-var other2 = ['hi', 'goodbye'];
-console.log('isEqualWith', _.isEqualWith(array2, other2, customizer)); // true
+var objIsMatch = { a: 1, b: 2 };
+console.log('isMatch:', _.isMatch(objIsMatch, { b: 2 })); // true
+console.log('isMatch:', _.isMatch(objIsMatch, { b: 1 })); // false
