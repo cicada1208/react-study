@@ -20,7 +20,26 @@ function Class2() {
 }
 Class1.prototype.b = 2;
 Class2.prototype.d = 4;
-console.log('prototype:', Object.assign({ a: 0 }, new Class1(), new Class2())); //  { a: 1, c: 3 }
+
+console.log(
+  'Object.assign:',
+  Object.assign({ a: 0 }, new Class1(), new Class2())
+); // { a: 1, c: 3 }
+
+const _ = require('lodash');
+
+console.log('_.assign:', _.assign({ a: 0 }, new Class1(), new Class2())); // { a: 1, c: 3 }
+
+console.log('_.assignIn:', _.assignIn({ a: 0 }, new Class1(), new Class2())); // { a: 1, b: 2, c: 3, d: 4 }
+
+console.log('_.defaults:', _.defaults({ a: 1 }, { b: 2 }, { a: 3 })); // { 'a': 1, 'b': 2 }
+
+console.log('_.defaults:', _.defaults({ a: { b: 2 } }, { a: { b: 1, c: 3 } })); // { a: { b: 2 } }
+
+console.log(
+  '_.defaultsDeep:',
+  _.defaultsDeep({ a: { b: 2 } }, { a: { b: 1, c: 3 } })
+); // { 'a': { 'b': 2, 'c': 3 } }
 
 // shallow clone
 const obj = { a: 1 };
