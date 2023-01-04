@@ -39,3 +39,7 @@ console.log('eval:', eval(expp)); // 9, type is number
 console.log('ceil:', _.ceil(4.006)); // 5
 console.log('ceil:', _.ceil(6.004, 2)); // 6.01
 console.log('ceil:', _.ceil(6040, -2)); // 6100
+
+console.log('floor:', _.floor(4.006)); // 4
+console.log('floor:', _.floor(0.046, 2)); // 0.04
+console.log('floor:', _.floor(4060, -2)); // 4000
