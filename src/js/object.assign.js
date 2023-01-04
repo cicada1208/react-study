@@ -8,15 +8,25 @@ const target = { a: 1, b: 2 };
 const source = { b: 3, c: 4 };
 const source2 = { d: 5, e: 6 };
 const returnedTarget = Object.assign(target, source, source2);
-console.log(target); // { a: 1, b: 3, c: 4, d: 5, e: 6 }
-console.log(returnedTarget); // { a: 1, b: 3, c: 4, d: 5, e: 6 }
-console.log(target === returnedTarget); // true
+console.log('target:', target); // { a: 1, b: 3, c: 4, d: 5, e: 6 }
+console.log('returnedTarget:', returnedTarget); // { a: 1, b: 3, c: 4, d: 5, e: 6 }
+console.log('target === returnedTarget:', target === returnedTarget); // true
 
-// cloning an object
+function Class1() {
+  this.a = 1;
+}
+function Class2() {
+  this.c = 3;
+}
+Class1.prototype.b = 2;
+Class2.prototype.d = 4;
+console.log('prototype:', Object.assign({ a: 0 }, new Class1(), new Class2())); //  { a: 1, c: 3 }
+
+// shallow clone
 const obj = { a: 1 };
-const copy = Object.assign({}, obj);
-console.log(copy); // { a: 1 }
-console.log(obj === copy); // false
+const shallowCopy = Object.assign({}, obj);
+console.log('shallowCopy:', shallowCopy); // { a: 1 }
+console.log('obj === shallowCopy:', obj === shallowCopy); // false
 
 // Object.assign is not deep clone.
 // For deep cloning, we need to use alternatives,
