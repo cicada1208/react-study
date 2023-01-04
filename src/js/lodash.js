@@ -59,6 +59,7 @@ console.log('forEach:');
 _.forEach({ a: 1, b: 2 }, (value, key) => console.log(`${key} = ${value}`)); // object iteration order is not guaranteed
 
 console.log('countBy:', _.countBy([6.1, 4.2, 6.3], Math.floor)); // { '4': 1, '6': 2 }
+
 console.log('countBy:', _.countBy(['three', 'one', 'two'], 'length')); // { '3': 2, '5': 1 }
 
 console.log('groupBy:', _.groupBy([6.1, 4.2, 6.3], Math.floor)); // { '4': [4.2], '6': [6.1, 6.3] }
@@ -214,3 +215,13 @@ console.log(
 var objIsMatch = { a: 1, b: 2 };
 console.log('isMatch:', _.isMatch(objIsMatch, { b: 2 })); // true
 console.log('isMatch:', _.isMatch(objIsMatch, { b: 1 })); // false
+
+var objMaxBy = [
+  { m: 9, n: 1 },
+  { m: 7, n: 2 }
+];
+console.log(
+  'maxBy:',
+  _.maxBy(objMaxBy, o => o.m + o.n)
+); // { m: 9, n: 1 }
+console.log('maxBy:', _.maxBy(objMaxBy, 'n')); // { m: 7, n: 2 }
