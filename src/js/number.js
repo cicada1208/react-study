@@ -11,6 +11,10 @@ console.log('parseInt:', parseInt(11, 2)); // 3
 // no base parameter
 console.log('parseFloat:', parseFloat(exp)); // NaN
 
+// 運算式計算函數
+let expp = '(1 + 2) * 3';
+console.log('eval:', eval(expp)); // 9, type is number
+
 let num = 1.045;
 // 四捨五入
 function Round(num, fraction = 0) {
@@ -32,10 +36,6 @@ console.log('toPrecision:', num.toPrecision(3)); // 0.00166
 console.log('toPrecision:', num.toPrecision(10)); // 0.001658853000
 console.log('toPrecision:', (1234).toPrecision(2)); // 1.2e+3
 
-// 運算式計算函數
-let expp = '(1 + 2) * 3';
-console.log('eval:', eval(expp)); // 9, type is number
-
 console.log('ceil:', _.ceil(4.006)); // 5
 console.log('ceil:', _.ceil(6.004, 2)); // 6.01
 console.log('ceil:', _.ceil(6040, -2)); // 6100
@@ -43,3 +43,11 @@ console.log('ceil:', _.ceil(6040, -2)); // 6100
 console.log('floor:', _.floor(4.006)); // 4
 console.log('floor:', _.floor(0.046, 2)); // 0.04
 console.log('floor:', _.floor(4060, -2)); // 4000
+
+console.log('round:', _.round(4.006)); // 4
+console.log('round:', _.round(4.006, 2)); // 4.01
+console.log('round:', _.round(4060, -2)); // 4100
+console.log('round:', _.round(4040, -2)); // 4000
+
+console.log('random:', _.random(0, 5)); // an integer between 0 and 5
+console.log('random:', _.random(5, true)); // a floating-point number between 0 and 5
