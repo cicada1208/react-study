@@ -225,3 +225,9 @@ console.log(
   _.maxBy(objMaxBy, o => o.m + o.n)
 ); // { m: 9, n: 1 }
 console.log('maxBy:', _.maxBy(objMaxBy, 'n')); // { m: 7, n: 2 }
+
+var objHas = { a: { b: undefined } };
+console.log('has:', _.has(objHas, 'a.b')); // true
+
+var objInvert = { a: 1, b: 2, c: 1 };
+console.log('invert:', _.invert(objInvert)); // { '1': 'c', '2': 'b' }
