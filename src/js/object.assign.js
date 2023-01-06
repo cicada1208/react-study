@@ -41,6 +41,25 @@ console.log(
   _.defaultsDeep({ a: { b: 2 } }, { a: { b: 1, c: 3 } })
 ); // { 'a': { 'b': 2, 'c': 3 } }
 
+var objMergeDes = { a: [{ b: 2 }, { d: 4 }] };
+var objMergeSrc = { a: [{ c: 3 }, { e: 5 }] };
+console.log('_.merge:', _.merge(objMergeDes, objMergeSrc)); // { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] }
+
+console.log('_.merge:', _.merge({ a: { b: 1 } }, { a: { d: 2 } })); // { a: { b: 1, d: 2 } }
+
+function customizerMergeWith(objValue, srcValue) {
+  if (_.isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
+}
+var objMergeWithDes = { a: [1], b: [2] };
+var objMergeWithSrc = { a: [3], b: [4] };
+
+console.log(
+  'mergeWith:',
+  _.mergeWith(objMergeWithDes, objMergeWithSrc, customizerMergeWith)
+); // { 'a': [1, 3], 'b': [2, 4] }
+
 // shallow clone
 const obj = { a: 1 };
 const shallowCopy = Object.assign({}, obj);
