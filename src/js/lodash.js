@@ -1,8 +1,11 @@
 const _ = require('lodash');
 
-let obj1 = { a: 'a' };
-let obj2 = obj1;
-console.log('difference:', _.difference([obj1, 1], [2, obj2])); // [ 1 ]
+let objDifference1 = { a: 'a' };
+let objDifference2 = objDifference1;
+console.log(
+  'difference:',
+  _.difference([objDifference1, 1], [2, objDifference2])
+); // [ 1 ]
 
 console.log(
   'differenceBy:',
@@ -231,3 +234,40 @@ console.log('has:', _.has(objHas, 'a.b')); // true
 
 var objInvert = { a: 1, b: 2, c: 1 };
 console.log('invert:', _.invert(objInvert)); // { '1': 'c', '2': 'b' }
+
+var objInvertBy = { a: 1, b: 2, c: 1 };
+console.log(
+  'invertBy:',
+  _.invertBy(objInvertBy, function (value) {
+    return 'group' + value;
+  })
+); // { 'group1': ['a', 'c'], 'group2': ['b'] }
+
+function ClassKeys() {
+  this.a = 1;
+  this.b = 2;
+}
+ClassKeys.prototype.c = 3;
+console.log('keys:', _.keys(new ClassKeys())); // ['a', 'b'] (iteration order is not guaranteed)
+console.log('keysIn:', _.keysIn(new ClassKeys())); // ['a', 'b', 'c'] (iteration order is not guaranteed)
+
+console.log(
+  'mapKeys:',
+  _.mapKeys({ a: 1, b: 2 }, function (value, key) {
+    return key + value;
+  })
+); // { 'a1': 1, 'b2': 2 }
+
+var objMapValues = {
+  fred: { id: 'A001', age: 40 },
+  pebbles: { id: 'B002', age: 1 }
+};
+console.log(
+  'mapValues:',
+  _.mapValues(objMapValues, o => `id=${o.id} is ${o.age} years old.`)
+);
+// {
+//   fred: 'id=A001 is 40 years old.',
+//   pebbles: 'id=B002 is 1 years old.'
+// } (iteration order is not guaranteed)
+console.log('mapValues:', _.mapValues(objMapValues, 'age')); // { 'fred': 40, 'pebbles': 1 }
