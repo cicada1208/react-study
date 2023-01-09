@@ -1,3 +1,4 @@
+const { log } = require('console');
 const _ = require('lodash');
 
 let objDifference1 = { a: 'a' };
@@ -250,6 +251,9 @@ function ClassKeys() {
 ClassKeys.prototype.c = 3;
 console.log('keys:', _.keys(new ClassKeys())); // ['a', 'b'] (iteration order is not guaranteed)
 console.log('keysIn:', _.keysIn(new ClassKeys())); // ['a', 'b', 'c'] (iteration order is not guaranteed)
+
+console.log('values:', _.values(new ClassKeys())); // [ 1, 2 ]
+console.log('valuesIn:', _.valuesIn(new ClassKeys())); // [ 1, 2, 3 ]
 
 console.log(
   'mapKeys:',
