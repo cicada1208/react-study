@@ -275,3 +275,14 @@ console.log(
 //   pebbles: 'id=B002 is 1 years old.'
 // } (iteration order is not guaranteed)
 console.log('mapValues:', _.mapValues(objMapValues, 'age')); // { 'fred': 40, 'pebbles': 1 }
+
+var users = [
+  { user: 'barney', age: 36 },
+  { user: 'pebbles', age: 1 }
+];
+var youngest = _.chain(users)
+  .sortBy('age')
+  .map(u => u.user + ' is ' + u.age)
+  .head()
+  .value();
+console.log('chain:', youngest); // 'pebbles is 1'
