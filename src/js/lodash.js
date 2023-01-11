@@ -350,4 +350,16 @@ console.log(
   })
 ); // 'hi-diddly-ho there...'
 
-console.log('words:', _.words('fred, barney, & pebbles', /[^, ]+/g)); // [ 'fred', 'barney', '&', 'pebbles' ]
+let line = 'fred, barney, & pebbles';
+console.log('words:', _.words(line, /[^, ]+/g));
+// 結果同 line.match(/[^, ]+/g)
+// [ 'fred', 'barney', '&', 'pebbles' ]
+
+var condFunc = _.cond([
+  [_.matches({ a: 1 }), _.constant('matches A')],
+  [_.conforms({ b: _.isNumber }), _.constant('matches B')],
+  [_.stubTrue, _.constant('no match')]
+]);
+console.log('cond:', condFunc({ a: 1, b: 2 })); // 'matches A'
+console.log('cond:', condFunc({ a: 0, b: 1 })); // 'matches B'
+console.log('cond:', condFunc({ a: '1', b: '2' })); // 'no match'
