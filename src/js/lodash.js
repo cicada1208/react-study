@@ -1,4 +1,3 @@
-const { log } = require('console');
 const _ = require('lodash');
 
 let objDifference1 = { a: 'a' };
@@ -286,3 +285,69 @@ var youngest = _.chain(users)
   .head()
   .value();
 console.log('chain:', youngest); // 'pebbles is 1'
+
+console.log(
+  'camelCase:',
+  _.camelCase('Foo Bar'),
+  _.camelCase('--foo-bar--'),
+  _.camelCase('__FOO_BAR__')
+); // fooBar fooBar fooBar
+
+console.log(
+  'kebabCase:',
+  _.kebabCase('Foo Bar'),
+  _.kebabCase('fooBar'),
+  _.kebabCase('__FOO_BAR__')
+); // foo-bar foo-bar foo-bar
+
+console.log(
+  'snakeCase:',
+  _.snakeCase('Foo Bar'),
+  _.snakeCase('fooBar'),
+  _.snakeCase('--FOO-BAR--')
+); // foo_bar foo_bar foo_bar
+
+console.log(
+  'lowerCase:',
+  _.lowerCase('Foo Bar'),
+  _.lowerCase('fooBar'),
+  _.lowerCase('__FOO_BAR__')
+); // foo bar foo bar foo bar
+
+console.log(
+  'upperCase:',
+  _.upperCase('--foo-bar'),
+  _.upperCase('fooBar'),
+  _.upperCase('__foo_bar__')
+); // FOO BAR FOO BAR FOO BAR
+
+console.log(
+  'startCase:',
+  _.startCase('--foo-bar--'),
+  _.startCase('fooBar'),
+  _.startCase('FOO BAR')
+); // Foo Bar Foo Bar FOO BAR
+
+console.log('capitalize:', _.capitalize('FRED TED')); // Fred ted
+
+console.log('lowerFirst:', _.lowerFirst('FRED TED')); // fRED TED
+
+console.log('upperFirst:', _.upperFirst('fred ted')); // Fred ted
+
+console.log('startsWith:', _.startsWith('abc', 'b', 1)); // true
+
+console.log('endsWith:', _.endsWith('abc', 'b', 2)); // true
+
+console.log('pad:', _.pad('abc', 8, '#&')); // #&abc#&#
+
+console.log('trim:', _.trim('-_-abc-_-', '_-')); // abc
+
+console.log(
+  'truncate:',
+  _.truncate('hi-diddly-ho there, neighborino', {
+    length: 24,
+    separator: /,? +/
+  })
+); // 'hi-diddly-ho there...'
+
+console.log('words:', _.words('fred, barney, & pebbles', /[^, ]+/g)); // [ 'fred', 'barney', '&', 'pebbles' ]
