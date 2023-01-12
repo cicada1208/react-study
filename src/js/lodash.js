@@ -363,3 +363,24 @@ var condFunc = _.cond([
 console.log('cond:', condFunc({ a: 1, b: 2 })); // 'matches A'
 console.log('cond:', condFunc({ a: 0, b: 1 })); // 'matches B'
 console.log('cond:', condFunc({ a: '1', b: '2' })); // 'no match'
+
+console.log(
+  'conforms:',
+  _.filter(
+    [
+      { a: 2, b: 1 },
+      { a: 1, b: 2 }
+    ],
+    _.conforms({ b: n => n > 1 })
+  )
+); // [ { a: 1, b: 2 } ]
+
+var constInvokeTimes = _.times(2, _.constant({ a: 1 }));
+console.log('time:', constInvokeTimes); // [ { a: 1 }, { a: 1 } ]
+console.log('constant:', constInvokeTimes[0] === constInvokeTimes[1]); // true
+
+function square(n) {
+  return n * n;
+}
+var addSquare = _.flow([_.add, square]);
+console.log('flow:', addSquare(1, 2)); // 9
