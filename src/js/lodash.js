@@ -24,6 +24,11 @@ console.log(
   )
 ); // [ { x: 2, y: 0 } ]
 
+console.log(
+  'intersectionBy:',
+  _.intersectionBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], 'x')
+); // [ { x: 1 } ]
+
 console.log('union:', _.union([2], [1, 2])); // [ 2, 1 ]
 
 console.log('unionBy:', _.unionBy([2.1], [1.2, 2.3], Math.floor)); // [ 2.1, 1.2 ]
@@ -385,6 +390,9 @@ function square(n) {
 var addSquare = _.flow([_.add, square]);
 console.log('flow:', addSquare(1, 2)); // 9
 
+var overFunc = _.over([Math.max, Math.min]);
+console.log('over:', overFunc(1, 2, 3, 4)); // [ 4, 1 ]
+
 let objMixinDes = { f1: () => console.log('mixin:', 'f1') };
 function objMixinSrc() {
   this.fa = () => console.log('mixin:', 'fa');
@@ -394,4 +402,4 @@ objMixinSrc.prototype.fc = () => console.log('mixin:', 'fc');
 _.mixin(objMixinDes, new objMixinSrc());
 objMixinDes.fa(); // fa
 objMixinDes.fb(); // fb
-// objMixinDes.fc(); // exception
+// objMixinDes.fc(); // throw exception

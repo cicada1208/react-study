@@ -51,3 +51,6 @@ console.log('round:', _.round(4040, -2)); // 4000
 
 console.log('random:', _.random(0, 5)); // an integer between 0 and 5
 console.log('random:', _.random(5, true)); // a floating-point number between 0 and 5
+
+console.log('range:', _.range(-4)); // [ 0, -1, -2, -3 ]
+console.log('range:', _.range(0, 20, 5)); // [ 0, 5, 10, 15 ]
