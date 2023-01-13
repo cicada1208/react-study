@@ -384,3 +384,14 @@ function square(n) {
 }
 var addSquare = _.flow([_.add, square]);
 console.log('flow:', addSquare(1, 2)); // 9
+
+let objMixinDes = { f1: () => console.log('mixin:', 'f1') };
+function objMixinSrc() {
+  this.fa = () => console.log('mixin:', 'fa');
+  this.fb = () => console.log('mixin:', 'fb');
+}
+objMixinSrc.prototype.fc = () => console.log('mixin:', 'fc');
+_.mixin(objMixinDes, new objMixinSrc());
+objMixinDes.fa(); // fa
+objMixinDes.fb(); // fb
+// objMixinDes.fc(); // exception
