@@ -175,8 +175,8 @@ console.log(
   )
 ); // [4, 5, 2, 3, 0, 1]
 
-// 延遲一秒執行，若於 delay 時間內多次執行 delay1s，
-// 會以最後一次延遲一秒才執行
+// delay1s: 取消後延遲 delay 時間執行，
+// delay 時間內再次執行 delay1s 會再次取消後延遲 delay 時間執行
 var delay1s = _.debounce(p => console.log('debounce:', p), 1000);
 delay1s('debounce.test');
 delay1s('debounce.test'); // print once debounce: debounce.test
